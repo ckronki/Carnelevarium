@@ -15,4 +15,16 @@ public class Inventory : MonoBehaviour
     {
         return items.Contains(itemName);
     }
+
+    // Nuevo: limpiar inventario
+    public void Clear()
+    {
+        items.Clear();
+    }
+
+    // Nuevo: devolver lista de ítems
+    public List<string> GetItems()
+    {
+        return items;
+    }
 }

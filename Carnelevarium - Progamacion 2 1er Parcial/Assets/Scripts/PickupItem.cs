@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PickupItem : MonoBehaviour
 {
+    public string objectID; // <--- ASIGNA UN NOMBRE ÚNICO EN EL INSPECTOR (Ej: Pocion_1)
     public GameObject itemPrefab;
     public GameObject flashlightObject;
     private Inventory inventory;
@@ -12,8 +13,9 @@ public class PickupItem : MonoBehaviour
     void Start()
     {
         inspectSystem = FindObjectOfType<InspectItem>();
-        inventory = FindObjectOfType<Inventory>(); 
+        inventory = FindObjectOfType<Inventory>();
     }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -32,6 +34,13 @@ public class PickupItem : MonoBehaviour
         {
             if (!inspectSystem.IsInspecting())
             {
+                // --- LÓGICA DE GUARDADO ---
+                SaveSystem ss = FindObjectOfType<SaveSystem>();
+                if (ss != null)
+                {
+                    ss.RegistrarObjetoDestruido(objectID);
+                }
+
                 if (inventory != null)
                 {
                     inventory.AddItem(gameObject.name);
@@ -45,7 +54,12 @@ public class PickupItem : MonoBehaviour
                         light.enabled = false;
                 }
 
-                inspectSystem.SetItem(itemPrefab, this.gameObject);
+                // Cambiamos 'this.gameObject' por 'null' para que InspectItem
+                // NO destruya el objeto original al terminar la inspección.
+                inspectSystem.SetItem(itemPrefab, null);
+
+                // En lugar de destruir, simplemente ocultamos el objeto de la escena
+                this.gameObject.SetActive(false);
             }
         }
     }

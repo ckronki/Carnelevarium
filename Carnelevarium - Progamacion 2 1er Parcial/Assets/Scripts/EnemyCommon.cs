@@ -47,6 +47,6 @@ public class EnemyBasic : Enemy
     }
     public override void Death()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false); // En vez de Destroy
     }
 }
