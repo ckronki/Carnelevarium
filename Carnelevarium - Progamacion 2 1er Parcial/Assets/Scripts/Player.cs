@@ -5,7 +5,6 @@ public class Player : Entity
 {
     public InputActionReference controlMove;
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private float moveSpeed = 10f;
 
     [Header("Pantalla muerte")]
     public GameObject death;
@@ -13,11 +12,9 @@ public class Player : Entity
     public Animator animator;
     Coroutine _currentCoroutine;
     float _backupSpeed;
+
     private void Awake()
     {
-        Life = 100;   
-        damage = 10;
-        speed = 5f;
         _backupSpeed = speed;
     }
 
