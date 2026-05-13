@@ -11,6 +11,11 @@ public class InteractionController : MonoBehaviour
     [SerializeField] GameObject _interactionCrosshair;
     IInteractable _currentTargetedInteractable;
 
+    public void Start()
+    {
+        _interactionDistanceBackup = _interactionDistance;
+    }
+
     public void Update()
     {
         UpdateCurrentInteractable();
@@ -55,7 +60,6 @@ public class InteractionController : MonoBehaviour
         Debug.Log("Cámara bloqueada: " + _cameraController.isCameraLocked);
         _cameraController.LockCamera();
 
-        _interactionDistanceBackup = _interactionDistance;
         _interactionDistance = 0;
 
 
