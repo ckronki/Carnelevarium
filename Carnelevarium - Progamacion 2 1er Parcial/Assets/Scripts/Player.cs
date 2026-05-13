@@ -15,8 +15,7 @@ public class Player : Entity
     float _backupSpeed;
     private void Awake()
     {
-        
-        life = 100;
+        Life = 100;   
         damage = 10;
         speed = 5f;
         _backupSpeed = speed;

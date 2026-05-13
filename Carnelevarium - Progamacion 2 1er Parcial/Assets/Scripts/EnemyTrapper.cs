@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class EnemyTrapper : Enemy
 {
@@ -11,14 +12,13 @@ public class EnemyTrapper : Enemy
 
     [Header("Trampas")]
     [SerializeField] GameObject trapPrefab;
-    [SerializeField] float trapLifetime = 150f; 
+    [SerializeField] float trapLifetime = 150f;
     [SerializeField] int maxTraps = 5;
     [SerializeField] float trapCooldown = 5f;
     [SerializeField] float trapPlaceDelay = 2f;
 
     private List<GameObject> activeTraps = new List<GameObject>();
     private float trapTimer;
-
     private bool isPlacingTrap = false;
 
     protected override void Update()
@@ -27,7 +27,6 @@ public class EnemyTrapper : Enemy
 
         float distance = Vector3.Distance(transform.position, player.position);
 
-       
         if (distance <= detectionRange)
         {
             speed = runSpeed;
@@ -65,17 +64,20 @@ public class EnemyTrapper : Enemy
         }
     }
 
-    private System.Collections.IEnumerator PlaceTrapRoutine()
+    private IEnumerator PlaceTrapRoutine()
     {
         isPlacingTrap = true;
         float originalSpeed = speed;
-        speed = 0f; 
+        speed = 0f;
 
         yield return new WaitForSeconds(trapPlaceDelay);
 
-        GameObject trap = Instantiate(trapPrefab, transform.position, Quaternion.identity);
-        activeTraps.Add(trap);
-        Destroy(trap, trapLifetime);
+        if (trapPrefab != null)
+        {
+            GameObject trap = Instantiate(trapPrefab, transform.position, Quaternion.identity);
+            activeTraps.Add(trap);
+            Destroy(trap, trapLifetime);
+        }
 
         trapTimer = 0f;
         speed = originalSpeed;
@@ -86,9 +88,11 @@ public class EnemyTrapper : Enemy
 
     public override void Death()
     {
-        Destroy(gameObject);
+        // Cambiado para que sea compatible con el SaveSystem
+        gameObject.SetActive(false);
     }
 
+    // Implementación de métodos abstractos obligatorios de Enemy
     protected override void AttackPlayer() { }
     protected override void ChasePlayer(float distance) { }
 }
