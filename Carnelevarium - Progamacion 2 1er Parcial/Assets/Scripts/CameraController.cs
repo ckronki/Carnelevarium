@@ -10,15 +10,36 @@ public class CameraController : MonoBehaviour
     private float _leftRight;
     public float sensitivity;
 
+    public bool isCameraLocked;
+
     private void Update()
     {
-        _lookInput = controlLook.action.ReadValue<Vector2>();
+        if (isCameraLocked == true)
+        {
+            return;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
 
-        _upDown -= _lookInput.y * sensitivity;
-        _leftRight += _lookInput.x * sensitivity;
+            _lookInput = controlLook.action.ReadValue<Vector2>();
 
-        _upDown = Mathf.Clamp(_upDown, -80f, 80f);
-        transform.rotation = Quaternion.Euler(_upDown, _leftRight, 0);
-        playerTransform.rotation = Quaternion.Euler(0, _leftRight, 0);
+            _upDown -= _lookInput.y * sensitivity;
+            _leftRight += _lookInput.x * sensitivity;
+
+            _upDown = Mathf.Clamp(_upDown, -80f, 80f);
+            transform.rotation = Quaternion.Euler(_upDown, _leftRight, 0);
+            playerTransform.rotation = Quaternion.Euler(0, _leftRight, 0);
+        }
+    }
+
+    public void UnlockCamera()
+    {
+        isCameraLocked = false;
+    }
+    public void LockCamera()
+    {
+        isCameraLocked = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 }
