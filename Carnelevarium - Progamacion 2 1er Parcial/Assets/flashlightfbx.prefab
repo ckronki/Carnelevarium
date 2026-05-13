@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7078225365084879633}
   - component: {fileID: 6166892314401977524}
   - component: {fileID: 8246588631445454974}
-  - component: {fileID: 3056660553335406643}
   - component: {fileID: 2226420760044079494}
   - component: {fileID: 2586307673068667492}
   - component: {fileID: 3041391467128785376}
@@ -90,19 +89,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3056660553335406643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7597916560484426155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e7f125c70b01df409b43d021da8cfc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemName: Linterna
 --- !u!114 &2226420760044079494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 7597916560484426155}
+  flashlightObject: {fileID: 0}
 --- !u!65 &2586307673068667492
 BoxCollider:
   m_ObjectHideFlags: 0

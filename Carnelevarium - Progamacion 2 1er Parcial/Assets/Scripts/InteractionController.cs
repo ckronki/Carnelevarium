@@ -5,7 +5,9 @@ using UnityEngine.Rendering;
 public class InteractionController : MonoBehaviour
 {
     [SerializeField] Camera _playerCamera;
+    public CameraController _cameraController;
     [SerializeField] float _interactionDistance;
+    [SerializeField] float _interactionDistanceBackup;
     [SerializeField] GameObject _interactionCrosshair;
     IInteractable _currentTargetedInteractable;
 
@@ -44,5 +46,27 @@ public class InteractionController : MonoBehaviour
         {
             _currentTargetedInteractable.Interact();
         }
+    }
+
+
+
+    public void LockInteraction()
+    {
+        Debug.Log("Cámara bloqueada: " + _cameraController.isCameraLocked);
+        _cameraController.LockCamera();
+
+        _interactionDistanceBackup = _interactionDistance;
+        _interactionDistance = 0;
+
+
+    }
+
+    public void UnlockInteraction()
+    {
+        Debug.Log("Cámara bloqueada: " + _cameraController.isCameraLocked);
+        _cameraController.UnlockCamera();
+
+        _interactionDistance = _interactionDistanceBackup;
+
     }
 }
