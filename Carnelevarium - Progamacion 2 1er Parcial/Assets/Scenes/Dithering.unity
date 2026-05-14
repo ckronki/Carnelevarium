@@ -4961,10 +4961,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   life: 100
   damage: 20
-  speed: 20
+  speed: 7
   controlMove: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   rb: {fileID: 840034873}
-  moveSpeed: 50
   death: {fileID: 1209691368545156217, guid: fe9f3750a8001d54fab08cd24cf7744c, type: 3}
   animator: {fileID: 1690120280}
 --- !u!65 &840034872
@@ -10616,6 +10615,7 @@ MonoBehaviour:
   player: {fileID: 840034870}
   keypad: {fileID: 1638578789}
   hud: {fileID: 1709019914}
+  timeToReset: 1.3
   interactionController: {fileID: 840034883}
   openKeypad: {fileID: 2009003797}
   door: {fileID: 1395851642}

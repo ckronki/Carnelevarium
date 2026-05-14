@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using Unity.Multiplayer.Center.Common;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class Keypad : MonoBehaviour
     public GameObject keypad;
     public GameObject hud;
 
+    [SerializeField] float timeToReset;
     [SerializeField] InteractionController interactionController;
     [SerializeField] GameObject openKeypad;
 
@@ -43,7 +45,7 @@ public class Keypad : MonoBehaviour
         }
         else
         {
-            keypadText.text = "Wrong";
+            StartCoroutine(Wrong(timeToReset));
         }
     }
 
@@ -52,6 +54,17 @@ public class Keypad : MonoBehaviour
         keypadText.text = "";
 
     }
+
+    public IEnumerator Wrong(float time)
+    {
+        keypadText.text = "Wrong";
+
+        yield return new WaitForSeconds(time);
+
+        Clear();
+    }
+
+    
 
     public void Exit()
     {
