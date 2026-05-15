@@ -5360,7 +5360,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1638578791}
         m_TargetAssemblyTypeName: Keypad, Assembly-CSharp
-        m_MethodName: Execute
+        m_MethodName: Enter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6838,7 +6838,7 @@ GameObject:
   - component: {fileID: 1192694828}
   - component: {fileID: 1192694827}
   m_Layer: 5
-  m_Name: RawImage
+  m_Name: InspectItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9103,17 +9103,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: code
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -10622,7 +10622,6 @@ MonoBehaviour:
   doorAnimator: {fileID: 1395851647}
   keypadText: {fileID: 1481207582}
   currentKeypadAnswer: 
-  animate: 0
 --- !u!1 &1690120278 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 47bac8e4b2978a74aaea48989e6d053b, type: 3}
@@ -12583,7 +12582,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keypadUI: {fileID: 1638578789}
-  keypadAnswer: 76
+  keypadAnswer: 6769
 --- !u!65 &2009003799
 BoxCollider:
   m_ObjectHideFlags: 0
