@@ -10615,13 +10615,13 @@ MonoBehaviour:
   player: {fileID: 840034870}
   keypad: {fileID: 1638578789}
   hud: {fileID: 1709019914}
-  timeToReset: 1.3
+  timeToReset: 0.6
   interactionController: {fileID: 840034883}
   openKeypad: {fileID: 2009003797}
   door: {fileID: 1395851642}
   doorAnimator: {fileID: 1395851647}
   keypadText: {fileID: 1481207582}
-  keypadAnswer: 12345
+  currentKeypadAnswer: 
   animate: 0
 --- !u!1 &1690120278 stripped
 GameObject:
@@ -10673,7 +10673,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1709019915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12582,7 +12582,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45833df17c22ad14c8a0384cd8740332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keypad: {fileID: 1638578789}
+  keypadUI: {fileID: 1638578789}
+  keypadAnswer: 76
 --- !u!65 &2009003799
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -2,10 +2,15 @@ using UnityEngine;
 
 public class OpenKeypad : MonoBehaviour , IInteractable
 {
-    [SerializeField] GameObject keypad;
+    [SerializeField] GameObject keypadUI;
+
+    [SerializeField] string keypadAnswer;    
 
     public void Interact()
     {
-        keypad.SetActive(true);
+        keypadUI.SetActive(true);
+        keypadUI.GetComponent<Keypad>().SetAnswer(keypadAnswer);
+
+        Debug.Log("Código actual: " + keypadUI.GetComponent<Keypad>().currentKeypadAnswer);
     }
 }

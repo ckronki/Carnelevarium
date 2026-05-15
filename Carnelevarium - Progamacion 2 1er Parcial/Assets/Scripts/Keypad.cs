@@ -10,6 +10,8 @@ public class Keypad : MonoBehaviour
     public GameObject keypad;
     public GameObject hud;
 
+    private bool _isResetting;
+
     [SerializeField] float timeToReset;
     [SerializeField] InteractionController interactionController;
     [SerializeField] GameObject openKeypad;
@@ -17,31 +19,72 @@ public class Keypad : MonoBehaviour
     public GameObject door;
     public Animator doorAnimator;
 
-    public TextMeshProUGUI keypadText;
-    [SerializeField] string keypadAnswer = "12345";
+    public TMP_Text keypadText;
+    public string currentKeypadAnswer;
 
     //public AudioSource button;
     //public AudioSource correct;
     //public AudioSource wrong;
 
-    public bool animate;
-
     public void Start()
     {
-        //keypad.SetActive(false);
+        keypad.SetActive(false);
+    }
+
+    public void Update()
+    {
+        if (keypad.activeInHierarchy)
+        {
+            hud.SetActive(false);
+            player.GetComponent<Player>().enabled = false;
+            interactionController.LockInteraction();
+        }
+    }
+
+    public void SetAnswer(string answer)
+    {
+        currentKeypadAnswer = answer;
+        keypadText.text = "";
     }
 
     public void Number(int number)
     {
-        keypadText.text += number.ToString();
+        if (!_isResetting)
+        {
+            keypadText.text += number.ToString();
+        }
     }
 
-    public void Execute()
+    public IEnumerator Right(float time)
     {
-        if (keypadText.text == keypadAnswer)
+        keypadText.text = "Right";
+        keypadText.color = Color.green;
+        _isResetting = true;
+
+        yield return new WaitForSeconds(time);
+
+        Exit();
+        OpenAnimation();
+        _isResetting = false;
+    }
+
+    public IEnumerator Wrong(float time)
+    {
+        keypadText.text = "Wrong";
+        keypadText.color = Color.red;
+        _isResetting = true;
+
+        yield return new WaitForSeconds(time);
+
+        Clear();
+        _isResetting = false;
+    }
+
+    public void Enter()
+    {
+        if (keypadText.text == currentKeypadAnswer)
         {
-            keypadText.text = "Right";
-            animate = true;
+            StartCoroutine(Right(timeToReset));
         }
         else
         {
@@ -49,46 +92,27 @@ public class Keypad : MonoBehaviour
         }
     }
 
-    public void Clear()
-    {
-        keypadText.text = "";
-
-    }
-
-    public IEnumerator Wrong(float time)
-    {
-        keypadText.text = "Wrong";
-
-        yield return new WaitForSeconds(time);
-
-        Clear();
-    }
-
-    
-
     public void Exit()
     {
         keypad.SetActive(false);
         hud.SetActive(true);
         player.GetComponent<Player>().enabled = true;
         interactionController.UnlockInteraction();
+
         openKeypad.GetComponent<OpenKeypad>().enabled = false;
+
+        Clear();
     }
 
-    public void Update()
+    public void Clear()
     {
-        if (keypadText.text == "Right" && animate)
-        {
-            doorAnimator.SetBool("Open", true);
-            Debug.Log("Door opens");
-            Exit();
-        }
+        keypadText.text = "";
+        keypadText.color = Color.black;
+    }
 
-        if (keypad.activeInHierarchy)
-        {
-            hud.SetActive(false);
-            player.GetComponent<Player>().enabled = false;
-            interactionController.LockInteraction();
-        }
+    public void OpenAnimation()
+    {
+        doorAnimator.SetBool("Open", true);
+        Debug.Log("Door opens");
     }
 }
