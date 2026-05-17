@@ -9,6 +9,9 @@ public class Stalker : Entity
     public Transform objetive;
     private NavMeshAgent _stalker;
 
+    [SerializeField] Animator animator;
+
+
     void Start()
     {
         _stalker = GetComponent<NavMeshAgent>();
@@ -33,7 +36,13 @@ public class Stalker : Entity
         {
             Player player = other.GetComponent<Player>();
             player.GetDamage(damage); // usa el damage heredado de Entity
+            animator.SetBool("Attack", true);
         }
+        
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        animator.SetBool("Attack", false);
     }
     public override void Death()
     {
