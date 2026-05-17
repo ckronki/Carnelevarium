@@ -14,10 +14,9 @@ public class Keypad : MonoBehaviour
 
     [SerializeField] float timeToReset;
     [SerializeField] InteractionController interactionController;
-    [SerializeField] GameObject openKeypad;
+    public OpenKeypad openKeypad;
 
-    public GameObject door;
-    public Animator doorAnimator;
+    public Door currentDoor;
 
     public TMP_Text keypadText;
     public string currentKeypadAnswer;
@@ -25,11 +24,6 @@ public class Keypad : MonoBehaviour
     //public AudioSource button;
     //public AudioSource correct;
     //public AudioSource wrong;
-
-    public void Start()
-    {
-        keypad.SetActive(false);
-    }
 
     public void Update()
     {
@@ -64,7 +58,10 @@ public class Keypad : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         Exit();
-        OpenAnimation();
+
+        openKeypad.hasOpened = true;
+
+        currentDoor.OpenDoor();
         _isResetting = false;
     }
 
@@ -99,8 +96,6 @@ public class Keypad : MonoBehaviour
         player.GetComponent<Player>().enabled = true;
         interactionController.UnlockInteraction();
 
-        openKeypad.GetComponent<OpenKeypad>().enabled = false;
-
         Clear();
     }
 
@@ -108,11 +103,5 @@ public class Keypad : MonoBehaviour
     {
         keypadText.text = "";
         keypadText.color = Color.black;
-    }
-
-    public void OpenAnimation()
-    {
-        doorAnimator.SetBool("Open", true);
-        Debug.Log("Door opens");
     }
 }
