@@ -11,6 +11,8 @@ public class Stalker : Entity
 
     [SerializeField] Animator animator;
 
+    [SerializeField] Door controlledDoor;
+
 
     void Start()
     {
@@ -20,14 +22,21 @@ public class Stalker : Entity
 
     void Update()
     {
-        _stalker.speed = speed;
-
-        if (objetive != null)
+        if (controlledDoor != null && controlledDoor.isOpen)
         {
-            _stalker.SetDestination(objetive.position);
-        }
+            _stalker.speed = speed;
 
-        float distancia = Vector3.Distance(transform.position, objetive.position); //distancia entre el stalker y el player
+            if (objetive != null)
+            {
+                _stalker.SetDestination(objetive.position);
+            }
+        }
+        else
+        {
+            // Quieto si la puerta no está abierta
+            _stalker.SetDestination(transform.position);
+            _stalker.speed = 0;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

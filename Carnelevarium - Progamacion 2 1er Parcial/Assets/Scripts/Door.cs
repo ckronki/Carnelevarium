@@ -24,5 +24,6 @@ public class Door : MonoBehaviour , IInteractable
         Debug.Log("Se abre la puerta");
         door.SetBool("Open", true);
         doorInteractionArea.GetComponent<BoxCollider>().enabled = false;
+        isOpen = true; 
     }
 }
