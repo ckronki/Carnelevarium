@@ -1,17 +1,19 @@
 using UnityEngine;
 
-public class Door : MonoBehaviour , IInteractable
+public class Door : Interactables , IInteractable
 {
     public Animator door;
-    public GameObject doorInteractionArea;
+    public BoxCollider doorInteractionArea;
     public bool isOpen;
+
     [SerializeField] bool _isOpenable;
 
     public void Interact()
     {
         if (!_isOpenable)
         {
-            Debug.Log("Batate y grabalo :3");
+            StartCoroutine(HasInteracted(dialogue, dialogueTime));
+            return;
         }
         else
         {
@@ -23,7 +25,9 @@ public class Door : MonoBehaviour , IInteractable
     {
         Debug.Log("Se abre la puerta");
         door.SetBool("Open", true);
-        doorInteractionArea.GetComponent<BoxCollider>().enabled = false;
+
+        doorInteractionArea.enabled = false;
+
         isOpen = true; 
     }
 }

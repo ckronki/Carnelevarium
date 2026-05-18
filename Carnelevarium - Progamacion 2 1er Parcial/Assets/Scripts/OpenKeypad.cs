@@ -3,12 +3,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class OpenKeypad : MonoBehaviour , IInteractable
+public class OpenKeypad : Interactables , IInteractable
 {
     [SerializeField] Door door;
 
     [SerializeField] string keypadAnswer;
-    [SerializeField] float dialogueTime;
 
     private GameObject keypadUI;
     private TMP_Text dialogueText;
@@ -25,7 +24,7 @@ public class OpenKeypad : MonoBehaviour , IInteractable
     {
         if (hasOpened)
         {
-            StartCoroutine(HasOpened(dialogueTime));
+            StartCoroutine(HasInteracted(dialogue, dialogueTime));
             return;
         }
         else
@@ -39,16 +38,5 @@ public class OpenKeypad : MonoBehaviour , IInteractable
             
             Debug.Log("Código actual: " + keypadUI.GetComponent<Keypad>().currentKeypadAnswer);
         }
-        
     }
-
-    public IEnumerator HasOpened(float time)
-    {
-        dialogueText.text = "Batate y grabalo :3";
-
-        yield return new WaitForSeconds (time);
-
-        dialogueText.text = "";
-    }
-
 }
