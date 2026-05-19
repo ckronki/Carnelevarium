@@ -1623,7 +1623,8 @@ MonoBehaviour:
   - {fileID: 622562882198758867}
   - {fileID: 8463873762726559979}
   - {fileID: 3767681630723187821}
-  columnas: 5
+  gridWidth: 5
+  gridHeight: 3
 --- !u!114 &-7718211249450800961
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,6 +15,6 @@ MonoBehaviour:
   id: 
   nombre: Flashlight
   icono: {fileID: 21300000, guid: 79a54077432dc3b48b752ef4a940693b, type: 3}
-  prefab3D: {fileID: 7597916560484426155, guid: 0ca7b9e6a370043419238e067db5104f, type: 3}
+  prefab3D: {fileID: 919132149155446097, guid: ea83dd019dd629f46b692e4cf1228c31, type: 3}
   ancho: 1
   alto: 2

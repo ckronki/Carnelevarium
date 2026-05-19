@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7597916560484426155
+--- !u!1 &7631145614496722326
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,51 +8,50 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7078225365084879633}
-  - component: {fileID: 6166892314401977524}
-  - component: {fileID: 8246588631445454974}
-  - component: {fileID: 3056660553335406643}
-  - component: {fileID: 2226420760044079494}
-  - component: {fileID: 3041391467128785376}
-  - component: {fileID: 6341276107963672472}
-  - component: {fileID: -1796486468975163466}
-  m_Layer: 0
-  m_Name: INV-Flashlight
+  - component: {fileID: 614023430195117444}
+  - component: {fileID: 3137723999029203040}
+  - component: {fileID: 7954632127543521363}
+  - component: {fileID: 4117828903792617798}
+  - component: {fileID: 7671248899976971150}
+  - component: {fileID: 1202669649516730853}
+  - component: {fileID: 6712306232459131245}
+  m_Layer: 6
+  m_Name: Pickup_Capsula
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7078225365084879633
+--- !u!4 &614023430195117444
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7597916560484426155}
+  m_GameObject: {fileID: 7631145614496722326}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.6769567, w: 0.7360229}
-  m_LocalPosition: {x: 5.438, y: 1.369, z: -11.96}
-  m_LocalScale: {x: 2.837409, y: 2.837409, z: 2.837409}
+  m_LocalPosition: {x: -0.99, y: 2.53, z: -10.41}
+  m_LocalScale: {x: 0.31105632, y: 0.31105632, z: 0.31105632}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 85.213}
---- !u!33 &6166892314401977524
+--- !u!33 &3137723999029203040
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7597916560484426155}
-  m_Mesh: {fileID: -6492427120234770954, guid: ea83dd019dd629f46b692e4cf1228c31, type: 3}
---- !u!23 &8246588631445454974
+  m_GameObject: {fileID: 7631145614496722326}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &7954632127543521363
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7597916560484426155}
+  m_GameObject: {fileID: 7631145614496722326}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -69,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e043b5a169326674b8e66e69628f3ed0, type: 2}
+  - {fileID: 2100000, guid: faa10361172fc1947bc95112984077b8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,41 +90,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3056660553335406643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7597916560484426155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e7f125c70b01df409b43d021da8cfc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemName: Linterna
---- !u!114 &2226420760044079494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7597916560484426155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 963318be8e5f5124087a3a10286bc3c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectID: Flashlight
-  itemPrefab: {fileID: 7597916560484426155}
-<<<<<<<< Updated upstream:Carnelevarium - Progamacion 2 1er Parcial/Assets/Prefabs/flashlightfbx.prefab
---- !u!65 &2586307673068667492
+--- !u!65 &4117828903792617798
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7597916560484426155}
+  m_GameObject: {fileID: 7631145614496722326}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -138,18 +109,15 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.29729515, y: 0.36065012, z: 0.43540522}
-  m_Center: {x: -0.0059112436, y: 0, z: -0.012155043}
-========
-  flashlightObject: {fileID: 0}
->>>>>>>> Stashed changes:Carnelevarium - Progamacion 2 1er Parcial/Assets/Prefabs/INV-Flashlight.prefab
---- !u!65 &3041391467128785376
+  m_Size: {x: 0.5489131, y: 0.88106346, z: 0.634377}
+  m_Center: {x: 0.01844124, y: -0.017565394, z: -0.11164163}
+--- !u!65 &7671248899976971150
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7597916560484426155}
+  m_GameObject: {fileID: 7631145614496722326}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -162,32 +130,33 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.05553463, y: 0.36065015, z: 0.05553462}
+  m_Size: {x: 0.05553462, y: 0.36065012, z: 0.05553462}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6341276107963672472
+--- !u!114 &1202669649516730853
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7597916560484426155}
+  m_GameObject: {fileID: 7631145614496722326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68bf545cc68a5b44094d96ef900b2fb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 963318be8e5f5124087a3a10286bc3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 63ae62028c26da848a5ad9e499954f33, type: 2}
-  rotado: 0
-  lastSlot: {fileID: 0}
---- !u!114 &-1796486468975163466
+  objectID: Capsula
+  itemPrefab: {fileID: 7597916560484426155, guid: 00538a58aa101ec4d9655e1cdc2cbfd1, type: 3}
+  flashlightObject: {fileID: 7631145614496722326}
+--- !u!114 &6712306232459131245
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7597916560484426155}
+  m_GameObject: {fileID: 7631145614496722326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bdb3b809a2fc0944b4d705c05b4f37c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2257efee416b1d34f9fb6e23ae68e509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabInventarioCorrecto: {fileID: 7597916560484426155, guid: 00538a58aa101ec4d9655e1cdc2cbfd1, type: 3}

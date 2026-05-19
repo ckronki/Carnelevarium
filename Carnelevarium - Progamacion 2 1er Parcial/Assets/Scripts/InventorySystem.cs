@@ -1,187 +1,224 @@
 using UnityEngine;
-using System.Collections.Generic;
+using System.Collections.Generic; // Requerido para usar listas dinámicas y estructuras Dictionary (mapas de datos).
 
 public class InventorySystem : MonoBehaviour
 {
-    [Header("Slots del Inventario")]
-    public List<Transform> slots;
-    public int columnas = 4;
-
-    private Dictionary<Transform, InventoryItem> slotMap = new Dictionary<Transform, InventoryItem>();
+    // --- PATRÓN SINGLETON ---
+    // Permite que cualquier otro script (como MouseManager) acceda a este sistema usando 'InventorySystem.Instance' sin buscarlo.
     public static InventorySystem Instance { get; private set; }
 
+    [Header("Configuración de la Cuadrícula")]
+    public List<Transform> slots = new List<Transform>(); // Lista ordenada de todos los GameObjects que actúan como casilleros físicos en la UI/Mundo.
+    public int gridWidth = 5;  // Columnas máximas de la cuadrícula (Ancho).
+    public int gridHeight = 5; // Filas máximas de la cuadrícula (Alto).
+
+    // Diccionario clave-valor que asocia cada Casillero (Transform) con el Objeto (InventoryItem) que lo está pisando. Si vale 'null', está libre.
+    public Dictionary<Transform, InventoryItem> slotMap = new Dictionary<Transform, InventoryItem>();
+
+    // Awake se ejecuta antes que el Start al cargar la escena
     void Awake()
     {
-        Instance = this;
+        // Configuración y validación del Singleton para evitar que existan dos inventarios duplicados al mismo tiempo.
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+
+        InicializarContenedor(); // Prepara el mapa de datos.
     }
 
-    public bool IntentarAñadirItemAuto(InventoryItem item)
+    // Registra todos los slots de la lista en el diccionario inicializándolos como vacíos (null)
+    private void InicializarContenedor()
     {
-        // Busca de forma inteligente celdas que cumplan con la matriz completa (Ancho x Alto)
         foreach (Transform slot in slots)
         {
-            List<Transform> celdasRequeridas = GetSlotsForItem(slot, item.GetWidth(), item.GetHeight());
-            if (CanPlaceItem(celdasRequeridas))
+            if (slot != null && !slotMap.ContainsKey(slot))
             {
-                PlaceItem(item, slot);
-                return true;
+                slotMap[slot] = null; // El casillero empieza limpio y disponible.
             }
         }
-        return false;
     }
 
-    public void PlaceItem(InventoryItem item, Transform startSlot)
+    // Método automático para meter un ítem recolectado del suelo en el primer hueco libre que encaje
+    public bool IntentarAñadirItemAuto(InventoryItem item)
     {
-        List<Transform> requiredSlots = GetSlotsForItem(startSlot, item.GetWidth(), item.GetHeight());
-
-        if (CanPlaceItem(requiredSlots))
+        // FILTROS DE SEGURIDAD: Evitan crasheos si el objeto viene dañado o mal configurado desde el Inspector.
+        if (item == null)
         {
-            // 1. Limpiar registros antiguos de este ítem específico para no duplicar espacio
-            LiberarSlotsDeItem(item);
+            Debug.LogError("[INVENTARIO] ¡El ítem que intentas añadir es NULL!");
+            return false;
+        }
 
-            // 2. Ocupar los nuevos slots
-            foreach (Transform slot in requiredSlots)
+        if (item.contenedorVisual == null)
+        {
+            Debug.LogError($"[INVENTARIO] El objeto '{item.gameObject.name}' no tiene asignado el Contenedor Visual en el Inspector.");
+            return false;
+        }
+
+        // Recorre todos los casilleros de la cuadrícula uno por uno simulando que son la esquina superior izquierda del ítem
+        foreach (Transform slot in slots)
+        {
+            // Si el ítem entra perfectamente en este slot y sus casilleros adyacentes...
+            if (CanPlaceItem(item, slot))
             {
-                slotMap[slot] = item;
+                PlaceItem(item, slot); // Lo posiciona físicamente y reserva sus bloques en la matriz.
+                return true; // Retorna éxito y corta el bucle.
             }
+        }
+        return false; // Retorna falso si recorrió todo el bolso y no encontró espacio suficiente.
+    }
 
-            // 3. Emparejar físicamente en el espacio 3D
-            ForzarColocacionFísica(item, startSlot);
+    // Algoritmo matemático para comprobar si un ítem cabe en un slot específico sin salirse de los bordes ni chocar con otros
+    public bool CanPlaceItem(InventoryItem item, Transform targetSlot)
+    {
+        // Obtiene el índice numérico (0, 1, 2...) del slot seleccionado dentro de la lista global.
+        int startIndex = slots.IndexOf(targetSlot);
+        if (startIndex == -1) return false; // Seguridad: si el slot no pertenece a este inventario, rebota la acción.
+
+        // --- TRUCO MATEMÁTICO: Conversión de Índice Lineal a Coordenadas (X, Y) ---
+        int startX = startIndex % gridWidth;  // El residuo (%) da la columna exacta en la cuadrícula.
+        int startY = startIndex / gridWidth;  // La división entera (/) da la fila exacta en la cuadrícula.
+
+        // Lee el tamaño actual que el ítem requiere (considerando si el jugador lo rotó con la R).
+        int itemW = item.GetWidth();
+        int itemH = item.GetHeight();
+
+        // COMPROBACIÓN DE BORDES: Si la posición inicial + el tamaño del ítem superan los límites del maletín, no entra.
+        if (startX + itemW > gridWidth || startY + itemH > gridHeight) return false;
+
+        // DOBLE BUCLE: Recorre la sub-matriz de celdas que el objeto cubriría si se soltara en esa posición
+        for (int x = 0; x < itemW; x++)
+        {
+            for (int y = 0; y < itemH; y++)
+            {
+                int currentX = startX + x; // Columna actual bajo análisis.
+                int currentY = startY + y; // Fila actual bajo análisis.
+
+                // --- Re-conversión inversa: de Coordenadas (X, Y) a Índice de Lista Plana ---
+                int slotIndex = currentY * gridWidth + currentX;
+
+                if (slotIndex >= slots.Count) return false; // Control de desborde de seguridad.
+
+                Transform checkSlot = slots[slotIndex]; // Identifica el casillero real en esa coordenada.
+
+                // COMPROBACIÓN DE OCUPACIÓN: Si el casillero ya está asociado a otro objeto en el diccionario, rebota el guardado.
+                if (slotMap.ContainsKey(checkSlot) && slotMap[checkSlot] != null)
+                {
+                    return false; // Casillero ocupado.
+                }
+            }
+        }
+        return true; // Si superó todas las pruebas, la zona está completamente despejada.
+    }
+
+    // Gestiona la reubicación lógica y física de un ítem hacia su nuevo slot de destino
+    public void PlaceItem(InventoryItem item, Transform targetSlot)
+    {
+        LiberarSlotsDeItem(item); // 1. Limpia sus marcas del lugar anterior para evitar duplicaciones lógicas.
+        ForzarColocacionFísica(item, targetSlot); // 2. Ejecuta el acomodo visual y matemático en el nuevo slot.
+    }
+
+    // Modifica jerarquías, escalas, rotaciones y componentes físicos del objeto para calzarlo en la cuadrícula
+    public void ForzarColocacionFísica(InventoryItem item, Transform targetSlot)
+    {
+        // Empaqueta el objeto volviéndolo hijo directo del casillero raíz seleccionado.
+        item.transform.SetParent(targetSlot, false);
+        item.transform.localPosition = new Vector3(0f, 0.5f, 0f); // Lo eleva ligeramente en el eje Y para que flote sobre el piso del inventario.
+        item.transform.localRotation = Quaternion.identity;
+        item.transform.localScale = Vector3.one;
+
+        // --- AJUSTES GRÁFICOS MEDIANTE EL CONTENEDOR VISUAL ---
+        if (item.contenedorVisual != null)
+        {
+            item.contenedorVisual.SetParent(item.transform, false);
+            item.contenedorVisual.localPosition = Vector3.zero;
+
+            // Aplica la escala de guardado (diseñada en el script del ítem) para que quepa bien visualmente en las celdas.
+            item.contenedorVisual.localScale = item.escalaEnInventario;
+
+            // Define su rotación visual final: lo acuesta (90 en X) y le suma 90 en Z si se encuentra en estado rotado.
+            float anguloGiro = item.rotado ? 90f : 0f;
+            item.contenedorVisual.localRotation = Quaternion.Euler(90f, 0f, anguloGiro);
         }
         else
         {
-            // Revertir
-            InventoryItemDrag dragScript = item.GetComponent<InventoryItemDrag>();
-            if (dragScript != null) dragScript.RegresarAUltimoSlot();
-        }
-    }
-
-    public void ForzarColocacionFísica(InventoryItem item, Transform targetSlot)
-    {
-        // 1. Emparentamos de forma limpia
-        item.transform.SetParent(targetSlot);
-
-        // 2. ¡SOLUCIÓN AL ESTIRAMIENTO!: Forzamos la escala global (del mundo) a (1,1,1)
-        // Al usar un bucle 'while', nos aseguramos de limpiar la escala de CUALQUIER hijo visual interno.
-        item.transform.localScale = Vector3.one;
-
-        // Con este truco anulamos la deformación que le hereda el padre en el espacio global
-        Vector3 escalaMundoActual = item.transform.lossyScale;
-        item.transform.localScale = new Vector3(
-            1f / (escalaMundoActual.x == 0 ? 1 : escalaMundoActual.x),
-            1f / (escalaMundoActual.y == 0 ? 1 : escalaMundoActual.y),
-            1f / (escalaMundoActual.z == 0 ? 1 : escalaMundoActual.z)
-        );
-
-        // 3. Posicionamiento ligeramente al frente para evitar z-fighting
-        item.transform.localPosition = new Vector3(0f, 0f, -0.2f);
-
-        // 4. Apagar fuerzas físicas del Rigidbody del ítem (si lo tiene)
-        Rigidbody itemRb = item.GetComponent<Rigidbody>();
-        if (itemRb != null)
-        {
-            itemRb.isKinematic = true;
-            itemRb.linearVelocity = Vector3.zero;
-            itemRb.angularVelocity = Vector3.zero;
+            // Si el ítem no usa contenedor separado, rota todo su cuerpo para reflejar el cambio.
+            float anguloGiro = item.rotado ? 90f : 0f;
+            item.transform.localRotation = Quaternion.Euler(90f, 0f, anguloGiro);
         }
 
-        // 5. Volvemos el Box Collider un Trigger
+        // --- AJUSTES FÍSICOS Y AUTOMÁTICOS DEL COLLIDER ---
         BoxCollider boxCol = item.GetComponent<BoxCollider>();
         if (boxCol != null)
         {
-            boxCol.isTrigger = true;
+            boxCol.enabled = true; // Prende el collider para que el MouseManager lo detecte de nuevo mediante Raycast.
+            boxCol.isTrigger = true; // Lo vuelve trigger para que no empuje físicamente al jugador ni cause glitches con el mapa.
             boxCol.center = Vector3.zero;
-            boxCol.size = Vector3.one;
+            boxCol.size = new Vector3(0.95f, 0.95f, 1.5f); // Redimensiona la caja de selección para que ocupe de manera óptima el casillero.
         }
 
-        // 6. Mantener la rotación alineada (X=90, Y=0 o 90, Z=0)
-        float anguloY = item.rotado ? 90f : 0f;
-        item.transform.localRotation = Quaternion.Euler(90f, anguloY, 0f);
+        // --- ESTABILIZACIÓN DEL RIGIDBODY ---
+        Rigidbody itemRb = item.GetComponent<Rigidbody>();
+        if (itemRb != null)
+        {
+            itemRb.isKinematic = true; // Desactiva la gravedad y fuerzas físicas del motor sobre el ítem.
+            itemRb.linearVelocity = Vector3.zero; // Cancela cualquier velocidad residual.
+            itemRb.angularVelocity = Vector3.zero; // Cancela cualquier rotación física.
+        }
 
-        item.lastSlot = targetSlot;
+        item.lastSlot = targetSlot; // El ítem recuerda este casillero exitoso como su posición de respaldo (por si falla futuros arrastres).
 
-        // Volver a registrar los slots
+        // --- RESERVA LÓGICA EN EL DICCIONARIO ---
+        // Obtiene la lista de todos los casilleros que este objeto va a tapar según su tamaño.
         List<Transform> requiredSlots = GetSlotsForItem(targetSlot, item.GetWidth(), item.GetHeight());
         foreach (Transform slot in requiredSlots)
         {
-            slotMap[slot] = item;
+            slotMap[slot] = item; // Registra este ítem como dueño actual de esos casilleros en el diccionario.
         }
     }
 
+    // Busca y borra cualquier rastro o registro de pertenencia de un ítem dentro del diccionario
     public void LiberarSlotsDeItem(InventoryItem item)
     {
-        // Creamos una lista temporal para guardar las llaves a liberar y evitar errores de modificación durante el bucle
-        List<Transform> llavesALiberar = new List<Transform>();
-
-        foreach (var pair in slotMap)
+        // Copia las llaves (Slots) en una lista temporal para poder modificarlas de forma segura dentro del bucle sin romper la colección.
+        List<Transform> slotsAModificar = new List<Transform>(slotMap.Keys);
+        foreach (Transform slot in slotsAModificar)
         {
-            if (pair.Value == item)
+            // Si el casillero le pertenecía a este objeto específico...
+            if (slotMap[slot] == item)
             {
-                llavesALiberar.Add(pair.Key);
+                slotMap[slot] = null; // Libera el casillero seteándolo de nuevo en vacío.
             }
         }
-
-        // Limpiamos los slots de forma segura
-        foreach (Transform slot in llavesALiberar)
-        {
-            slotMap[slot] = null; // O remuévelo si usas un sistema de ocupación booleano
-        }
-    }
-    public bool HasItemInSlot(Transform slot) => slotMap.ContainsKey(slot);
-
-    bool CanPlaceItem(List<Transform> requiredSlots)
-    {
-        foreach (Transform slot in requiredSlots)
-        {
-            if (slot == null) return false;
-            if (slotMap.ContainsKey(slot)) return false;
-        }
-        return true;
     }
 
-    List<Transform> GetSlotsForItem(Transform startSlot, int width, int height)
+    // Método utilitario que devuelve una lista con todos los casilleros físicos involucrados a partir de un punto y un tamaño
+    public List<Transform> GetSlotsForItem(Transform targetSlot, int width, int height)
     {
-        List<Transform> result = new List<Transform>();
+        List<Transform> foundSlots = new List<Transform>();
+        int startIndex = slots.IndexOf(targetSlot);
+        if (startIndex == -1) return foundSlots; // Si el slot de origen no existe, devuelve una lista vacía.
 
-        int index = slots.IndexOf(startSlot);
-        if (index == -1) return result;
+        // Mapea la posición lineal de origen a formato fila/columna (X, Y).
+        int startX = startIndex % gridWidth;
+        int startY = startIndex / gridWidth;
 
-        int filaInicial = index / columnas;
-        int colInicial = index % columnas;
-
-        for (int y = 0; y < height; y++)
+        // Recorre el bloque bidimensional sumando las dimensiones del objeto
+        for (int x = 0; x < width; x++)
         {
-            for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
             {
-                int actualFila = filaInicial + y;
-                int actualCol = colInicial + x;
+                int currentX = startX + x;
+                int currentY = startY + y;
 
-                // Controlar que el objeto no se desborde horizontalmente hacia la siguiente línea
-                if (actualCol >= columnas || actualIndexFueraDeRango(actualFila, actualCol))
-                {
-                    result.Add(null);
-                    continue;
-                }
+                // Calcula el índice lineal resultante de cada celda perteneciente al bloque.
+                int slotIndex = currentY * gridWidth + currentX;
 
-                int targetIndex = actualFila * columnas + actualCol;
-                if (targetIndex >= 0 && targetIndex < slots.Count)
+                // Si el índice calculado es válido dentro de la lista oficial, añade ese Transform a la lista de retorno.
+                if (slotIndex < slots.Count)
                 {
-                    result.Add(slots[targetIndex]);
-                }
-                else
-                {
-                    result.Add(null);
+                    foundSlots.Add(slots[slotIndex]);
                 }
             }
         }
-        return result;
-    }
-
-    private bool actualIndexFueraDeRango(int f, int c) => f * columnas + c >= slots.Count;
-
-    public void RemoveItem(InventoryItem item)
-    {
-        LiberarSlotsDeItem(item);
-        Destroy(item.gameObject);
+        return foundSlots; // Devuelve la colección de celdas reservadas.
     }
 }

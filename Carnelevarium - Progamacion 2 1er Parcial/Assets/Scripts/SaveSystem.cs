@@ -91,7 +91,7 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
-    // --- LÓGICA DE CARGA ---
+    // --- LÓGICA DE CARGA (Segmento Actualizado) ---
     public void LoadGame(int slot)
     {
         string path = GetPath(slot);
@@ -107,14 +107,15 @@ public class SaveSystem : MonoBehaviour
             // 2. Sincronizar lista de objetos recogidos
             objetosRecogidosEnEstaSesion = new List<string>(data.collectedObjectIDs);
 
-            // 3. Inventario
+            // 3. Inventario 
             inventory.Clear();
             foreach (string item in data.items)
             {
-                inventory.AddItem(item);
+                // Pasamos 'true' para avisar al inventario que es una carga y no sature la consola en tiempo real
+                inventory.AddItem(item, true);
             }
 
-            // 4. Actualizar Escena (Objetos e Items)
+            // 4. Actualizar Escena (Objetos e Items del mapa)
             ActualizarObjetosEnEscena(objetosRecogidosEnEstaSesion);
 
             // 5. Actualizar Enemigos
@@ -126,19 +127,24 @@ public class SaveSystem : MonoBehaviour
 
     void ActualizarObjetosEnEscena(List<string> objetosRecogidos)
     {
+        // Buscamos absolutamente todos los PickupItem en el proyecto (activos e inactivos)
         PickupItem[] objetosEnMapa = Resources.FindObjectsOfTypeAll<PickupItem>();
 
         foreach (PickupItem obj in objetosEnMapa)
         {
+            // FILTRO CRÍTICO: Evita interactuar con los Prefabs de la carpeta Assets. Solo queremos objetos de la escena.
             if (obj.gameObject.scene.name == null) continue;
 
+            // Si el ID de este objeto ya está en la lista de recolectados del archivo de guardado...
             if (objetosRecogidos.Contains(obj.objectID))
             {
-                obj.gameObject.SetActive(false);
+                obj.gameObject.SetActive(false); // Se apaga dado que ya fue recogido con anterioridad
+                Debug.Log($"[SaveSystem] Objeto '{obj.gameObject.name}' con ID [{obj.objectID}] DESACTIVADO (Ya cargado como recogido).");
             }
             else
             {
-                obj.gameObject.SetActive(true);
+                obj.gameObject.SetActive(true); // Se activa/mantiene activo si no ha sido recolectado
+                Debug.Log($"[SaveSystem] Objeto '{obj.gameObject.name}' con ID [{obj.objectID}] ACTIVADO (Disponible en el mapa).");
             }
         }
     }
