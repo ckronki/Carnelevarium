@@ -56,11 +56,11 @@ public class ElectricTrap : MonoBehaviour
         while (player != null)
         {
             player.GetDamage(damageAmount);
-
+           
             // shakecamara
             if (ShakeCamara.Instance != null) ShakeCamara.Instance.Shake(0.3f);
-
             yield return new WaitForSeconds(damageTickRate);
+
         }
     }
 }

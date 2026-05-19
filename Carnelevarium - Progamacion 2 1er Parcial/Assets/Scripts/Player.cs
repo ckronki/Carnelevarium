@@ -75,7 +75,7 @@ public class Player : Entity
 
     public override void Death()
     {
-        Invoke(nameof(LoadDeathScene), 3f);
+        Invoke(nameof(LoadDeathScene), 0f);
     }
 
     private void LoadDeathScene()
