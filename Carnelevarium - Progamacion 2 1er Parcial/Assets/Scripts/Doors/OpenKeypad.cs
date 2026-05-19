@@ -9,6 +9,8 @@ public class OpenKeypad : Interactables , IInteractable
 
     [SerializeField] string keypadAnswer;
 
+    [SerializeField] int codeLimit;
+
     private GameObject keypadUI;
     private TMP_Text dialogueText;
 
@@ -34,6 +36,7 @@ public class OpenKeypad : Interactables , IInteractable
             keypadUI.GetComponent<Keypad>().openKeypad = this;
 
             keypadUI.GetComponent<Keypad>().SetAnswer(keypadAnswer);
+            keypadUI.GetComponent<Keypad>().SetLimit(codeLimit);
             keypadUI.GetComponent<Keypad>().currentDoor = door;
             
             Debug.Log("Código actual: " + keypadUI.GetComponent<Keypad>().currentKeypadAnswer);

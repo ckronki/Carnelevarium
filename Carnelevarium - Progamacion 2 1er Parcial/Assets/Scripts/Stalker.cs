@@ -15,7 +15,9 @@ public class Stalker : Entity
 
     [SerializeField] Door controlledDoor;
 
-    
+    [SerializeField] private float attackCooldown = 1.5f; // tiempo entre ataques
+    private float nextAttackTime = 0f;
+
     void Start()
     {
         _stalker = GetComponent<NavMeshAgent>();
@@ -43,10 +45,9 @@ public class Stalker : Entity
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && other.GetComponent<Health>())
+        if (other.GetComponent<Player>())
         {
-            Player player = other.GetComponent<Player>();
-            player.GetDamage(damage); // usa el damage heredado de Entity
+            AttackPlayer();
             animator.SetBool("Attack", true);
         }
 
@@ -60,6 +61,21 @@ public class Stalker : Entity
     public override void Death()
     {
       //stunn
+    }
+
+    private void AttackPlayer()
+    {
+        if (Time.time >= nextAttackTime)
+        {
+            Player p = objetive.GetComponent<Player>();
+            if (p != null)
+            {
+                p.GetDamage(damage);
+                Debug.Log($"{gameObject.name} ataca al jugador. Daño: {damage}");
+            }
+
+            nextAttackTime = Time.time + attackCooldown;
+        }
     }
 
 }

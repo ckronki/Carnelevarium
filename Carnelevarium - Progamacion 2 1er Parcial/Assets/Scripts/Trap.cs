@@ -12,10 +12,10 @@ public class Trap : MonoBehaviour
             // Congelar al jugador
             player.Freeze(freezeDuration);
 
+            Destroy(gameObject);
+
             // Cámara shake
             ShakeCamara.Instance.Shake(freezeDuration);
-
-            Destroy(gameObject);
         }
     }
 }

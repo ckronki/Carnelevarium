@@ -5,15 +5,6 @@ public class EnemyBasic : Enemy
     [SerializeField] private float attackCooldown = 1.5f; // tiempo entre ataques
     private float nextAttackTime = 0f;
 
-    private void Awake()
-    {
-        life = 80;
-        damage = 20;
-        speed = 3f;
-        detectionRange = 10f;
-        attackRange = 2f;
-    }
-
     protected override void ChasePlayer(float distance)
     {
         // detectionRange es 0, no hace nada

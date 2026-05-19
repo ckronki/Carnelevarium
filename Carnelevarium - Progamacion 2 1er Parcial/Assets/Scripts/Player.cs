@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class Player : Entity
@@ -31,13 +32,13 @@ public class Player : Entity
 
         Vector3 dir = transform.forward * move.y;
         dir += transform.right * move.x;
-        //Vector3 dir = new Vector3(move.x, 0, move.y);
-        transform.position += dir * speed * Time.deltaTime;
+
+        rb.linearVelocity = dir * speed;
 
         if (move.magnitude != 0)
         {
             animator.SetBool("isWalking", true);
-        }   
+        }
         else
             animator.SetBool("isWalking", false);
 
@@ -48,28 +49,23 @@ public class Player : Entity
         {
             Walking();
         }
-
-
-        
-
     }
 
-    public void Walking ()
+    public void Walking()
     {
-     if (!audioSource.isPlaying)
-     {
-        audioSource.clip = footSteps;   // asigno el clip
-        audioSource.loop = true;        // que se repita mientras camina
-        audioSource.Play();             // empieza a sonar
-     }
-
-       else
-       {
-          if (audioSource.isPlaying)
-          {
-            audioSource.Stop();             // se detiene al dejar de caminar
-          }
-       }  
+        if (!audioSource.isPlaying)
+        {
+            audioSource.clip = footSteps;   // asigno el clip
+            audioSource.loop = true;        // que se repita mientras camina
+            audioSource.Play();             // empieza a sonar
+        }
+        else
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();             // se detiene al dejar de caminar
+            }
+        }
     }
 
 
@@ -119,5 +115,15 @@ public class Player : Entity
 
 
     public float CurrentSpeed => speed;
+
+
+    public void AttackAnimation()
+    {
+        animator.SetBool("IsAttacking", true);
+        Debug.Log("Se reproduce la animación de ataque");
+    }
+
+    
+
 
 }

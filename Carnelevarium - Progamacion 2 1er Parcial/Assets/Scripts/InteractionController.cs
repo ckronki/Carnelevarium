@@ -14,6 +14,11 @@ public class InteractionController : MonoBehaviour
     // --- VARIABLES INTERNAS PRIVADAS ---
     IInteractable _currentTargetedInteractable; // Guarda la interfaz del objeto al que estamos mirando actualmente (si es que se puede interactuar con él).
 
+    public void Start()
+    {
+        _interactionDistanceBackup = _interactionDistance;
+    }
+
     // Update se ejecuta automáticamente una vez por cada fotograma del juego
     public void Update()
     {
@@ -70,9 +75,6 @@ public class InteractionController : MonoBehaviour
 
         // Llama al método del CameraController para congelar el movimiento del mouse del personaje.
         _cameraController.LockCamera();
-
-        // Guarda el valor actual de la distancia de interacción para no perderlo.
-        _interactionDistanceBackup = _interactionDistance;
 
         // Reduce la distancia de interacción a cero. Al hacer esto, el Raycast nunca llegará a tocar nada y no se podrá interactuar con nada.
         _interactionDistance = 0;

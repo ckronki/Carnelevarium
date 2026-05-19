@@ -20,6 +20,7 @@ public class Keypad : MonoBehaviour
 
     public TMP_Text keypadText;
     public string currentKeypadAnswer;
+    public int currentCodeLimit;
 
     public AudioSource audioSource; 
     public AudioClip correct;
@@ -40,10 +41,19 @@ public class Keypad : MonoBehaviour
         currentKeypadAnswer = answer;
         keypadText.text = "";
     }
+    
+    public void SetLimit(int limit)
+    {
+        currentCodeLimit = limit;
+    }
 
     public void Number(int number)
     {
-        if (!_isResetting)
+        if (keypadText.text.Length >= currentCodeLimit)
+        {
+            return;
+        }
+        else if (!_isResetting)
         {
             keypadText.text += number.ToString();
         }

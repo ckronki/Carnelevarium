@@ -4,7 +4,16 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     // --- VARIABLES INTERNAS PRIVADAS ---
-    private List<string> items = new List<string>();
+    public List<string> items = new List<string>();
+
+    public static Inventory instance;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else Destroy(gameObject);
+    }
 
     // Se añade el parámetro opcional 'esPorCarga'. Si no se especifica, por defecto es 'false'.
     public void AddItem(string itemName, bool esPorCarga = false)
