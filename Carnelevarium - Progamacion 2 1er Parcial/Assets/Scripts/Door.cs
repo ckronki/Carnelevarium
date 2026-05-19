@@ -8,6 +8,22 @@ public class Door : Interactables , IInteractable
 
     [SerializeField] bool _isOpenable;
 
+    public AudioSource audioSource;
+    public AudioClip automaticDoorSound;
+    
+
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    void Update()
+    {
+        
+
+    }
+
     public void Interact()
     {
         if (!_isOpenable)
@@ -28,6 +44,15 @@ public class Door : Interactables , IInteractable
 
         doorInteractionArea.enabled = false;
 
-        isOpen = true; 
+        isOpen = true;
+
+        OpenDoorSound();
+        
+    }
+
+    public void OpenDoorSound()
+    {
+        AnimatorStateInfo state = door.GetCurrentAnimatorStateInfo(0);
+        audioSource.PlayOneShot(automaticDoorSound);
     }
 }

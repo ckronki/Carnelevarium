@@ -7,13 +7,15 @@ using UnityEngine.AI;
 public class Stalker : Entity
 {
     public Transform objetive;
+    public AudioClip stepSound;
+    public AudioClip attackSound;
     private NavMeshAgent _stalker;
 
     [SerializeField] Animator animator;
 
     [SerializeField] Door controlledDoor;
 
-
+    
     void Start()
     {
         _stalker = GetComponent<NavMeshAgent>();
@@ -47,12 +49,14 @@ public class Stalker : Entity
             player.GetDamage(damage); // usa el damage heredado de Entity
             animator.SetBool("Attack", true);
         }
-        
+
     }
+
     private void OnTriggerExit(Collider other)
     {
         animator.SetBool("Attack", false);
     }
+
     public override void Death()
     {
       //stunn

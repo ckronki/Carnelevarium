@@ -21,10 +21,10 @@ public class Keypad : MonoBehaviour
     public TMP_Text keypadText;
     public string currentKeypadAnswer;
 
-    //public AudioSource button;
-    //public AudioSource correct;
-    //public AudioSource wrong;
-
+    public AudioSource audioSource; 
+    public AudioClip correct;
+    public AudioClip wrong;
+    
     public void Update()
     {
         if (keypad.activeInHierarchy)
@@ -51,6 +51,11 @@ public class Keypad : MonoBehaviour
 
     public IEnumerator Right(float time)
     {
+        if (audioSource != null)
+        {
+            audioSource.PlayOneShot(correct);
+        }
+
         keypadText.text = "Right";
         keypadText.color = Color.green;
         _isResetting = true;
@@ -67,6 +72,11 @@ public class Keypad : MonoBehaviour
 
     public IEnumerator Wrong(float time)
     {
+        if (audioSource != null)
+        {
+            audioSource.PlayOneShot(wrong);
+        }
+
         keypadText.text = "Wrong";
         keypadText.color = Color.red;
         _isResetting = true;

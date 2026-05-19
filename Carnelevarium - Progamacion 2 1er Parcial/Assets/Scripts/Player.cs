@@ -1,17 +1,19 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : Entity
 {
     public InputActionReference controlMove;
     [SerializeField] private Rigidbody rb;
 
-    [Header("Pantalla muerte")]
-    public GameObject death;
-
     public Animator animator;
     Coroutine _currentCoroutine;
     float _backupSpeed;
+
+    public AudioSource audioSource;
+    public AudioClip footSteps;
 
     private void Awake()
     {
@@ -33,17 +35,54 @@ public class Player : Entity
         transform.position += dir * speed * Time.deltaTime;
 
         if (move.magnitude != 0)
+        {
             animator.SetBool("isWalking", true);
+        }   
         else
             animator.SetBool("isWalking", false);
 
+
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+
+        if (state.IsName("Walking") && !audioSource.isPlaying)
+        {
+            Walking();
+        }
+
+
+        
+
     }
+
+    public void Walking ()
+    {
+     if (!audioSource.isPlaying)
+     {
+        audioSource.clip = footSteps;   // asigno el clip
+        audioSource.loop = true;        // que se repita mientras camina
+        audioSource.Play();             // empieza a sonar
+     }
+
+       else
+       {
+          if (audioSource.isPlaying)
+          {
+            audioSource.Stop();             // se detiene al dejar de caminar
+          }
+       }  
+    }
+
 
     public override void Death()
     {
-        
-        Instantiate(death);
-        Destroy(gameObject);
+        Invoke(nameof(LoadDeathScene), 3f);
+    }
+
+    private void LoadDeathScene()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene(2);
     }
     public override void GetDamage(int d)
     {
