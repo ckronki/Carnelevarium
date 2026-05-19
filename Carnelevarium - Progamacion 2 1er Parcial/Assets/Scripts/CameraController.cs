@@ -12,6 +12,19 @@ public class CameraController : MonoBehaviour
 
     public bool isCameraLocked;
 
+    // NUEVO MÉTODO: Sincroniza las variables internas con la rotación real de un objeto
+    public void SincronizarAngulos(Quaternion rotacionObjetivo)
+    {
+        Vector3 euler = rotacionObjetivo.eulerAngles;
+
+        // Convertimos los ángulos de Unity (0 a 360) a los rangos que maneja tu script
+        _leftRight = euler.y;
+
+        // El eje X en Unity puede dar números como 280 en vez de -80, esto lo corrige:
+        float x = euler.x;
+        if (x > 180) x -= 360f;
+        _upDown = x;
+    }
     private void Update()
     {
         if (isCameraLocked == true)

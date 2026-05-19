@@ -1,22 +1,28 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem; // Nuevo Input System
+using UnityEngine.InputSystem;
 
 public class SaveStation : MonoBehaviour
 {
-    public Text messageText;       // referencia al texto UI
-    public SaveMenuUI saveMenu;    // referencia al menú de guardado
+    public Text messageText;       // Referencia al texto UI del mundo (Legacy Text)
+    public SaveMenuUI saveMenu;    // Referencia al menú de guardado
 
     void Start()
     {
-        messageText.gameObject.SetActive(false); // oculto al inicio
+        messageText.gameObject.SetActive(false);
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            messageText.gameObject.SetActive(true); // mostrar mensaje
+            // El mensaje en el mundo siempre te invita a interactuar
+            if (messageText != null)
+            {
+                messageText.text = "Presiona 'E' para acceder a la terminal";
+                messageText.color = Color.white;
+            }
+            messageText.gameObject.SetActive(true);
         }
     }
 
@@ -24,15 +30,16 @@ public class SaveStation : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            messageText.gameObject.SetActive(false); // ocultar mensaje
+            messageText.gameObject.SetActive(false);
         }
     }
 
     void OnTriggerStay(Collider other)
     {
+        // El jugador SIEMPRE puede abrir la terminal con la 'E'
         if (other.CompareTag("Player") && Keyboard.current.eKey.wasPressedThisFrame)
         {
-            saveMenu.OpenMenu(); // Abre el menú de guardado
+            saveMenu.OpenMenu();
             messageText.gameObject.SetActive(false);
         }
     }
