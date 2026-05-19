@@ -2306,7 +2306,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 24
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -3589,8 +3589,9 @@ MonoBehaviour:
   speed: 6
   controlMove: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   rb: {fileID: 840034873}
-  death: {fileID: 1209691368545156217, guid: fe9f3750a8001d54fab08cd24cf7744c, type: 3}
   animator: {fileID: 1690120280}
+  audioSource: {fileID: 0}
+  footSteps: {fileID: 0}
 --- !u!65 &840034872
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7681,6 +7682,8 @@ MonoBehaviour:
   damage: 50
   speed: 0.6
   objetive: {fileID: 840034877}
+  stepSound: {fileID: 0}
+  attackSound: {fileID: 0}
   animator: {fileID: 0}
   controlledDoor: {fileID: 0}
 --- !u!195 &1536889502

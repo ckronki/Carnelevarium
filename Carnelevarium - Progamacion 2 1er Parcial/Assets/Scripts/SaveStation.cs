@@ -9,20 +9,23 @@ public class SaveStation : MonoBehaviour
 
     void Start()
     {
-        messageText.gameObject.SetActive(false);
+        if (messageText != null)
+        {
+            messageText.gameObject.SetActive(false);
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            // El mensaje en el mundo siempre te invita a interactuar
             if (messageText != null)
             {
+                // El mensaje en el mundo siempre te invita a interactuar
                 messageText.text = "Presiona 'E' para acceder a la terminal";
                 messageText.color = Color.white;
+                messageText.gameObject.SetActive(true);
             }
-            messageText.gameObject.SetActive(true);
         }
     }
 
@@ -30,17 +33,26 @@ public class SaveStation : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            messageText.gameObject.SetActive(false);
+            if (messageText != null)
+            {
+                messageText.gameObject.SetActive(false);
+            }
         }
     }
 
     void OnTriggerStay(Collider other)
     {
-        // El jugador SIEMPRE puede abrir la terminal con la 'E'
+        // El jugador SIEMPRE puede abrir la terminal con la 'E' si el menú no está ya abierto
         if (other.CompareTag("Player") && Keyboard.current.eKey.wasPressedThisFrame)
         {
-            saveMenu.OpenMenu();
-            messageText.gameObject.SetActive(false);
+            if (saveMenu != null && !saveMenu.menuPanel.activeSelf)
+            {
+                // Ocultamos el texto flotante para que no se quede estorbando detrás del menú
+                if (messageText != null) messageText.gameObject.SetActive(false);
+
+                // Abrimos el menú de guardado (esto ya frena el tiempo y libera el mouse)
+                saveMenu.OpenMenu();
+            }
         }
     }
 }

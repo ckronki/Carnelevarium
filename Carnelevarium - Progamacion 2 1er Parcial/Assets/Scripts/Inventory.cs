@@ -36,9 +36,29 @@ public class Inventory : MonoBehaviour
         return items.Contains(itemName);
     }
 
+    /// <summary>
+    /// Limpia la lista lógica de strings y destruye físicamente todos los elementos
+    /// visuales arrastrables que se encuentren dentro del inventario de cuadrícula.
+    /// </summary>
     public void Clear()
     {
         items.Clear();
+
+        // Limpieza visual profunda del sistema de cuadrícula (Grid)
+        if (InventorySystem.Instance != null)
+        {
+            // Buscamos todos los componentes InventoryItem que existan como hijos del sistema de inventario
+            InventoryItem[] itemsEnMaletin = InventorySystem.Instance.GetComponentsInChildren<InventoryItem>(true);
+
+            foreach (InventoryItem itemFisico in itemsEnMaletin)
+            {
+                if (itemFisico != null && itemFisico.gameObject.scene.name != null)
+                {
+                    Debug.Log($"<color=red>[Inventario - Limpieza]</color> Destruyendo objeto visual: {itemFisico.gameObject.name}");
+                    Destroy(itemFisico.gameObject);
+                }
+            }
+        }
     }
 
     public List<string> GetItems()

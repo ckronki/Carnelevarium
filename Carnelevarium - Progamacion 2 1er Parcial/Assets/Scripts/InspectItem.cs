@@ -3,7 +3,7 @@ using UnityEngine.InputSystem; // Nueva librería de Input de Unity para detectar
 
 public class InspectItem : MonoBehaviour
 {
-    // --- VARIABLES EXPOSTAS EN EL INSPECTOR ---
+    // --- VARIABLES EXPUESTAS EN EL INSPECTOR ---
     [Header("Zoom")]
     public float minScale = 0.5f;   // El límite de tamaño más pequeño al que se puede encoger el objeto con el zoom.
     public float maxScale = 2f;     // El límite de tamaño más grande al que puede crecer el objeto con el zoom.
@@ -137,7 +137,6 @@ public class InspectItem : MonoBehaviour
                 prefabParaCrear = prefabInvCorrecto; // Cambia el objetivo para instanciar la versión optimizada del inventario.
             }
 
-
             // Paso 3: Crea físicamente en el juego una instancia del prefab seleccionado listo para ser procesado.
             GameObject contenedorNuevo = Instantiate(prefabParaCrear);
 
@@ -155,7 +154,10 @@ public class InspectItem : MonoBehaviour
                     Debug.Log($"¡{contenedorNuevo.name} guardado con éxito en el inventario!");
 
                     // Si el objeto del suelo tenía el script de recogida activo, le avisa que la operación fue un éxito para destruirse de la escena real.
-                    if (currentPickupRef != null) currentPickupRef.GuardadoExitosoEnInventario();
+                    if (currentPickupRef != null)
+                    {
+                        currentPickupRef.GuardadoExitosoEnInventario();
+                    }
                 }
                 else
                 {
@@ -198,7 +200,7 @@ public class InspectItem : MonoBehaviour
         Debug.Log("Modo inspección ACTIVADO");
 
         // Activa el disparador (Trigger) en el componente Animator para reproducir la animación de levantar/acercar el objeto a la pantalla.
-        animator.SetTrigger("TakingItem");
+        if (animator != null) animator.SetTrigger("TakingItem");
     }
 
     // Una función pública simplificada (tipo flecha) que cualquier otro script puede usar para saber desde afuera si el jugador está en el menú de inspección.

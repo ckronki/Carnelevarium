@@ -32,188 +32,203 @@ public class SaveMenuUI : MonoBehaviour
     private const int MAX_SAVES = 5;                   // Límite estricto de archivos permitidos
     private float tiempoParaOcultarAviso = -1f;        // Cronómetro para el texto de advertencia de 5 segundos
 
+    private string savePathFolder;
+
+    // ====================================================================
+    // MODIFICACIÓN CRÍTICA: LIMPIEZA AUTOMÁTICA AL INICIAR LA ESCENA
+    // ====================================================================
+    void Awake()
+    {
+        savePathFolder = Application.persistentDataPath;
+
+        // EJECUCIÓN INMEDIATA: Cada vez que se carga la escena o das Play,
+        // el script escanea la carpeta y elimina todos los archivos de guardado.
+        EliminarArchivosDeGuardadoDelDisco();
+    }
+
     private void Update()
     {
-        // 1. CERRAR CON ESCAPE: Si el menú está abierto y se pulsa Escape, se cierra
+        // 1. CERRAR CON ESCAPE
         if (menuPanel.activeSelf && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             CloseMenu();
         }
 
-        // 2. TEMPORIZADOR DEL AVISO VISUAL: Si el cronómetro está activo (es mayor que 0)
+        // 2. TEMPORIZADOR DEL AVISO VISUAL (5 Segundos)
         if (tiempoParaOcultarAviso > 0f)
         {
-            // 'Time.unscaledTime' mide el tiempo real del reloj físico. 
-            // Ignora si el juego está pausado con Time.timeScale = 0
             if (Time.unscaledTime >= tiempoParaOcultarAviso)
             {
-                avisoLimiteCanvas.SetActive(false); // Apagamos el objeto en el Canvas
-                tiempoParaOcultarAviso = -1f;       // Reseteamos el cronómetro
-                Debug.Log("[SAVE MENU] Tiempo cumplido. Texto de advertencia desactivado automáticamente.");
+                avisoLimiteCanvas.SetActive(false);
+                tiempoParaOcultarAviso = -1f;
             }
         }
     }
 
-    /// <summary>
-    /// Revisa de forma dinámica en el disco cuántos archivos "save_*.json" existen.
-    /// Devuelve TRUE si ya hay 5 o más.
-    /// </summary>
+    // Método interno encargado de realizar la purga en tu PC
+    private void EliminarArchivosDeGuardadoDelDisco()
+    {
+        try
+        {
+            // Busca cualquier archivo que coincida con tu formato de guardados JSON
+            string[] archivosJson = Directory.GetFiles(savePathFolder, "save_*.json");
+
+            if (archivosJson.Length > 0)
+            {
+                foreach (string archivo in archivosJson)
+                {
+                    File.Delete(archivo); // Borrado físico
+                    Debug.Log($"<color=red>[Auto-Clean]</color> Archivo eliminado al cargar escena: {Path.GetFileName(archivo)}");
+                }
+                Debug.Log("<color=red>[Auto-Clean]</color> Todos los guardados anteriores han sido eliminados con éxito.");
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[Auto-Clean] Error al intentar limpiar la carpeta de guardados: {e.Message}");
+        }
+    }
+
     public bool HaAlcanzadoElLimite()
     {
-        string path = Application.persistentDataPath;
-        string[] files = Directory.GetFiles(path, "save_*.json");
+        string[] files = Directory.GetFiles(savePathFolder, "save_*.json");
         return files.Length >= MAX_SAVES;
     }
 
-    /// <summary>
-    /// Abre el menú, pausa el juego, libera el cursor y refresca la lista de archivos.
-    /// </summary>
     public void OpenMenu()
     {
         menuPanel.SetActive(true);
-        LoadAllSaves(); // Busca los archivos en el disco para que puedas verlos y cargarlos
+        LoadAllSaves(); // Busca los archivos JSON en el disco
         RefreshList();  // Dibuja los botones en la interfaz
 
-        // Si tienes un texto fijo de advertencia en el menú, actualiza su visibilidad
         if (menuLimitWarningText != null)
         {
             menuLimitWarningText.gameObject.SetActive(HaAlcanzadoElLimite());
             menuLimitWarningText.text = "Slots llenos (5/5). Solo puedes cargar partidas existentes.";
         }
 
-        // Pausa del juego y liberación del mouse
         if (cameraController != null) cameraController.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        Time.timeScale = 0f; // El tiempo del juego se detiene aquí
+        Time.timeScale = 0f; // Pausa el juego
     }
 
-    /// <summary>
-    /// Cierra las ventanas del menú, limpia alertas temporales y reanuda el juego.
-    /// </summary>
     public void CloseMenu()
     {
         menuPanel.SetActive(false);
         confirmPanel.SetActive(false);
 
-        // Desactivamos el aviso de 5 segundos por si acaso seguía activo al cerrar el menú
         if (avisoLimiteCanvas != null) avisoLimiteCanvas.SetActive(false);
-        tiempoParaOcultarAviso = -1f; // Reseteamos el cronómetro
+        tiempoParaOcultarAviso = -1f;
 
-        // Reactivación del control del jugador y el tiempo
         if (cameraController != null) cameraController.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        Time.timeScale = 1f; // El tiempo del juego vuelve a la normalidad
+        Time.timeScale = 1f; // Reanuda el juego
     }
 
-    /// <summary>
-    /// Intenta crear un nuevo archivo de guardado. Bloquea la acción si ya hay 5 archivos.
-    /// </summary>
     public void AddNewSave()
     {
-        // COMPROBACIÓN DEL LÍMITE:
         if (HaAlcanzadoElLimite())
         {
             Debug.LogWarning("[SAVE MENU] No se puede crear un nuevo archivo. Límite de 5 alcanzado.");
-
-            // Si el objeto fue asignado en el inspector, lo activamos e iniciamos el conteo
             if (avisoLimiteCanvas != null)
             {
-                avisoLimiteCanvas.SetActive(true); // Se muestra inmediatamente en pantalla
-
-                // Calculamos el segundo exacto en el futuro en el que se debe apagar (Tiempo actual + 5 segundos)
+                avisoLimiteCanvas.SetActive(true);
                 tiempoParaOcultarAviso = Time.unscaledTime + 5f;
             }
-            else
-            {
-                Debug.LogError("[SAVE MENU] Error: No has arrastrado el 'avisoLimiteCanvas' en el Inspector.");
-            }
-
-            return; // Cortamos la ejecución para que NO guarde nada nuevo, pero el menú se queda abierto
+            return;
         }
 
-        // PROCESO DE GUARDADO NORMAL (Solo se ejecuta si hay menos de 5 archivos):
-        string path = Application.persistentDataPath;
-        string[] files = Directory.GetFiles(path, "save_*.json");
-        int nextSlot = files.Length;
+        int nextSlot = ObtenerSiguienteIndexLibre();
 
-        saveSystem.SaveGame(nextSlot); // Ordena al SaveSystem escribir el archivo .json
-        LoadAllSaves();                // Recarga la lista interna de posiciones
-        RefreshList();                 // Re-dibuja los botones en la interfaz
+        if (saveSystem != null)
+        {
+            saveSystem.SaveGame(nextSlot);
+        }
 
-        // Actualiza el texto fijo del menú si este último guardado completó los 5 slots
+        LoadAllSaves();
+        RefreshList();
+
         if (menuLimitWarningText != null)
         {
             menuLimitWarningText.gameObject.SetActive(HaAlcanzadoElLimite());
         }
     }
 
-    /// <summary>
-    /// Lee los archivos JSON del disco y extrae los datos de posición a la lista local.
-    /// </summary>
+    private int ObtenerSiguienteIndexLibre()
+    {
+        for (int i = 0; i < MAX_SAVES; i++)
+        {
+            string archivoVerificar = Path.Combine(savePathFolder, $"save_{i}.json");
+            if (!File.Exists(archivoVerificar))
+            {
+                return i;
+            }
+        }
+        return 0;
+    }
+
     private void LoadAllSaves()
     {
         saves.Clear();
-        string path = Application.persistentDataPath;
-        string[] files = Directory.GetFiles(path, "save_*.json");
+        string[] files = Directory.GetFiles(savePathFolder, "save_*.json");
 
-        System.Array.Sort(files); // Los ordena alfabéticamente para mantener el orden (0, 1, 2...)
+        System.Array.Sort(files);
 
         foreach (string file in files)
         {
-            string json = File.ReadAllText(file);
-            SaveData data = JsonUtility.FromJson<SaveData>(json);
-            saves.Add(new Vector3(data.x, data.y, data.z)); // Guardamos la posición en la lista interna
+            try
+            {
+                string json = File.ReadAllText(file);
+                SaveSystem.SaveData data = JsonUtility.FromJson<SaveSystem.SaveData>(json);
+                saves.Add(new Vector3(data.x, data.y, data.z));
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[SaveMenuUI] Error al leer JSON: {file}. Detalle: {e.Message}");
+            }
         }
     }
 
-    /// <summary>
-    /// Destruye los botones viejos y genera nuevos basados en los archivos detectados en el disco.
-    /// </summary>
     private void RefreshList()
     {
         if (saveListContainer == null || saveButtonPrefab == null) return;
 
-        // Limpieza de botones antiguos en el contenedor UI
         foreach (Transform child in saveListContainer)
         {
             Destroy(child.gameObject);
         }
 
-        // Creación dinámica de botones por cada guardado encontrado
-        for (int i = 0; i < saves.Count; i++)
+        string[] files = Directory.GetFiles(savePathFolder, "save_*.json");
+        System.Array.Sort(files);
+
+        for (int i = 0; i < files.Length; i++)
         {
-            int index = i; // Copia local del índice para evitar errores en el listener del botón
+            int index = i;
+
+            string nombreArchivo = Path.GetFileNameWithoutExtension(files[i]);
+            string numeroStr = nombreArchivo.Replace("save_", "");
+            int.TryParse(numeroStr, out int numeroRealSlot);
+
             Button btn = Instantiate(saveButtonPrefab, saveListContainer);
             TMP_Text textComponent = btn.GetComponentInChildren<TMP_Text>();
 
             if (textComponent != null)
             {
-                textComponent.text = "Guardado " + (index + 1); // Nombra el botón: "Guardado 1", "Guardado 2", etc.
-            }
-            else
-            {
-                Debug.LogError("El prefab del botón no tiene un componente TextMeshPro adjunto.");
+                textComponent.text = "Guardado " + (numeroRealSlot + 1);
             }
 
-            // Al hacer click, este botón seleccionará su propio índice de guardado para permitirte cargarlo
-            btn.onClick.AddListener(() => SelectSave(index));
+            btn.onClick.AddListener(() => SelectSave(numeroRealSlot));
         }
     }
 
-    /// <summary>
-    /// Registra qué índice se clickeó y despliega el panel flotante de confirmación.
-    /// </summary>
     private void SelectSave(int index)
     {
         selectedIndex = index;
-        confirmPanel.SetActive(true); // Abre la ventanita de "¿Estás seguro de cargar?"
+        confirmPanel.SetActive(true);
     }
 
-    /// <summary>
-    /// Se ejecuta desde el botón 'Aceptar' del panel de confirmación.
-    /// </summary>
     public void ConfirmLoad()
     {
         if (selectedIndex >= 0)
@@ -222,14 +237,16 @@ public class SaveMenuUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Ejecuta la carga final del slot seleccionado y cierra la interfaz.
-    /// </summary>
     private void LoadSave(int index)
     {
         confirmPanel.SetActive(false);
         Debug.Log("Cargando el archivo en el slot index: " + index);
-        saveSystem.LoadGame(index); // Envía la orden de carga de datos al Player
-        CloseMenu(); // Cierra el menú y reanuda el juego automáticamente al cargar
+
+        if (saveSystem != null)
+        {
+            saveSystem.LoadGame(index);
+        }
+
+        CloseMenu();
     }
 }
