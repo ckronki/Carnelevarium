@@ -175,9 +175,9 @@ public class SaveSystem : MonoBehaviour
 
             item.gameObject.SetActive(!yaRecogido);
 
-            if (item.flashlightObject != null)
+            if (item.gameObject != null)
             {
-                item.flashlightObject.SetActive(!yaRecogido);
+                item.gameObject.SetActive(!yaRecogido);
             }
         }
     }
