@@ -15,7 +15,7 @@ public class InspectItem : MonoBehaviour
     // --- VARIABLES INTERNAS PRIVADAS ---
     private GameObject currentItem; // Guarda la referencia del clon tridimensional que está flotando frente a la cámara de inspección.
     private GameObject worldItem;   // Guarda la referencia del objeto real físico que estaba tirado en el suelo del mapa.
-    private bool isInspecting = false; // Interruptor tipo sí/no para saber si el jugador está mirando un objeto en este momento.
+    public bool isInspecting = false; // Interruptor tipo sí/no para saber si el jugador está mirando un objeto en este momento.
     private GameObject itemPrefabRef; // Guarda el archivo original de la carpeta del proyecto para clonarlo después en el inventario.
     private PickupItem currentPickupRef; // Guarda el componente de recolección del objeto del suelo para avisarle si se guardó bien.
     private string currentID; // ID único del objeto (útil para sistemas de guardado de partidas o misiones).

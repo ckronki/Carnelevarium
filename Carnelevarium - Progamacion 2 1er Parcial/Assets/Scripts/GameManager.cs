@@ -5,6 +5,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public Player player;
+    public CrowbarController crowbarController;
+    public CameraController cameraController;
+
     void Awake()
     {
         if (instance == null)

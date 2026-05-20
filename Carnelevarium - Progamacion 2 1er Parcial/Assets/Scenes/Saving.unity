@@ -3431,6 +3431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4975a43e97b834da955c05f590ab73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  items: []
 --- !u!4 &727729609
 Transform:
   m_ObjectHideFlags: 0
@@ -3588,10 +3589,17 @@ MonoBehaviour:
   damage: 20
   speed: 6
   controlMove: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  sprintAction: {fileID: 0}
   rb: {fileID: 840034873}
   animator: {fileID: 1690120280}
   audioSource: {fileID: 0}
   footSteps: {fileID: 0}
+  cantMove: 0
+  sprintMultiplier: 0
+  staminaMax: 0
+  staminaMin: 0
+  staminaRegenRate: 0
+  staminaCurrent: 0
 --- !u!65 &840034872
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3721,7 +3729,7 @@ MonoBehaviour:
   health: 100
   maxHealth: 100
   healthBar: {fileID: 74125006}
-  healthText: {fileID: 1519004627}
+  healthText: {fileID: 0}
 --- !u!114 &840034883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5937,6 +5945,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1221749035}
   - component: {fileID: 1221749036}
+  - component: {fileID: 1221749037}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5971,9 +5980,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98c5b8225665661408c8f0fe982f45ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 840034871}
   inventory: {fileID: 727729608}
-  objetosRecogidosEnEstaSesion: []
+--- !u!114 &1221749037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221749033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa69f83440656754f906687f3c9949de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 840034871}
 --- !u!1 &1223952349
 GameObject:
   m_ObjectHideFlags: 0
@@ -7682,10 +7702,9 @@ MonoBehaviour:
   damage: 50
   speed: 0.6
   objetive: {fileID: 840034877}
-  stepSound: {fileID: 0}
-  attackSound: {fileID: 0}
   animator: {fileID: 0}
   controlledDoor: {fileID: 0}
+  attackCooldown: 1.5
 --- !u!195 &1536889502
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9755,6 +9774,7 @@ MonoBehaviour:
   maxScale: 2
   zoomSpeed: 0.1
   inspectCamera: {fileID: 388396033}
+  isInspecting: 0
   animator: {fileID: 1690120280}
 --- !u!4 &1882203323
 Transform:
@@ -11540,6 +11560,7 @@ MonoBehaviour:
   attackRange: 2
   player: {fileID: 840034877}
   attackCooldown: 1.5
+  animator: {fileID: 0}
 --- !u!195 &2132107524
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -11688,10 +11709,11 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1221749035}
+  - {fileID: 727729609}
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 2070426842}
-  - {fileID: 1221749035}
   - {fileID: 840034877}
   - {fileID: 2132107522}
   - {fileID: 1882203323}
@@ -11702,7 +11724,6 @@ SceneRoots:
   - {fileID: 490894333}
   - {fileID: 1709019918}
   - {fileID: 483471542}
-  - {fileID: 727729609}
   - {fileID: 1536889506}
   - {fileID: 2035861051}
   - {fileID: 388396034}

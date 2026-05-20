@@ -28,6 +28,8 @@ public class Stalker : Entity
         {
             _stalker.speed = speed;
 
+            animator.SetBool("CanMove", true);
+
             if (objetive != null)
             {
                 _stalker.SetDestination(objetive.position);

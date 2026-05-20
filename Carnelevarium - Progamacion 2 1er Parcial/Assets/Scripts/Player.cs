@@ -15,11 +15,10 @@ public class Player : Entity
     Coroutine _currentCoroutine;
     float _backupSpeed;
 
-
     public AudioSource audioSource;
     public AudioClip footSteps;
 
-    public bool IsStun;
+    public bool cantMove;
     // --- Sprint & Stamina ---
     [Header("Sprint Settings")]
     [SerializeField] float sprintMultiplier; 
@@ -29,7 +28,9 @@ public class Player : Entity
 
     public float staminaCurrent;
     private bool isSprinting;
-    private bool exhausted; 
+    private bool exhausted;
+
+    public bool hasCrowbar;
 
     private void Awake()
     {
@@ -44,19 +45,17 @@ public class Player : Entity
 
     private void Update()
     {
-       
-        
-        
-
-        if (IsStun == true) return;
+        if (cantMove == true) return;
         else 
         {
             Vector2 move = controlMove.action.ReadValue<Vector2>();
 
             Vector3 dir = transform.forward * move.y;
             dir += transform.right * move.x;
-            HandleSprint(move);
+            
             rb.linearVelocity = dir * speed;
+
+            HandleSprint(move);
 
             if (move.magnitude != 0)
             {
@@ -67,18 +66,38 @@ public class Player : Entity
 
             AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
 
-            if (state.IsName("Walking") && !audioSource.isPlaying)
+            if (move != Vector2.zero)
             {
                 Walking();
+            }
+            else
+            {
+                audioSource.Stop();
             }
         }
         
     }
     public void setStun()
     {
-        IsStun = true;
+        cantMove = true;
         rb.linearVelocity = Vector3.zero;
     }
+
+    public void CantMove()
+    {
+        cantMove = true;
+    }
+
+    public void CanMove()
+    {
+        cantMove = false;
+    }
+
+    public void GetCrowbar()
+    {
+        hasCrowbar = true;
+    }
+
     public void EnableSprint()
     {
         exhausted = false;
@@ -159,18 +178,11 @@ public class Player : Entity
             audioSource.loop = true;
             audioSource.Play();
         }
-        else
-        {
-            if (audioSource.isPlaying)
-            {
-                audioSource.Stop();
-            }
-        }
     }
 
     public override void Death()
     {
-        Invoke(nameof(LoadDeathScene), 1.5f);
+        Invoke(nameof(LoadDeathScene), 2f);
     }
 
     private void LoadDeathScene()
@@ -200,7 +212,7 @@ public class Player : Entity
         speed = 0f;
         yield return new WaitForSeconds(duration);
         speed = originalSpeed;
-        IsStun = false;
+        cantMove = false;
     }
 
     public void ChangeSpeed(float multiplier)
