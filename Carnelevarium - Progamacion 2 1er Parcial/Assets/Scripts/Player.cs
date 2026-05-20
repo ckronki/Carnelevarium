@@ -45,9 +45,13 @@ public class Player : Entity
 
         AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
 
-        if (state.IsName("Walking") && !audioSource.isPlaying)
+        if (move != Vector2.zero)
         {
             Walking();
+        }
+        else
+        {
+            audioSource.Stop();
         }
     }
 
@@ -59,19 +63,16 @@ public class Player : Entity
             audioSource.loop = true;        // que se repita mientras camina
             audioSource.Play();             // empieza a sonar
         }
-        else
-        {
-            if (audioSource.isPlaying)
-            {
-                audioSource.Stop();             // se detiene al dejar de caminar
-            }
-        }
-    }
+        
+    }  
+    
 
+
+    
 
     public override void Death()
     {
-        Invoke(nameof(LoadDeathScene), 0f);
+        Invoke(nameof(LoadDeathScene), 1.5f);
     }
 
     private void LoadDeathScene()

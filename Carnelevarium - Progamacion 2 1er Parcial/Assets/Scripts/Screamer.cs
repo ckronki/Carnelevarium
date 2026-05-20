@@ -4,7 +4,7 @@ public class Screamer : MonoBehaviour
 {
     public GameObject screamer;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {

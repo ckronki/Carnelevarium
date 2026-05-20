@@ -25,7 +25,8 @@ public class Keypad : MonoBehaviour
     public AudioSource audioSource; 
     public AudioClip correct;
     public AudioClip wrong;
-    
+    public AudioClip clicking;
+
     public void Update()
     {
         if (keypad.activeInHierarchy)
@@ -124,4 +125,5 @@ public class Keypad : MonoBehaviour
         keypadText.text = "";
         keypadText.color = Color.black;
     }
+
 }

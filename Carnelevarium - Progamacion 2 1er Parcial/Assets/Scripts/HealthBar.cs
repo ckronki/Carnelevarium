@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Health : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class Health : MonoBehaviour
 
     [Header ("Interfaz")]
     public Image healthBar;
-    public Text healthText;
+    public TMP_Text healthText;
 
     void Start()
     {

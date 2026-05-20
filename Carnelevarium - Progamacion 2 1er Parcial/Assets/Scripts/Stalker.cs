@@ -7,8 +7,6 @@ using UnityEngine.AI;
 public class Stalker : Entity
 {
     public Transform objetive;
-    public AudioClip stepSound;
-    public AudioClip attackSound;
     private NavMeshAgent _stalker;
 
     [SerializeField] Animator animator;
@@ -45,10 +43,18 @@ public class Stalker : Entity
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Player>())
+        if (other.GetComponent<Player>().CurrentLife > 0)
         {
             AttackPlayer();
             animator.SetBool("Attack", true);
+        }
+
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.GetComponent<Player>().CurrentLife>0)
+        {
+            AttackPlayer();
         }
 
     }
