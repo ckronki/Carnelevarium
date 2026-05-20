@@ -20,11 +20,17 @@ public class ElectricTrap : MonoBehaviour
 
         if (player != null && !activeTraps.ContainsKey(player))
         {
-            // la velocidad que tenía antes de entrar
+            // Detener sprint antes de ralentizar
+            player.ForceStopSprint();
+
+            // Guardar la velocidad base antes de ralentizar
             originalSpeeds[player] = player.CurrentSpeed;
 
-            // la ralentización 
+            // Aplicar ralentización
             player.ChangeSpeed(slowMultiplier);
+
+            // Bloquear el sprint mientras está en la trampa
+            player.DisableSprintTemporarily(Mathf.Infinity);
 
             // daño constante
             Coroutine damageRoutine = StartCoroutine(ApplyElectricDamage(player));
@@ -42,12 +48,15 @@ public class ElectricTrap : MonoBehaviour
             StopCoroutine(activeTraps[player]);
             activeTraps.Remove(player);
 
-            // velocidad original
+            // Restaurar velocidad original
             if (originalSpeeds.ContainsKey(player))
             {
                 player.ResetSpeed(originalSpeeds[player]);
                 originalSpeeds.Remove(player);
             }
+
+            // Permitir sprint de nuevo
+            player.EnableSprint(); // Debes agregar este método en Player
         }
     }
 

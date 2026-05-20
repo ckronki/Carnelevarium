@@ -6,15 +6,16 @@ public class Trap : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
         Player player = other.GetComponent<Player>();
         if (player != null)
         {
-            // Congelar al jugador
+            player.setStun();
             player.Freeze(freezeDuration);
 
             Destroy(gameObject);
 
-            // Cámara shake
+            
             ShakeCamara.Instance.Shake(freezeDuration);
         }
     }

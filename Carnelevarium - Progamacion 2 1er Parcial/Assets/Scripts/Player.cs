@@ -3,22 +3,38 @@ using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Player : Entity
 {
     public InputActionReference controlMove;
+    public InputActionReference sprintAction; 
     [SerializeField] private Rigidbody rb;
 
     public Animator animator;
     Coroutine _currentCoroutine;
     float _backupSpeed;
 
+
     public AudioSource audioSource;
     public AudioClip footSteps;
+
+    public bool IsStun;
+    // --- Sprint & Stamina ---
+    [Header("Sprint Settings")]
+    [SerializeField] float sprintMultiplier; 
+    [SerializeField] public float staminaMax;        
+    [SerializeField] float staminaMin;         
+    [SerializeField] float staminaRegenRate;   
+
+    public float staminaCurrent;
+    private bool isSprinting;
+    private bool exhausted; 
 
     private void Awake()
     {
         _backupSpeed = speed;
+        staminaCurrent = staminaMax;
     }
 
     private void Start()
@@ -28,30 +44,110 @@ public class Player : Entity
 
     private void Update()
     {
-        Vector2 move = controlMove.action.ReadValue<Vector2>();//Input.GetAxis
+       
+        
+        
 
-        Vector3 dir = transform.forward * move.y;
-        dir += transform.right * move.x;
-
-        rb.linearVelocity = dir * speed;
-
-        if (move.magnitude != 0)
+        if (IsStun == true) return;
+        else 
         {
-            animator.SetBool("isWalking", true);
+            Vector2 move = controlMove.action.ReadValue<Vector2>();
+
+            Vector3 dir = transform.forward * move.y;
+            dir += transform.right * move.x;
+            HandleSprint(move);
+            rb.linearVelocity = dir * speed;
+
+            if (move.magnitude != 0)
+            {
+                animator.SetBool("isWalking", true);
+            }
+            else
+                animator.SetBool("isWalking", false);
+
+            AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+
+            if (state.IsName("Walking") && !audioSource.isPlaying)
+            {
+                Walking();
+            }
+        }
+        
+    }
+    public void setStun()
+    {
+        IsStun = true;
+        rb.linearVelocity = Vector3.zero;
+    }
+    public void EnableSprint()
+    {
+        exhausted = false;
+    }
+    public void ForceStopSprint()
+    {
+        if (isSprinting)
+        {
+            speed = _backupSpeed;
+            isSprinting = false;
+        }
+    }
+    public void DisableSprintTemporarily(float duration)
+    {
+        StartCoroutine(DisableSprintRoutine(duration));
+    }
+
+    private IEnumerator DisableSprintRoutine(float duration)
+    {
+        exhausted = true; 
+        yield return new WaitForSeconds(duration);
+        exhausted = false; 
+    }
+    private void HandleSprint(Vector2 move)
+    {
+        bool sprintPressed = sprintAction.action.IsPressed();
+
+        if (sprintPressed && move.magnitude > 0 && !exhausted)
+        {
+            if (!isSprinting && staminaCurrent > staminaMin)
+            {
+                speed = _backupSpeed * sprintMultiplier;
+                isSprinting = true;
+            }
+
+            if (isSprinting)
+            {
+                staminaCurrent -= Time.deltaTime;
+                if (staminaCurrent <= 0f)
+                {
+                    staminaCurrent = 0f;
+                    StopSprint();
+                    exhausted = true;
+                }
+            }
         }
         else
-            animator.SetBool("isWalking", false);
-
-
-        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
-
-        if (move != Vector2.zero)
         {
-            Walking();
+            StopSprint();
         }
-        else
+
+        // Regeneración de stamina
+        if (!isSprinting)
         {
-            audioSource.Stop();
+            staminaCurrent += staminaRegenRate * Time.deltaTime;
+            staminaCurrent = Mathf.Clamp(staminaCurrent, 0f, staminaMax);
+
+            if (exhausted && staminaCurrent >= staminaMax)
+            {
+                exhausted = false; // ya puede volver a sprintar
+            }
+        }
+    }
+    private void StopSprint()
+    {
+        if (isSprinting)
+        {
+            speed = _backupSpeed;
+            isSprinting = false;
         }
     }
 
@@ -59,16 +155,18 @@ public class Player : Entity
     {
         if (!audioSource.isPlaying)
         {
-            audioSource.clip = footSteps;   // asigno el clip
-            audioSource.loop = true;        // que se repita mientras camina
-            audioSource.Play();             // empieza a sonar
+            audioSource.clip = footSteps;
+            audioSource.loop = true;
+            audioSource.Play();
         }
-        
-    }  
-    
-
-
-    
+        else
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+        }
+    }
 
     public override void Death()
     {
@@ -81,11 +179,13 @@ public class Player : Entity
         Cursor.visible = true;
         SceneManager.LoadScene(2);
     }
+
     public override void GetDamage(int d)
     {
         base.GetDamage(d);
         Debug.Log("El jugador recibe " + d + " de daño. Vida restante: " + life);
     }
+
     public void Freeze(float duration)
     {
         if (_currentCoroutine != null)
@@ -100,6 +200,7 @@ public class Player : Entity
         speed = 0f;
         yield return new WaitForSeconds(duration);
         speed = originalSpeed;
+        IsStun = false;
     }
 
     public void ChangeSpeed(float multiplier)
@@ -114,17 +215,11 @@ public class Player : Entity
         _backupSpeed = speed;
     }
 
-
     public float CurrentSpeed => speed;
-
 
     public void AttackAnimation()
     {
         animator.SetBool("IsAttacking", true);
         Debug.Log("Se reproduce la animación de ataque");
     }
-
-    
-
-
 }
