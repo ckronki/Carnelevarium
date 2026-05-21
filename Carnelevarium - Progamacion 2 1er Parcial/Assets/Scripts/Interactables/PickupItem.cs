@@ -12,7 +12,7 @@ public class PickupItem : Interactables , IInteractable
     public GameObject gameObject; // El modelo 3D visual de la linterna que el jugador ve tirado en el suelo del escenario.
 
     // --- VARIABLES INTERNAS PRIVADAS ---
-    private InspectItem inspectSystem; // Referencia al sistema encargado de hacer flotar y rotar el ítem en la pantalla de inspección.
+    protected InspectItem inspectSystem; // Referencia al sistema encargado de hacer flotar y rotar el ítem en la pantalla de inspección.
 
     // Start se ejecuta en el primer fotograma al iniciar la escena
     void Start()
@@ -23,6 +23,7 @@ public class PickupItem : Interactables , IInteractable
 
     public void Interact()
     {
+        Inventory.instance.AddItem(this.name);
         StartCoroutine(HasInteracted(dialogue, dialogueTime));
 
         if (!inspectSystem.IsInspecting())

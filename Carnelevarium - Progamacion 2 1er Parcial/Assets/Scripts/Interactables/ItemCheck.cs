@@ -1,10 +1,12 @@
 using UnityEngine;
 
-public class ItemCheck : MonoBehaviour , IInteractable
+public class ItemCheck : MonoBehaviour
 {
-    [SerializeField] GameObject[] requiredItems;
+    [SerializeField] protected GameObject[] requiredItems;
 
-    public void Interact()
+    public bool hasFoundItem;
+
+    public void InventoryCheck()
     {
         for (int i = 0; i < requiredItems.Length; i++)
         {
@@ -14,8 +16,11 @@ public class ItemCheck : MonoBehaviour , IInteractable
                 if (Inventory.instance.items[j] == requiredItems[i].name)
                 {
                     Debug.Log(Inventory.instance.items[j]);
-                    Inventory.instance.items.Remove(Inventory.instance.items[j]);
+
                     Debug.Log("Se removió el item " + Inventory.instance.items[j] + " del inventario");
+                    Inventory.instance.items.Remove(Inventory.instance.items[j]);
+                    
+                    hasFoundItem = true;
                     return;
                 }
                 else
@@ -26,5 +31,10 @@ public class ItemCheck : MonoBehaviour , IInteractable
             }
         }
         
+    }
+
+    public void ItemFoundReset()
+    {
+        hasFoundItem = false;
     }
 }

@@ -9,7 +9,6 @@ public class CrowbarController : MonoBehaviour
     public float attackCooldown;
     public bool isAttacking;
 
-
     [SerializeField] Camera _playerCamera;
 
     public float attackDistance;
@@ -67,5 +66,17 @@ public class CrowbarController : MonoBehaviour
 
         canAttack = true;
         isAttacking = false;
+    }
+
+    public void AttackLock()
+    {
+        canAttack = false;
+        this.gameObject.SetActive(false);
+    }
+
+    public void AttackUnlock()
+    {
+        canAttack = true;
+        this.gameObject.SetActive(true);
     }
 }

@@ -25,6 +25,9 @@ public class InteractionController : MonoBehaviour
         UpdateCurrentInteractable(); // Paso 1: Busca si hay un objeto interactivo frente al jugador.
         UpdateInteractionCrosshair(); // Paso 2: Enciende o apaga la retícula en la pantalla según el paso 1.
         CheckForInteractionInput(); // Paso 3: Revisa si el jugador presiona la tecla de interactuar.
+
+
+
     }
 
     // Lanza un rayo físico desde el centro de la cámara para detectar objetos interactivos

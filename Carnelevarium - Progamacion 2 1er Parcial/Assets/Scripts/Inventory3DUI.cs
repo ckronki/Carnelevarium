@@ -149,11 +149,12 @@ public class Inventory3DUI : MonoBehaviour
             {
                 // Inicia la animación de interpolación suave para mudar la cámara de la cabeza al punto del maletín.
                 StartCoroutine(MoveCamera(camPoint.position, camPoint.rotation));
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
             }
 
             // Libera y muestra la flecha del cursor en la pantalla para poder arrastrar las celdas e ítems con comodidad.
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            
         }
         else // --- LÓGICA DE CIERRE ---
         {
@@ -173,11 +174,19 @@ public class Inventory3DUI : MonoBehaviour
             }
 
             // 3. Devuelve los mandos del teclado al script de movimiento del jugador.
-            if (playerScript != null) playerScript.enabled = true;
+            if (playerScript != null)
+            {
+                playerScript.enabled = true;
+
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+
+                
+            }
+                
 
             // Vuelve a capturar el cursor del mouse, ocultándolo en el centro para el juego en primera persona.
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            
 
             if (inventoryMessage != null) inventoryMessage.gameObject.SetActive(false);
         }
@@ -200,6 +209,8 @@ public class Inventory3DUI : MonoBehaviour
         float duration = 0.4f; // El viaje de la cámara tomará exactamente 0.4 segundos.
         float elapsed = 0f; // Cronómetro interno que arranca en cero.
 
+        GameManager.instance.player.CantMove();
+
         // Registra las coordenadas y rotaciones de salida exactas desde donde se encuentra la cámara al momento de pulsar el Tab.
         Vector3 startPos = playerCamera.transform.position;
         Quaternion startRot = playerCamera.transform.rotation;
@@ -217,6 +228,18 @@ public class Inventory3DUI : MonoBehaviour
 
             yield return null; // Pausa la ejecución aquí y espera al siguiente fotograma del juego antes de continuar el bucle.
         }
+
+        GameManager.instance.player.CanMove();
+        
+        if (!GameManager.instance.crowbarController.canAttack && GameManager.instance.player.hasCrowbar)
+        {
+            GameManager.instance.crowbarController.AttackUnlock();
+        }
+        else
+        {
+            GameManager.instance.crowbarController.AttackLock();
+        }
+            
 
         // CONTROL DE PRECISIÓN DE CIERRE: Fuerza la posición y rotación final exacta para corregir cualquier milésima de desfase numérico.
         playerCamera.transform.position = targetPos;

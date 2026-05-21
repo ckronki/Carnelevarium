@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;    
     [SerializeField] GameObject pauseMenuUI;
     [SerializeField] GameObject cameraObject;
+
+    [SerializeField] InspectItem inspectSystem;
 
     private Keyboard keyboard;
 
@@ -18,10 +21,15 @@ public class PauseMenu : MonoBehaviour
     {
         if (keyboard != null && keyboard.escapeKey.wasPressedThisFrame)
         {
-            if (GameIsPaused)
-                Resume();
+            if (inspectSystem.isInspecting) return;
             else
-                Pause();
+            {
+                if (GameIsPaused)
+                    Resume();
+                else
+                    Pause();
+            }
+            
         }
     }
 
@@ -39,8 +47,8 @@ public class PauseMenu : MonoBehaviour
         }
 
         // Bloquear cursor de nuevo
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.visible = false;
     }
     private void Pause()
     {
@@ -57,13 +65,13 @@ public class PauseMenu : MonoBehaviour
         }
 
         // Liberar cursor
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
     }
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu"); 
+        SceneManager.LoadScene(0); 
     }
     public void QuitGame()
     {

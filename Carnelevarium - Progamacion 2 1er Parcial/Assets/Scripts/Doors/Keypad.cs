@@ -34,6 +34,7 @@ public class Keypad : MonoBehaviour
             hud.SetActive(false);
             player.GetComponent<Player>().enabled = false;
             interactionController.LockInteraction();
+            GameManager.instance.crowbarController.AttackLock();
         }
     }
 
@@ -116,6 +117,7 @@ public class Keypad : MonoBehaviour
         hud.SetActive(true);
         player.GetComponent<Player>().enabled = true;
         interactionController.UnlockInteraction();
+        GameManager.instance.crowbarController.AttackUnlock();
 
         Clear();
     }

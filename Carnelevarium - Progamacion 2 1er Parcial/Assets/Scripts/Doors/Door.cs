@@ -6,7 +6,7 @@ public class Door : Interactables , IInteractable
     public BoxCollider doorInteractionArea;
     public bool isOpen;
 
-    [SerializeField] bool _isOpenable;
+    [SerializeField] protected bool _isOpenable;
 
     public AudioSource audioSource;
     public AudioClip automaticDoorSound;
@@ -24,7 +24,7 @@ public class Door : Interactables , IInteractable
 
     }
 
-    public void Interact()
+    public virtual void Interact()
     {
         if (!_isOpenable)
         {

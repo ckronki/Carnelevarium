@@ -36,6 +36,11 @@ public class Inventory : MonoBehaviour
         return items.Contains(itemName);
     }
 
+    public void RemoveItem(string itemName)
+    {
+        items.Remove(itemName);
+    }
+
     /// <summary>
     /// Limpia la lista lógica de strings y destruye físicamente todos los elementos
     /// visuales arrastrables que se encuentren dentro del inventario de cuadrícula.
