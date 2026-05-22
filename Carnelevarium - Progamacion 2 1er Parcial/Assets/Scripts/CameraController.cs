@@ -34,6 +34,7 @@ public class CameraController : MonoBehaviour
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.visible = false;
 
             _lookInput = controlLook.action.ReadValue<Vector2>();
 
@@ -49,10 +50,12 @@ public class CameraController : MonoBehaviour
     public void UnlockCamera()
     {
         isCameraLocked = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
     public void LockCamera()
     {
         isCameraLocked = true;
         Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
     }
 }

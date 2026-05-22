@@ -2705,7 +2705,7 @@ MonoBehaviour:
 
     Sprint: Shift
 
-    Attack: LMB
+    Attack: Left Click
 
     Pause:
     ESC'

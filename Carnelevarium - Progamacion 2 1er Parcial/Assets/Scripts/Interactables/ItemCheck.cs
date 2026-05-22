@@ -19,7 +19,7 @@ public class ItemCheck : MonoBehaviour
 
                     Debug.Log("Se removió el item " + Inventory.instance.items[j] + " del inventario");
                     Inventory.instance.items.Remove(Inventory.instance.items[j]);
-                    
+
                     hasFoundItem = true;
                     return;
                 }
@@ -30,7 +30,7 @@ public class ItemCheck : MonoBehaviour
                 }
             }
         }
-        
+
     }
 
     public void ItemFoundReset()

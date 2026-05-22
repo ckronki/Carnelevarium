@@ -9,6 +9,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject pauseMenuUI;
     [SerializeField] GameObject cameraObject;
 
+    public GameObject keypad;
+
     [SerializeField] InspectItem inspectSystem;
 
     private Keyboard keyboard;
@@ -21,13 +23,22 @@ public class PauseMenu : MonoBehaviour
     {
         if (keyboard != null && keyboard.escapeKey.wasPressedThisFrame)
         {
-            if (inspectSystem.isInspecting) return;
+            if (keypad.activeInHierarchy)
+            {
+                Debug.Log("El player no puede pausar");
+                return;
+            }
+
             else
             {
-                if (GameIsPaused)
-                    Resume();
+                if (inspectSystem.isInspecting) return;
                 else
-                    Pause();
+                {
+                    if (GameIsPaused)
+                        Resume();
+                    else
+                        Pause();
+                }
             }
             
         }
@@ -46,9 +57,7 @@ public class PauseMenu : MonoBehaviour
                 camController.enabled = true;
         }
 
-        // Bloquear cursor de nuevo
-        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-        UnityEngine.Cursor.visible = false;
+       cameraObject.GetComponent<CameraController>().UnlockCamera();
     }
     private void Pause()
     {
@@ -64,9 +73,8 @@ public class PauseMenu : MonoBehaviour
                 camController.enabled = false;
         }
 
-        // Liberar cursor
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
-        UnityEngine.Cursor.visible = true;
+        cameraObject.GetComponent<CameraController>().LockCamera();
+
     }
     public void LoadMainMenu()
     {

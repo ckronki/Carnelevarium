@@ -14,6 +14,7 @@ public class Player : Entity
     public Animator animator;
     Coroutine _currentCoroutine;
     float _backupSpeed;
+    private InteractionController interactionController;
 
     public AudioSource audioSource;
     public AudioClip footSteps;
@@ -32,6 +33,11 @@ public class Player : Entity
 
     public bool hasCrowbar;
 
+    public string currentDialogue;
+    public int currentDialogueTime;
+    public bool isInteracting;
+    public PickupCrowbar pickupCrowbar;
+
     private void Awake()
     {
         _backupSpeed = speed;
@@ -41,6 +47,7 @@ public class Player : Entity
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        interactionController = GetComponent<InteractionController>();
     }
 
     private void Update()
@@ -75,7 +82,6 @@ public class Player : Entity
                 audioSource.Stop();
             }
         }
-        
     }
     public void setStun()
     {

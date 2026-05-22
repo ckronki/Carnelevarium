@@ -1,4 +1,4 @@
-using UnityEngine;
+    using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
@@ -10,8 +10,10 @@ public class MainMenu : MonoBehaviour
 
     public void Quit()
     {
-        Debug.Log("Has cerrado el juego");
         Application.Quit();
+
+        Debug.Log("Has cerrado el juego");
+        
     }
 
     public void goMenu()

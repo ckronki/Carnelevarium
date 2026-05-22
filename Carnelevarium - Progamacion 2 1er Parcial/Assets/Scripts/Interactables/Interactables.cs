@@ -9,9 +9,11 @@ public class Interactables : MonoBehaviour
     public IEnumerator HasInteracted(string dialogue, float time)
     {
         UIManager.instance.dialogueText.text = dialogue;
+        Debug.Log("Comenzó la coroutine");
 
         yield return new WaitForSeconds(time);
 
+        Debug.Log("Se terminó la coroutine");
         UIManager.instance.dialogueText.text = "";
     }
 }

@@ -8,12 +8,7 @@ public class CrowbarDoor : Door
 
     public override void Interact()
     {
-        Debug.Log(requiredItem.name);
-        for (int i = 0; i < Inventory.instance.items.Count; i++)
-        {
-            Debug.Log("Entró al loop");
-            Debug.Log(Inventory.instance.items[i]);
-            if (Inventory.instance.items[i] != requiredItem.name)
+            if (!GameManager.instance.player.hasCrowbar)
             {
                 StartCoroutine(HasInteracted(dialogue, dialogueTime));
                 return;
@@ -23,6 +18,5 @@ public class CrowbarDoor : Door
                 OpenDoor();
                 StartCoroutine(HasInteracted(openDialogue, dialogueTime));
             }
-        }
     }
 }
