@@ -6,10 +6,23 @@ public class ClickManager : MonoBehaviour
     public Camera mainCamera;
     private MenuTextButton lastHovered;
 
+    // Creamos un LayerMask para los textos
+    public LayerMask uiWorldLayer;
+
+    void Start()
+    {
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main; // asegura que sea la cámara principal
+        }
+    }
+
     void Update()
     {
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
-        if (Physics.Raycast(ray, out RaycastHit hit))
+
+        // Raycast solo contra la capa UIWorld
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, uiWorldLayer))
         {
             MenuTextButton btn = hit.collider.GetComponent<MenuTextButton>();
             if (btn != null)

@@ -110,13 +110,23 @@ public class MenuGameManager : MonoBehaviour
         foreach (GameObject btn in buttons)
         {
             TextFade tf = btn.GetComponent<TextFade>();
+            MenuTextButton mtb = btn.GetComponent<MenuTextButton>();
             if (tf != null)
             {
-                if (fadeIn) tf.FadeIn(1f);
-                else tf.FadeOut(1f);
+                if (fadeIn)
+                {
+                    tf.FadeIn(1f);
+                    if (mtb != null) mtb.isActive = true;   // activar interacción
+                }
+                else
+                {
+                    tf.FadeOut(1f);
+                    if (mtb != null) mtb.isActive = false;  // desactivar interacción
+                }
             }
         }
     }
+
 
     void SetButtonsInvisible(List<GameObject> buttons)
     {

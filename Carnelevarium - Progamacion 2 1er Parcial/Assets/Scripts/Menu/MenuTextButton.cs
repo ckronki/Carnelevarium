@@ -6,16 +6,18 @@ public class MenuTextButton : MonoBehaviour
     public string action;
     private TextMeshPro textMesh;
     private Color originalColor;
+    public bool isActive = false; // nuevo flag
 
     void Start()
     {
         textMesh = GetComponent<TextMeshPro>();
-        // fuerza alpha = 1 para que nunca se guarde transparente
         originalColor = new Color(textMesh.color.r, textMesh.color.g, textMesh.color.b, 1f);
     }
 
     public void ExecuteAction()
     {
+        if (!isActive) return; // ignora clicks si no está activo
+
         MenuGameManager gm = FindObjectOfType<MenuGameManager>();
         if (action == "Options") gm.ShowOptions();
         else if (action == "Exit") gm.ExitGame();
@@ -27,18 +29,18 @@ public class MenuTextButton : MonoBehaviour
 
     public void OnHoverEnter()
     {
+        if (!isActive) return; // ignora hover si no está activo
         textMesh.color = Color.yellow;
         Debug.Log("Mouse sobre botón: " + action);
     }
 
     public void OnHoverExit()
     {
-        // Solo restaurar color si el texto está visible (alpha > 0.5)
+        if (!isActive) return; // ignora hover si no está activo
         if (textMesh.color.a > 0.5f)
         {
             textMesh.color = originalColor;
             Debug.Log("Mouse salió del botón: " + action);
         }
     }
-
 }
