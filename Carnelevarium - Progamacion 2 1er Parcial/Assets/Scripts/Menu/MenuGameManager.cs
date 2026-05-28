@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class MenuGameManager : MonoBehaviour
 {
@@ -12,9 +13,13 @@ public class MenuGameManager : MonoBehaviour
     private MenuControls controls;
     private bool started = false;
 
-    public List<GameObject> menuButtons;     // Play + Options + Exit
+    // Botones principales
+    public List<GameObject> menuButtons;     // Play + Options + Credits + Exit
     public List<GameObject> optionsButtons;  // Back
-    public List<GameObject> exitButtons;     // opcional
+
+
+    // ?? Slider de opciones
+    public GameObject optionsSlider;
 
     public FadeController fadeController;    // referencia al panel negro
 
@@ -34,7 +39,10 @@ public class MenuGameManager : MonoBehaviour
 
         SetButtonsInvisible(menuButtons);
         SetButtonsInvisible(optionsButtons);
-        SetButtonsInvisible(exitButtons);
+
+
+        // Desactivar slider al inicio
+        if (optionsSlider) optionsSlider.SetActive(false);
     }
 
     void OnAnyKey()
@@ -47,21 +55,33 @@ public class MenuGameManager : MonoBehaviour
         }
     }
 
-    public void ShowOptions() => GoToPoint(optionsPoint, "Options");
-    public void BackToMenu() => GoToPoint(menuPoint, "Menu");
-
-    // Acción Play con fade y cambio de escena
+    // Acciones principales
     public void PlayGame()
     {
-        StartCoroutine(fadeController.FadeOutAndLoad("SubLevel"));
+        int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        StartCoroutine(fadeController.FadeOutAndLoad(nextIndex));
     }
 
-    // Exit con fade y luego cerrar
+    public void ShowOptions()
+    {
+        GoToPoint(optionsPoint, "Options");
+        if (optionsSlider) optionsSlider.SetActive(true);   // activar slider
+    }
+
+
+    public void BackToMenu()
+    {
+        GoToPoint(menuPoint, "Menu");
+        if (optionsSlider) optionsSlider.SetActive(false);  // ocultar slider
+    }
+
     public void ExitGame()
     {
+        GoToPoint(exitPoint, "Exit");
         StartCoroutine(fadeController.FadeOutAndQuit());
     }
 
+    // Movimiento de cámara
     public void GoToPoint(Transform target, string pointType)
     {
         StartCoroutine(MoveCamera(target, pointType));
@@ -85,26 +105,31 @@ public class MenuGameManager : MonoBehaviour
         mainCamera.transform.position = target.position;
         mainCamera.transform.rotation = target.rotation;
 
+        // Activar/desactivar botones según el menú
         if (pointType == "Menu")
         {
             SetButtonsFade(menuButtons, true);
             SetButtonsFade(optionsButtons, false);
-            SetButtonsFade(exitButtons, false);
+
         }
         else if (pointType == "Options")
         {
             SetButtonsFade(menuButtons, false);
             SetButtonsFade(optionsButtons, true);
-            SetButtonsFade(exitButtons, false);
+        }
+        else if (pointType == "Credits")
+        {
+            SetButtonsFade(menuButtons, false);
+ 
         }
         else if (pointType == "Exit")
         {
             SetButtonsFade(menuButtons, false);
-            SetButtonsFade(optionsButtons, false);
-            SetButtonsFade(exitButtons, true);
+
         }
     }
 
+    // Helpers
     void SetButtonsFade(List<GameObject> buttons, bool fadeIn)
     {
         foreach (GameObject btn in buttons)
@@ -116,24 +141,25 @@ public class MenuGameManager : MonoBehaviour
                 if (fadeIn)
                 {
                     tf.FadeIn(1f);
-                    if (mtb != null) mtb.isActive = true;   // activar interacción
+                    if (mtb != null) mtb.isActive = true;
                 }
                 else
                 {
                     tf.FadeOut(1f);
-                    if (mtb != null) mtb.isActive = false;  // desactivar interacción
+                    if (mtb != null) mtb.isActive = false;
                 }
             }
         }
     }
-
 
     void SetButtonsInvisible(List<GameObject> buttons)
     {
         foreach (GameObject btn in buttons)
         {
             TextFade tf = btn.GetComponent<TextFade>();
+            MenuTextButton mtb = btn.GetComponent<MenuTextButton>();
             if (tf != null) tf.SetInvisible();
+            if (mtb != null) mtb.isActive = false;
         }
     }
 }
