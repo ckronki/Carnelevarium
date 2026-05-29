@@ -5410,6 +5410,7 @@ MonoBehaviour:
   staminaMin: 0
   staminaRegenRate: 0
   staminaCurrent: 0
+  hasCrowbar: 0
 --- !u!65 &840034872
 BoxCollider:
   m_ObjectHideFlags: 0
