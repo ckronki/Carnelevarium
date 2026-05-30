@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class MenuGameManager : MonoBehaviour
 {
     public Camera mainCamera;
-    public Transform startPoint, menuPoint, optionsPoint, exitPoint;
+    public Transform startPoint, menuPoint, optionsPoint, creditsPoint, exitPoint;
     public float transitionDuration = 2f;
 
     private MenuControls controls;
@@ -15,11 +15,9 @@ public class MenuGameManager : MonoBehaviour
 
     // Botones principales
     public List<GameObject> menuButtons;     // Play + Options + Credits + Exit
-    public List<GameObject> optionsButtons;  // Back
-
-
-    // ?? Slider de opciones
-    public GameObject optionsSlider;
+    public List<GameObject> optionsButtons;  // Back (+ cualquier otro en Options)
+    public List<GameObject> creditsButtons;  // Back
+    public List<GameObject> exitButtons;     // opcional
 
     public FadeController fadeController;    // referencia al panel negro
 
@@ -39,10 +37,8 @@ public class MenuGameManager : MonoBehaviour
 
         SetButtonsInvisible(menuButtons);
         SetButtonsInvisible(optionsButtons);
-
-
-        // Desactivar slider al inicio
-        if (optionsSlider) optionsSlider.SetActive(false);
+        SetButtonsInvisible(creditsButtons);
+        SetButtonsInvisible(exitButtons);
     }
 
     void OnAnyKey()
@@ -65,14 +61,16 @@ public class MenuGameManager : MonoBehaviour
     public void ShowOptions()
     {
         GoToPoint(optionsPoint, "Options");
-        if (optionsSlider) optionsSlider.SetActive(true);   // activar slider
     }
 
+    public void ShowCredits()
+    {
+        GoToPoint(creditsPoint, "Credits");
+    }
 
     public void BackToMenu()
     {
         GoToPoint(menuPoint, "Menu");
-        if (optionsSlider) optionsSlider.SetActive(false);  // ocultar slider
     }
 
     public void ExitGame()
@@ -110,7 +108,8 @@ public class MenuGameManager : MonoBehaviour
         {
             SetButtonsFade(menuButtons, true);
             SetButtonsFade(optionsButtons, false);
-
+            SetButtonsFade(creditsButtons, false);
+            SetButtonsFade(exitButtons, false);
         }
         else if (pointType == "Options")
         {
@@ -120,12 +119,12 @@ public class MenuGameManager : MonoBehaviour
         else if (pointType == "Credits")
         {
             SetButtonsFade(menuButtons, false);
- 
+            SetButtonsFade(creditsButtons, true);
         }
         else if (pointType == "Exit")
         {
             SetButtonsFade(menuButtons, false);
-
+            SetButtonsFade(exitButtons, true);
         }
     }
 

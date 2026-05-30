@@ -18,12 +18,12 @@ public class TextFade : MonoBehaviour
         textMesh.color = c;
     }
 
-    public void FadeIn(float duration = 1f)
+    public void FadeIn(float duration = 0.1f)
     {
         StartCoroutine(FadeText(0f, 1f, duration));
     }
 
-    public void FadeOut(float duration = 1f)
+    public void FadeOut(float duration = 2.5f)
     {
         StartCoroutine(FadeText(1f, 0f, duration));
     }
