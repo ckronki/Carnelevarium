@@ -6,8 +6,8 @@ using TMPro;
 [System.Serializable]
 public class ZonaData
 {
-    public GameObject zona;       // GameObject padre con las imágenes rojas
-    public int nivelRequerido;    // Nivel de mapa necesario para mostrar esta zona
+    public GameObject zona;       
+    public int nivelRequerido;    
 }
 
 public class MapSystem : MonoBehaviour
@@ -23,7 +23,7 @@ public class MapSystem : MonoBehaviour
     public TextMeshProUGUI mensajeTMP;
 
     [Header("Zonas del mapa")]
-    public ZonaData[] zonas; // cada zona con su nivel requerido
+    public ZonaData[] zonas; 
 
     [Header("Referencias del jugador")]
     public MonoBehaviour playerMovement;
@@ -99,7 +99,7 @@ public class MapSystem : MonoBehaviour
 
             if (mapaNivel == 0)
             {
-                mensajeTMP.text = "No tienes ningún mapa";
+                mensajeTMP.text = "no tengo mapa de esta zona";
                 mensajeTMP.gameObject.SetActive(true);
             }
             else
@@ -146,7 +146,6 @@ public class MapSystem : MonoBehaviour
                 {
                     z.zona.SetActive(true);
 
-                    // Titileo: recorrer todas las imágenes hijas
                     Image[] images = z.zona.GetComponentsInChildren<Image>();
                     foreach (Image img in images)
                     {
