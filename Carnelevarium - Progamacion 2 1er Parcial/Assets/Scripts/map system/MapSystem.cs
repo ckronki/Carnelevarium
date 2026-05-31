@@ -1,26 +1,36 @@
 using UnityEngine;
-using TMPro;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using TMPro;
+
+[System.Serializable]
+public class ZonaData
+{
+    public GameObject zona;       // GameObject padre con las imágenes rojas
+    public int nivelRequerido;    // Nivel de mapa necesario para mostrar esta zona
+}
 
 public class MapSystem : MonoBehaviour
 {
-    public static MapSystem Instance { get; private set; }
+    public static MapSystem Instance;
 
+    [Header("Mapas progresivos")]
     public GameObject mapa1;
     public GameObject mapa2;
     public GameObject mapa3;
+
+    [Header("Mensaje sin mapa")]
     public TextMeshProUGUI mensajeTMP;
 
-    [Header("Referencia al Player")]
-    public Player playerMovement;
-    public CameraController playerCamera;
-
     [Header("Zonas del mapa")]
-    public Image[] zonas; // todas las imágenes rojas en el objeto Zonas
+    public ZonaData[] zonas; // cada zona con su nivel requerido
 
-    private int mapaNivel = 0;
+    [Header("Referencias del jugador")]
+    public MonoBehaviour playerMovement;
+    public MonoBehaviour playerCamera;
+
     private bool isOpen = false;
+    private int mapaNivel = 0;
     private string currentRoom = "";
 
     void Awake()
@@ -35,14 +45,10 @@ public class MapSystem : MonoBehaviour
         mapa3.SetActive(false);
         mensajeTMP.gameObject.SetActive(false);
 
-        foreach (Image zona in zonas)
+        foreach (ZonaData z in zonas)
         {
-            zona.enabled = false;
+            z.zona.SetActive(false);
         }
-    }
-    public string GetCurrentRoom()
-    {
-        return currentRoom;
     }
 
     void Update()
@@ -67,6 +73,11 @@ public class MapSystem : MonoBehaviour
     public void SetCurrentRoom(string roomName)
     {
         currentRoom = roomName;
+    }
+
+    public string GetCurrentRoom()
+    {
+        return currentRoom;
     }
 
     void ToggleMap()
@@ -99,7 +110,6 @@ public class MapSystem : MonoBehaviour
                 else if (mapaNivel == 2) mapa2.SetActive(true);
                 else if (mapaNivel == 3) mapa3.SetActive(true);
 
-                // ?? Mostrar la zona actual encima del mapa
                 ActualizarZonas();
             }
         }
@@ -114,32 +124,37 @@ public class MapSystem : MonoBehaviour
 
             mensajeTMP.gameObject.SetActive(false);
 
-            foreach (Image zona in zonas)
+            foreach (ZonaData z in zonas)
             {
-                zona.enabled = false;
-                zona.color = Color.red;
+                z.zona.SetActive(false);
             }
         }
     }
 
     void ActualizarZonas()
     {
-        foreach (Image zona in zonas)
+        foreach (ZonaData z in zonas)
         {
-            zona.enabled = false;
+            z.zona.SetActive(false);
         }
 
         if (!string.IsNullOrEmpty(currentRoom))
         {
-            foreach (Image zona in zonas)
+            foreach (ZonaData z in zonas)
             {
-                if (zona.name == currentRoom)
+                if (z.zona.name == currentRoom && mapaNivel >= z.nivelRequerido)
                 {
-                    zona.enabled = true;
-                    zona.color = Color.Lerp(Color.red, Color.white, Mathf.PingPong(Time.unscaledTime, 1));
+                    z.zona.SetActive(true);
+
+                    // Titileo: recorrer todas las imágenes hijas
+                    Image[] images = z.zona.GetComponentsInChildren<Image>();
+                    foreach (Image img in images)
+                    {
+                        float alpha = Mathf.PingPong(Time.unscaledTime, 1f);
+                        img.color = new Color(1f, 0f, 0f, alpha);
+                    }
                 }
             }
         }
     }
-
 }
