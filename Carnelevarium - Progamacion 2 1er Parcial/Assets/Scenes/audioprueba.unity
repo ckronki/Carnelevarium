@@ -88347,10 +88347,22 @@ MonoBehaviour:
   damage: 20
   speed: 7
   controlMove: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  sprintAction: {fileID: 0}
   rb: {fileID: 1667422116}
   animator: {fileID: 1767892729}
   audioSource: {fileID: 1667422118}
   footSteps: {fileID: 8300000, guid: a6708ae46906c8840a9ed292402d5401, type: 3}
+  cantMove: 0
+  sprintMultiplier: 0
+  staminaMax: 0
+  staminaMin: 0
+  staminaRegenRate: 0
+  staminaCurrent: 0
+  hasCrowbar: 0
+  currentDialogue: 
+  currentDialogueTime: 0
+  isInteracting: 0
+  pickupCrowbar: {fileID: 0}
 --- !u!136 &1667422114
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -104513,6 +104525,10 @@ PrefabInstance:
     - target: {fileID: 6334826068141619221, guid: 5bba62d8b65dae44898012275d24ba9e, type: 3}
       propertyPath: m_Name
       value: Stalker
+      objectReference: {fileID: 0}
+    - target: {fileID: 6334826068141619221, guid: 5bba62d8b65dae44898012275d24ba9e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6334826068141619242, guid: 5bba62d8b65dae44898012275d24ba9e, type: 3}
       propertyPath: m_LocalScale.x
