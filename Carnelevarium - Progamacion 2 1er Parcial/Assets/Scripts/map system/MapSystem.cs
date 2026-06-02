@@ -20,7 +20,7 @@ public class MapSystem : MonoBehaviour
     public GameObject mapa3;
 
     [Header("Mensaje sin mapa")]
-    public TextMeshProUGUI mensajeTMP;
+    public GameObject mensajeSinMapa; 
 
     [Header("Zonas del mapa")]
     public ZonaData[] zonas; 
@@ -43,13 +43,14 @@ public class MapSystem : MonoBehaviour
         mapa1.SetActive(false);
         mapa2.SetActive(false);
         mapa3.SetActive(false);
-        mensajeTMP.gameObject.SetActive(false);
+        mensajeSinMapa.SetActive(false);
 
         foreach (ZonaData z in zonas)
         {
             z.zona.SetActive(false);
         }
     }
+
 
     void Update()
     {
@@ -99,12 +100,11 @@ public class MapSystem : MonoBehaviour
 
             if (mapaNivel == 0)
             {
-                mensajeTMP.text = "no tengo mapa de esta zona";
-                mensajeTMP.gameObject.SetActive(true);
+                mensajeSinMapa.SetActive(true); 
             }
             else
             {
-                mensajeTMP.gameObject.SetActive(false);
+                mensajeSinMapa.SetActive(false);
 
                 if (mapaNivel == 1) mapa1.SetActive(true);
                 else if (mapaNivel == 2) mapa2.SetActive(true);
@@ -122,13 +122,14 @@ public class MapSystem : MonoBehaviour
             if (playerMovement != null) playerMovement.enabled = true;
             if (playerCamera != null) playerCamera.enabled = true;
 
-            mensajeTMP.gameObject.SetActive(false);
+            mensajeSinMapa.SetActive(false);
 
             foreach (ZonaData z in zonas)
             {
                 z.zona.SetActive(false);
             }
         }
+
     }
 
     void ActualizarZonas()

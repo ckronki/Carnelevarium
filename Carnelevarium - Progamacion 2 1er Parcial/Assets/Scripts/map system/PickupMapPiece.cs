@@ -1,32 +1,23 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class PickupMapPiece : MonoBehaviour
+public class PickupMapPiece : MonoBehaviour, IInteractable
 {
-    public int nivelMapa; // 1, 2 o 3
-    private bool playerInRange = false;
+    [Header("Nivel de mapa que desbloquea")]
+    public int nivelMapa = 1;
 
-    void Update()
+    // Este método se llama automáticamente desde InteractionController
+    public void Interact()
     {
-        if (playerInRange && Keyboard.current.eKey.wasPressedThisFrame)
+        // Buscar el MapSystem y desbloquear el nivel
+        MapSystem mapSystem = FindObjectOfType<MapSystem>();
+        if (mapSystem != null)
         {
-            MapSystem mapSystem = FindObjectOfType<MapSystem>();
-            if (mapSystem != null)
-            {
-                mapSystem.AddPiece(nivelMapa); // ? ahora sí existe
-            }
-
-            gameObject.SetActive(false); // ocultar cubo
+            mapSystem.AddPiece(nivelMapa);
         }
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player")) playerInRange = true;
-    }
+        // Ocultar el objeto después de recogerlo
+        gameObject.SetActive(false);
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player")) playerInRange = false;
+        Debug.Log("Has recogido el mapa nivel " + nivelMapa);
     }
 }

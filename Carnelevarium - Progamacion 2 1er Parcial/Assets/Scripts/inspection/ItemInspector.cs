@@ -1,23 +1,20 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InspectItem : MonoBehaviour
+public class ItemInspector : MonoBehaviour
 {
-    public static InspectItem Instance { get; private set; }
-    public Camera mainCamera;
+    [Header("Referencias")]
+    public Camera inspectCamera;       // Cámara secundaria
+    public Transform inspectPoint;     // Empty delante de la cámara
 
     private GameObject currentItem;
     private bool isInspecting = false;
-
-    void Awake()
-    {
-        Instance = this;
-    }
 
     void Update()
     {
         if (!isInspecting || currentItem == null) return;
 
+        // Rotación con mouse
         if (Mouse.current.leftButton.isPressed)
         {
             float rotX = Mouse.current.delta.x.ReadValue() * 100f * Time.unscaledDeltaTime;
@@ -26,6 +23,7 @@ public class InspectItem : MonoBehaviour
             currentItem.transform.Rotate(Vector3.right, rotY, Space.World);
         }
 
+        // Cerrar con Escape
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             CloseInspection();
@@ -34,36 +32,35 @@ public class InspectItem : MonoBehaviour
 
     public void Inspect(GameObject prefab)
     {
-        Debug.Log("Inspect() llamado");
-
-        if (prefab == null || mainCamera == null)
+        if (prefab == null || inspectPoint == null)
         {
-            Debug.LogError("Prefab o MainCamera no asignado.");
+            Debug.LogError("Prefab o InspectPoint no asignado.");
             return;
         }
 
         if (currentItem != null) CloseInspection();
 
-        Vector3 spawnPos = mainCamera.transform.position + mainCamera.transform.forward * 2f;
-        Quaternion spawnRot = Quaternion.identity;
-
-        currentItem = Instantiate(prefab, spawnPos, spawnRot);
-        Debug.Log("Prefab instanciado: " + currentItem.name);
+        currentItem = Instantiate(prefab, inspectPoint.position, inspectPoint.rotation);
+        currentItem.transform.SetParent(inspectPoint, true);
 
         isInspecting = true;
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        Debug.Log("Modo inspección ACTIVADO con " + currentItem.name);
     }
 
     public void CloseInspection()
     {
         if (currentItem != null) Destroy(currentItem);
+
         isInspecting = false;
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        Debug.Log("Inspección cerrada");
+
+        Debug.Log("Modo inspección CERRADO");
     }
 
     public bool IsInspecting() => isInspecting;
