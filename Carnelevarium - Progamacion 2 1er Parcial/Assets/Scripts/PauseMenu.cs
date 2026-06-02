@@ -31,7 +31,7 @@ public class PauseMenu : MonoBehaviour
 
             else
             {
-                if (inspectSystem.isInspecting) return;
+                if (InspectItem.Instance.IsInspecting()) return;
                 else
                 {
                     if (GameIsPaused)

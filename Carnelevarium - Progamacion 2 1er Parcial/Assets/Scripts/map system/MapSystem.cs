@@ -6,8 +6,8 @@ using TMPro;
 [System.Serializable]
 public class ZonaData
 {
-    public GameObject zona;       // GameObject padre con las imágenes rojas
-    public int nivelRequerido;    // Nivel de mapa necesario para mostrar esta zona
+    public GameObject zona;       
+    public int nivelRequerido;    
 }
 
 public class MapSystem : MonoBehaviour
@@ -20,10 +20,10 @@ public class MapSystem : MonoBehaviour
     public GameObject mapa3;
 
     [Header("Mensaje sin mapa")]
-    public TextMeshProUGUI mensajeTMP;
+    public GameObject mensajeSinMapa; 
 
     [Header("Zonas del mapa")]
-    public ZonaData[] zonas; // cada zona con su nivel requerido
+    public ZonaData[] zonas; 
 
     [Header("Referencias del jugador")]
     public MonoBehaviour playerMovement;
@@ -43,13 +43,14 @@ public class MapSystem : MonoBehaviour
         mapa1.SetActive(false);
         mapa2.SetActive(false);
         mapa3.SetActive(false);
-        mensajeTMP.gameObject.SetActive(false);
+        mensajeSinMapa.SetActive(false);
 
         foreach (ZonaData z in zonas)
         {
             z.zona.SetActive(false);
         }
     }
+
 
     void Update()
     {
@@ -99,12 +100,11 @@ public class MapSystem : MonoBehaviour
 
             if (mapaNivel == 0)
             {
-                mensajeTMP.text = "No tienes ningún mapa";
-                mensajeTMP.gameObject.SetActive(true);
+                mensajeSinMapa.SetActive(true); 
             }
             else
             {
-                mensajeTMP.gameObject.SetActive(false);
+                mensajeSinMapa.SetActive(false);
 
                 if (mapaNivel == 1) mapa1.SetActive(true);
                 else if (mapaNivel == 2) mapa2.SetActive(true);
@@ -122,13 +122,14 @@ public class MapSystem : MonoBehaviour
             if (playerMovement != null) playerMovement.enabled = true;
             if (playerCamera != null) playerCamera.enabled = true;
 
-            mensajeTMP.gameObject.SetActive(false);
+            mensajeSinMapa.SetActive(false);
 
             foreach (ZonaData z in zonas)
             {
                 z.zona.SetActive(false);
             }
         }
+
     }
 
     void ActualizarZonas()
@@ -146,7 +147,6 @@ public class MapSystem : MonoBehaviour
                 {
                     z.zona.SetActive(true);
 
-                    // Titileo: recorrer todas las imágenes hijas
                     Image[] images = z.zona.GetComponentsInChildren<Image>();
                     foreach (Image img in images)
                     {

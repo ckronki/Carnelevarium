@@ -62,6 +62,7 @@ public class InteractionController : MonoBehaviour
     // Escucha el teclado para activar la interacción
     public void CheckForInteractionInput()
     {
+
         // Si el jugador presionó la tecla 'E' en este fotograma EXACTO y además hay un objeto válido en la mira...
         if (Keyboard.current.eKey.wasPressedThisFrame && _currentTargetedInteractable != null)
         {
