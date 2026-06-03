@@ -22041,6 +22041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keypadUI: {fileID: 572683760}
+  simonSaysUI: {fileID: 0}
   dialogueText: {fileID: 152378139}
 --- !u!224 &581300197
 RectTransform:

@@ -65,7 +65,9 @@ public class SlidingPuzzle : MonoBehaviour
         size = 3;
         CreateGamePieces(0.01f);
 
+        shuffling = true;  // bloquea CheckCompletion durante el shuffle
         Shuffle();
+        shuffling = false; // habilita después
     }
 
     void Update()
@@ -135,11 +137,8 @@ public class SlidingPuzzle : MonoBehaviour
 
             emptyLocation = i;
 
-            // 🔹 Condición de victoria
-            if (CheckCompletion())
-            {
-                ShowVictory();
-            }
+            // 👇 ELIMINA estas líneas que estaban aquí:
+            // if (CheckCompletion()) { ShowVictory(); }
 
             return true;
         }
@@ -148,6 +147,9 @@ public class SlidingPuzzle : MonoBehaviour
 
     private bool CheckCompletion()
     {
+        // Ignorar si todavía está shuffling
+        if (shuffling) return false;
+
         for (int i = 0; i < pieces.Count; i++)
         {
             if (pieces[i].name != $"{i}")

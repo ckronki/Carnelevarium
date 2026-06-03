@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
 
     public GameObject keypadUI;
+    public GameObject simonSaysUI;
     public TMP_Text dialogueText;
 
     void Awake()

@@ -72,28 +72,28 @@ public class InteractionController : MonoBehaviour
     }
 
     // Bloquea por completo la capacidad de interactuar y mover la cámara (útil para menús, cinemáticas o el modo inspección)
-    public void LockInteraction()
-    {
-        // Imprime en la consola el estado de bloqueo actual de la cámara antes de cambiarlo.
-        Debug.Log("Cámara bloqueada: " + _cameraController.isCameraLocked);
+        public void LockInteraction()
+        {
+            // Imprime en la consola el estado de bloqueo actual de la cámara antes de cambiarlo.
+            Debug.Log("Cámara bloqueada: " + _cameraController.isCameraLocked);
 
-        // Llama al método del CameraController para congelar el movimiento del mouse del personaje.
-        _cameraController.LockCamera();
+            // Llama al método del CameraController para congelar el movimiento del mouse del personaje.
+            _cameraController.LockCamera();
 
-        // Reduce la distancia de interacción a cero. Al hacer esto, el Raycast nunca llegará a tocar nada y no se podrá interactuar con nada.
-        _interactionDistance = 0;
-    }
+            // Reduce la distancia de interacción a cero. Al hacer esto, el Raycast nunca llegará a tocar nada y no se podrá interactuar con nada.
+            _interactionDistance = 0;
+        }
 
-    // Desbloquea el sistema devolviendo el control al jugador
-    public void UnlockInteraction()
-    {
-        // Imprime en la consola el estado de bloqueo de la cámara.
-        Debug.Log("Cámara bloqueada: " + _cameraController.isCameraLocked);
+        // Desbloquea el sistema devolviendo el control al jugador
+        public void UnlockInteraction()
+        {
+            // Imprime en la consola el estado de bloqueo de la cámara.
+            Debug.Log("Cámara bloqueada: " + _cameraController.isCameraLocked);
 
-        // Llama al método del CameraController para volver a liberar el movimiento del mouse del personaje.
-        _cameraController.UnlockCamera();
+            // Llama al método del CameraController para volver a liberar el movimiento del mouse del personaje.
+            _cameraController.UnlockCamera();
 
-        // Restaura la distancia de interacción original que habíamos respaldado en el método LockInteraction.
-        _interactionDistance = _interactionDistanceBackup;
-    }
+            // Restaura la distancia de interacción original que habíamos respaldado en el método LockInteraction.
+            _interactionDistance = _interactionDistanceBackup;
+        }
 }
