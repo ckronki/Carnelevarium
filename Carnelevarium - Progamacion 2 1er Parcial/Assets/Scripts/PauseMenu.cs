@@ -11,7 +11,7 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject keypad;
 
-    [SerializeField] InspectItem inspectSystem;
+    //[SerializeField] InspectItem inspectSystem;
 
     private Keyboard keyboard;
 
@@ -31,14 +31,14 @@ public class PauseMenu : MonoBehaviour
 
             else
             {
-                if (InspectItem.Instance.IsInspecting()) return;
-                else
-                {
+                //if (InspectItem.Instance.IsInspecting()) return;
+                //else
+                //{
                     if (GameIsPaused)
                         Resume();
                     else
                         Pause();
-                }
+                //}
             }
             
         }
