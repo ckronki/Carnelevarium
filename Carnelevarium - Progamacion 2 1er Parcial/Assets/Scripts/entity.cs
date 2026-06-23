@@ -1,26 +1,27 @@
 using UnityEngine;
 
-public abstract class Entity : MonoBehaviour
+public abstract class Entity : MonoBehaviour //TP2 ludmila perez arias, get/set,
 {
     [SerializeField] protected int life;
     [SerializeField] protected int damage;
     [SerializeField] protected float speed;
 
-    // Propiedad pública para acceder/modificar la vida
+    //para acceder vida con control
     public int Life
     {
-        get { return life; }
-        set { life = value; }
+        get => life;
+        set => life = Mathf.Max(0, value); 
     }
 
+    //consultar la vida actual
     public int CurrentLife => life;
 
     public virtual void GetDamage(int d)
     {
-        life -= d;
-        Debug.Log($"{gameObject.name} recibe {d} de daño. Vida restante: {life}");
+        Life -= d; //usa la propiedad  en vez de directamente
+        Debug.Log($"{gameObject.name} recibe {d} de daño. Vida restante: {Life}");
 
-        if (life <= 0)
+        if (Life <= 0)
         {
             Death();
         }

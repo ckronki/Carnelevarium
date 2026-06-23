@@ -2,74 +2,90 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class ElectricTrap : MonoBehaviour
+namespace Game.Traps
 {
-    [Header("Ajustes de Daño")]
-    [SerializeField] private int damageAmount = 5;
-    [SerializeField] private float damageTickRate = 2f;
-
-    [Header("Ajustes de Ralentización")]
-    [SerializeField] private float slowMultiplier = 0.5f;
-
-    private Dictionary<Player, Coroutine> activeTraps = new Dictionary<Player, Coroutine>();
-    private Dictionary<Player, float> originalSpeeds = new Dictionary<Player, float>();
-
-    private void OnTriggerEnter(Collider other)
+    public class ElectricTrap : MonoBehaviour //TP2 Ludmila Perez Arias, namespace, get/set, 
     {
-        Player player = other.GetComponent<Player>();
+        [Header("Ajustes de Daño")]
+        [SerializeField] private int damageAmount = 5;
+        [SerializeField] private float damageTickRate = 2f;
 
-        if (player != null && !activeTraps.ContainsKey(player))
+        [Header("Ajustes de Ralentización")]
+        [SerializeField] private float slowMultiplier = 0.5f;
+
+        private Dictionary<Player, Coroutine> activeTraps = new Dictionary<Player, Coroutine>();
+        private Dictionary<Player, float> originalSpeeds = new Dictionary<Player, float>();
+
+        //para daño (no menor a 0)
+        public int DamageAmount
         {
-            // Detener sprint antes de ralentizar
-            player.ForceStopSprint();
-
-            // Guardar la velocidad base antes de ralentizar
-            originalSpeeds[player] = player.CurrentSpeed;
-
-            // Aplicar ralentización
-            player.ChangeSpeed(slowMultiplier);
-
-            // Bloquear el sprint mientras está en la trampa
-            player.DisableSprintTemporarily(Mathf.Infinity);
-
-            // daño constante
-            Coroutine damageRoutine = StartCoroutine(ApplyElectricDamage(player));
-            activeTraps.Add(player, damageRoutine);
+            get => damageAmount;
+            private set => damageAmount = Mathf.Max(0, value);
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        Player player = other.GetComponent<Player>();
-
-        if (player != null && activeTraps.ContainsKey(player))
+        //para ralentización (no menor a 0)
+        public float SlowMultiplier
         {
-            // stop daño
-            StopCoroutine(activeTraps[player]);
-            activeTraps.Remove(player);
+            get => slowMultiplier;
+            private set => slowMultiplier = Mathf.Max(0f, value);
+        }
 
-            // Restaurar velocidad original
-            if (originalSpeeds.ContainsKey(player))
+        private void OnTriggerEnter(Collider other)
+        {
+            Player player = other.GetComponent<Player>();
+
+            if (player != null && !activeTraps.ContainsKey(player))
             {
-                player.ResetSpeed(originalSpeeds[player]);
-                originalSpeeds.Remove(player);
+
+                player.ForceStopSprint();
+
+                //guardar la velocidad base
+                originalSpeeds[player] = player.CurrentSpeed;
+
+
+                player.ChangeSpeed(SlowMultiplier);
+
+                //Bloquear el sprint
+                player.DisableSprintTemporarily(Mathf.Infinity);
+
+
+                Coroutine damageRoutine = StartCoroutine(ApplyElectricDamage(player));
+                activeTraps.Add(player, damageRoutine);
             }
-
-            // Permitir sprint de nuevo
-            player.EnableSprint(); // Debes agregar este método en Player
         }
-    }
 
-    private IEnumerator ApplyElectricDamage(Player player)
-    {
-        while (player != null)
+        private void OnTriggerExit(Collider other)
         {
-            player.GetDamage(damageAmount);
-           
-            // shakecamara
-            if (ShakeCamara.Instance != null) ShakeCamara.Instance.Shake(0.3f);
-            yield return new WaitForSeconds(damageTickRate);
+            Player player = other.GetComponent<Player>();
 
+            if (player != null && activeTraps.ContainsKey(player))
+            {
+                //stop daño
+                StopCoroutine(activeTraps[player]);
+                activeTraps.Remove(player);
+
+                //velocidad original
+                if (originalSpeeds.ContainsKey(player))
+                {
+                    player.ResetSpeed(originalSpeeds[player]);
+                    originalSpeeds.Remove(player);
+                }
+
+
+                player.EnableSprint();
+            }
+        }
+
+        private IEnumerator ApplyElectricDamage(Player player)
+        {
+            while (player != null)
+            {
+                player.GetDamage(DamageAmount);
+
+                //shakecamara
+                if (ShakeCamara.Instance != null) ShakeCamara.Instance.Shake(0.3f);
+                yield return new WaitForSeconds(damageTickRate);
+            }
         }
     }
 }

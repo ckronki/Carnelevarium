@@ -1,70 +1,91 @@
-using System.Collections;
 using UnityEngine;
+using System;
 
-public class EnemyBasic : Enemy
+namespace Game.Enemies // TP2 Ludmila perez arias - namespace, get/set, evento sonido de muerte
 {
-    [SerializeField] private float attackCooldown = 1.5f; // tiempo entre ataques
-    private float nextAttackTime = 0f;
-
-    [SerializeField] Animator animator;
-
-    public void Start()
+    public class EnemyBasic : Enemy
     {
-        animator = GetComponent<Animator>();
-    }
+        [SerializeField] private float attackCooldown = 1.5f;
+        private float nextAttackTime = 0f;
 
-    protected override void ChasePlayer(float distance)
-    {
-        // detectionRange es 0, no hace nada
-        if (detectionRange <= 0) return;
+        [SerializeField] Animator animator;
 
-        if (distance > attackRange)
+        //getter/setter para vida
+        public int Life
         {
-            transform.LookAt(player);
-            transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-            Debug.Log($"{gameObject.name} persigue al jugador");
-
-            animator.SetBool("IsMoving", true);
+            get => life;
+            private set => life = Mathf.Max(0, value);
         }
-        else
-        {
-            AttackPlayer();
-        }
-    }
 
-    protected override void AttackPlayer()
-    {
-        if (Time.time >= nextAttackTime)
+        //evento al morir
+        public event Action<EnemyBasic> OnEnemyDeath;
+
+        public void Start()
         {
-            Player p = player.GetComponent<Player>();
-            if (p != null)
+            animator = GetComponent<Animator>();
+        }
+
+        protected override void ChasePlayer(float distance)
+        {
+            if (detectionRange <= 0) return;
+
+            if (distance > attackRange)
             {
-                p.GetDamage(damage);
-                Debug.Log($"{gameObject.name} ataca al jugador. Daño: {damage}");
+                transform.LookAt(player);
+                transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+                Debug.Log($"{gameObject.name} persigue al jugador");
+
+                animator.SetBool("IsMoving", true);
+            }
+            else
+            {
+                AttackPlayer();
+            }
+        }
+
+        protected override void AttackPlayer()
+        {
+            if (Time.time >= nextAttackTime)
+            {
+                Player p = player.GetComponent<Player>();
+                if (p != null)
+                {
+                    p.GetDamage(damage);
+                    Debug.Log($"{gameObject.name} ataca al jugador. Daño: {damage}");
+                }
+
+                animator.SetTrigger("IsAttacking");
+
+                nextAttackTime = Time.time + attackCooldown;
+            }
+        }
+
+        public override void GetDamage(int d)
+        {
+            Life -= d; //para q no quede en numeros negativos
+            Debug.Log($"{gameObject.name} recibe {d} de daño. Vida restante: {Life}");
+
+            if (Life <= 0)
+            {
+                Death();
             }
 
-            animator.SetTrigger("IsAttacking");
-
-            nextAttackTime = Time.time + attackCooldown;
+            animator.SetTrigger("WasHit");
         }
-    }
 
-    public override void GetDamage(int d)
-    {
-        life -= d;
-        Debug.Log($"{gameObject.name} recibe {d} de daño. Vida restante: {life}");
-
-        if (life <= 0)
+        public override void Death()
         {
-            Death();
+            gameObject.SetActive(false);
+
+            //sonido al morir
+            AudioSource audio = GetComponent<AudioSource>();
+            if (audio != null)
+            {
+                audio.Play(); //audioSource
+            }
+
+            //evento de muerte
+            OnEnemyDeath?.Invoke(this);
         }
-
-        animator.SetTrigger("WasHit");
-    }
-
-    public override void Death()
-    {
-        gameObject.SetActive(false); // En vez de Destroy
-
     }
 }
