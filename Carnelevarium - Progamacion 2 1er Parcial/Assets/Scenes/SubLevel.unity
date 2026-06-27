@@ -94,7 +94,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: d4abdabdfa2a35c41be3a52280df237c, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5728,7 +5728,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &43342718
 MeshCollider:
@@ -13369,7 +13369,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &104871804
 MeshCollider:
@@ -15906,7 +15906,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &122025457
 MeshCollider:
@@ -67956,7 +67956,7 @@ AudioSource:
   m_GameObject: {fileID: 473722516}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7020585527182523290, guid: 0f3fcf7e103b1a748b4d72936aa1a38a, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -72731,9 +72731,9 @@ Mesh:
       format: 0
       dimension: 2
     - stream: 0
-      offset: 0
+      offset: 48
       format: 0
-      dimension: 0
+      dimension: 2
     - stream: 0
       offset: 0
       format: 0
@@ -72766,8 +72766,8 @@ Mesh:
       offset: 0
       format: 0
       dimension: 0
-    m_DataSize: 1152
-    _typelessdata: c0be6abe99ac3dc01c220fc100000000000000000000803f000080bf0000000000000000000080bfc0beea3e99ac9dc0c0be6a3e99ac3dc01c220fc100000000000000000000803f000080bf0000000000000000000080bf0000000099ac9dc0c0be6abe99ac3d401c220fc100000000000000000000803f000080bf0000000000000000000080bfc0beea3e0000803fc0be6a3e99ac3d401c220fc100000000000000000000803f000080bf0000000000000000000080bf000000000000803fc0be6a3e99ac3dc01c220fc10000803f000000000000000000000000000000000000803f000080bfc8f06c3f8e29213fc0be6a3e99ac3dc012b28ec10000803f000000000000000000000000000000000000803f000080bf805dbd3e8e29213fc0be6a3e99ac3d401c220fc10000803f000000000000000000000000000000000000803f000080bfc8f06c3fdaff7f3fc0be6a3e99ac3d4012b28ec10000803f000000000000000000000000000000000000803f000080bf805dbd3edaff7f3fc0be6a3e99ac3dc012b28ec10000000000000000000080bf0000803f0000000000000000000080bfc0beea3e99ac9dc0c0be6abe99ac3dc012b28ec10000000000000000000080bf0000803f0000000000000000000080bf0000000099ac9dc0c0be6a3e99ac3d4012b28ec10000000000000000000080bf0000803f0000000000000000000080bfc0beea3e0000803fc0be6abe99ac3d4012b28ec10000000000000000000080bf0000803f0000000000000000000080bf000000000000803fc0be6abe99ac3dc012b28ec1000080bf00000000000000000000000000000000000080bf000080bf08420e3fb429213fc0be6abe99ac3dc01c220fc1000080bf00000000000000000000000000000000000080bf000080bf00000000b429213fc0be6abe99ac3d4012b28ec1000080bf00000000000000000000000000000000000080bf000080bf08420e3f0000803fc0be6abe99ac3d401c220fc1000080bf00000000000000000000000000000000000080bf000080bf000000000000803fc0be6abe99ac3d401c220fc1000000000000803f000000000000803f0000000000000000000080bf000000000000803fc0be6a3e99ac3d401c220fc1000000000000803f000000000000803f0000000000000000000080bfc0beea3e0000803fc0be6abe99ac3d4012b28ec1000000000000803f000000000000803f0000000000000000000080bf000000001084fcc0c0be6a3e99ac3d4012b28ec1000000000000803f000000000000803f0000000000000000000080bfc0beea3e1084fcc0c0be6abe99ac3dc012b28ec100000000000080bf00000000000080bf0000000000000000000080bfc0beea3e1084fcc0c0be6a3e99ac3dc012b28ec100000000000080bf00000000000080bf0000000000000000000080bf000000001084fcc0c0be6abe99ac3dc01c220fc100000000000080bf00000000000080bf0000000000000000000080bfc0beea3e0000803fc0be6a3e99ac3dc01c220fc100000000000080bf00000000000080bf0000000000000000000080bf000000000000803f
+    m_DataSize: 1344
+    _typelessdata: c0be6abe99ac3dc01c220fc100000000000000000000803f000080bf0000000000000000000080bfc0beea3e99ac9dc042a07c3f0bd7a33cc0be6a3e99ac3dc01c220fc100000000000000000000803f000080bf0000000000000000000080bf0000000099ac9dc042a07c3f6ae9493dc0be6abe99ac3d401c220fc100000000000000000000803f000080bf0000000000000000000080bfc0beea3e0000803f2bac1b3f0bd7a33cc0be6a3e99ac3d401c220fc100000000000000000000803f000080bf0000000000000000000080bf000000000000803f2bac1b3f69e9493dc0be6a3e99ac3dc01c220fc10000803f000000000000000000000000000000000000803f000080bfc8f06c3f8e29213f40d7a33c30dff23dc0be6a3e99ac3dc012b28ec10000803f000000000000000000000000000000000000803f000080bf805dbd3e8e29213f718d163f30dff23dc0be6a3e99ac3d401c220fc10000803f000000000000000000000000000000000000803f000080bfc8f06c3fdaff7f3f0bd7a33cf89ffe3ec0be6a3e99ac3d4012b28ec10000803f000000000000000000000000000000000000803f000080bf805dbd3edaff7f3f708d163ff89ffe3ec0be6a3e99ac3dc012b28ec10000000000000000000080bf0000803f0000000000000000000080bfc0beea3e99ac9dc02bac1b3f6ce9c93dc0be6abe99ac3dc012b28ec10000000000000000000080bf0000803f0000000000000000000080bf0000000099ac9dc02bac1b3f79ea8d3dc0be6a3e99ac3d4012b28ec10000000000000000000080bf0000803f0000000000000000000080bfc0beea3e0000803f42a07c3f6ce9c93dc0be6abe99ac3d4012b28ec10000000000000000000080bf0000803f0000000000000000000080bf000000000000803f42a07c3f7aea8d3dc0be6abe99ac3dc012b28ec1000080bf00000000000000000000000000000000000080bf000080bf08420e3fb429213f40d7a33cb46e043fc0be6abe99ac3dc01c220fc1000080bf00000000000000000000000000000000000080bf000080bf00000000b429213f718d163fb46e043fc0be6abe99ac3d4012b28ec1000080bf00000000000000000000000000000000000080bf000080bf08420e3f0000803f0bd7a33cca62653fc0be6abe99ac3d401c220fc1000080bf00000000000000000000000000000000000080bf000080bf000000000000803f708d163fca62653fc0be6abe99ac3d401c220fc1000000000000803f000000000000803f0000000000000000000080bf000000000000803f738d163f0bd7a33cc0be6a3e99ac3d401c220fc1000000000000803f000000000000803f0000000000000000000080bfc0beea3e0000803f738d163f6ae9493dc0be6abe99ac3d4012b28ec1000000000000803f000000000000803f0000000000000000000080bf000000001084fcc00bd7a33c11d7a33cc0be6a3e99ac3d4012b28ec1000000000000803f000000000000803f0000000000000000000080bfc0beea3e1084fcc011d7a33c6de9493dc0be6abe99ac3dc012b28ec100000000000080bf00000000000080bf0000000000000000000080bfc0beea3e1084fcc0738d163f7bea8d3dc0be6a3e99ac3dc012b28ec100000000000080bf00000000000080bf0000000000000000000080bf000000001084fcc0738d163f6de9c93dc0be6abe99ac3dc01c220fc100000000000080bf00000000000080bf0000000000000000000080bfc0beea3e0000803f0bd7a33c79ea8d3dc0be6a3e99ac3dc01c220fc100000000000080bf00000000000080bf0000000000000000000080bf000000000000803f10d7a33c6ce9c93d
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0
@@ -72828,7 +72828,7 @@ Mesh:
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   'm_MeshMetrics[0]': 256.00003
-  'm_MeshMetrics[1]': 1
+  'm_MeshMetrics[1]': 244.94582
   m_MeshOptimizationFlags: 1
   m_StreamData:
     serializedVersion: 2
@@ -77614,7 +77614,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &530953529
 MeshCollider:
@@ -79499,7 +79499,7 @@ AudioSource:
   m_GameObject: {fileID: 540027728}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7020585527182523290, guid: 0f3fcf7e103b1a748b4d72936aa1a38a, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -88615,7 +88615,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &588142955
 MeshCollider:
@@ -100540,7 +100540,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &634153199
 MeshCollider:
@@ -100918,7 +100918,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &635738570
 MeshCollider:
@@ -123150,7 +123150,7 @@ AudioSource:
   m_GameObject: {fileID: 681896278}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7020585527182523290, guid: 0f3fcf7e103b1a748b4d72936aa1a38a, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -128183,7 +128183,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &719451266
 MeshCollider:
@@ -141378,7 +141378,7 @@ AudioSource:
   m_GameObject: {fileID: 805167661}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7020585527182523290, guid: 0f3fcf7e103b1a748b4d72936aa1a38a, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -146437,7 +146437,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &839966632
 MeshCollider:
@@ -172336,7 +172336,7 @@ AudioSource:
   m_GameObject: {fileID: 1012956437}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7020585527182523290, guid: 0f3fcf7e103b1a748b4d72936aa1a38a, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -187446,7 +187446,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &1101225455
 MeshCollider:
@@ -197199,7 +197199,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &1146673370
 MeshCollider:
@@ -209100,7 +209100,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &1218361438
 MeshCollider:
@@ -228875,7 +228875,7 @@ AudioSource:
   m_GameObject: {fileID: 1313677468}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7020585527182523290, guid: 0f3fcf7e103b1a748b4d72936aa1a38a, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -254304,7 +254304,7 @@ AudioSource:
   m_GameObject: {fileID: 1425852364}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7020585527182523290, guid: 0f3fcf7e103b1a748b4d72936aa1a38a, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -259780,7 +259780,7 @@ AudioSource:
   m_GameObject: {fileID: 955341658}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2324446033323681262, guid: 0f3fcf7e103b1a748b4d72936aa1a38a, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -280678,7 +280678,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &1600727176
 MeshCollider:
@@ -292332,7 +292332,7 @@ AudioSource:
   m_GameObject: {fileID: 1667422109}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -5906451489190823240, guid: 0f3fcf7e103b1a748b4d72936aa1a38a, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -297567,7 +297567,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &1696939981
 MeshCollider:
@@ -301824,7 +301824,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &1713267075
 MeshCollider:
@@ -311064,7 +311064,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &1761257671
 MeshCollider:
@@ -319089,7 +319089,7 @@ Light:
   m_Type: 2
   m_Color: {r: 0.9056604, g: 0.7524538, b: 0.6707013, a: 1}
   m_Intensity: 1.3
-  m_Range: 30
+  m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -319151,7 +319151,7 @@ Transform:
   m_GameObject: {fileID: 1814851801}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 45.68, y: 2.012, z: 26.499}
+  m_LocalPosition: {x: 45.68, y: 2.513, z: 26.499}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -366550,7 +366550,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!64 &2075637214
 MeshCollider:
