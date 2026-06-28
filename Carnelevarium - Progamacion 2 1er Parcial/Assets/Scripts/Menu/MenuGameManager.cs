@@ -1,3 +1,5 @@
+//TP2 - Sofia Liberman
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
@@ -13,17 +15,18 @@ public class MenuGameManager : MonoBehaviour
     private MenuControls controls;
     private bool started = false;
 
-    // Botones principales
-    public List<GameObject> menuButtons;     // Play + Options + Credits + Exit
-    public List<GameObject> optionsButtons;  // Back (+ cualquier otro en Options)
-    public List<GameObject> creditsButtons;  // Back
-    public List<GameObject> exitButtons;     // opcional
+    // GENERICS: uso de List<T> para almacenar botones.
+    public List<GameObject> menuButtons;     
+    public List<GameObject> optionsButtons;  
+    public List<GameObject> creditsButtons;  
+    public List<GameObject> exitButtons;     
 
-    public FadeController fadeController;    // referencia al panel negro
+    public FadeController fadeController;    
 
     void Awake()
     {
         controls = new MenuControls();
+        // DELEGATES + EVENTS: se suscribe al evento AnyKey.performed con un delegado(permiten reaccionar a acciones del jugador (presionar una tecla) sin tener que revisar manualmente cada frame).
         controls.UI.AnyKey.performed += ctx => OnAnyKey();
     }
 
@@ -128,7 +131,7 @@ public class MenuGameManager : MonoBehaviour
         }
     }
 
-    // Helpers
+
     void SetButtonsFade(List<GameObject> buttons, bool fadeIn)
     {
         foreach (GameObject btn in buttons)

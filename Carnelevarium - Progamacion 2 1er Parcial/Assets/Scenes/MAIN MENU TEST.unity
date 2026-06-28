@@ -2991,7 +2991,6 @@ MonoBehaviour:
   pauseMenuUI: {fileID: 0}
   cameraObject: {fileID: 842582123}
   keypad: {fileID: 0}
-  inspectSystem: {fileID: 0}
 --- !u!1001 &99831102
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60292,8 +60291,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.9222836, y: 1.7226768, z: 0.07429635}
-  m_Center: {x: -0.048986677, y: -0.092666745, z: -0.03714814}
+  m_Size: {x: 9.876411, y: 4.765747, z: 0.074296355}
+  m_Center: {x: -3.02605, y: 0.6689791, z: -0.03714827}
 --- !u!114 &1173768960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60405,7 +60404,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.20677638, z: 0.03223211, w: 0.13924283}
+  m_margin: {x: 0, y: 0.20677638, z: 5.6930776, w: 2.2634697}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -69888,8 +69887,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.1780744, y: 1.7226648, z: 0.299346}
-  m_Center: {x: -2.6037052, y: -0.09266676, z: -0.14967297}
+  m_Size: {x: 2.1639585, y: 1.1204172, z: 0.299346}
+  m_Center: {x: -2.6329937, y: 0.20845705, z: -0.14967297}
 --- !u!114 &1464142438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70001,7 +70000,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.20677638, z: 4.112971, w: 0.13924283}
+  m_margin: {x: 0, y: 0.4378004, z: 5.1056542, w: 0.632073}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -91152,8 +91151,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.2751632, y: 1.9709291, z: 0.07429635}
-  m_Center: {x: -2.6265688, y: -0.7575893, z: -0.03714814}
+  m_Size: {x: 2.6526234, y: 1.3598561, z: 0.074296355}
+  m_Center: {x: -1.7475457, y: -0.18182921, z: -0.03714814}
 --- !u!114 &2015160097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91265,7 +91264,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.4511584, z: 3.4765146, w: 0.13924283}
+  m_margin: {x: 0, y: 0.4511584, z: 3.4765146, w: 0.15936583}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -97911,8 +97910,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.8822, y: 2.038406, z: 0.07429635}
-  m_Center: {x: -1.3827885, y: -0.2505371, z: -0.03714814}
+  m_Size: {x: 3.2955465, y: 1.1164141, z: 0.074296355}
+  m_Center: {x: -1.6837193, y: 0.21045876, z: -0.03714814}
 --- !u!114 &2098424103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98024,7 +98023,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0.36793923, y: 0.20677638, z: 1.7918946, w: 0.13924283}
+  m_margin: {x: 0.36793923, y: 0.20677638, z: 3.6356294, w: 0.68900007}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0

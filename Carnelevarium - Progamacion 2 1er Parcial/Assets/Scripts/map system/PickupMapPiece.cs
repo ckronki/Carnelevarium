@@ -1,3 +1,7 @@
+//TP2 - Sofia Liberman
+// HERENCIA: PickupMapPiece hereda de MonoBehaviour, lo que le permite funcionar como componente en Unity.
+// INTERFACES: implementa IInteractable, lo que obliga a definir el método Interact().
+
 using UnityEngine;
 
 public class PickupMapPiece : MonoBehaviour, IInteractable

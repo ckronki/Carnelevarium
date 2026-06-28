@@ -6,7 +6,6 @@ public class ClickManager : MonoBehaviour
     public Camera mainCamera;
     private MenuTextButton lastHovered;
 
-    // Creamos un LayerMask para los textos
     public LayerMask uiWorldLayer;
 
     void Start()

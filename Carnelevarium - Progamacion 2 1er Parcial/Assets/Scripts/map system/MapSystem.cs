@@ -1,3 +1,7 @@
+// TP2 - Sofia Liberman
+// COMPOSICIÓN: esta clase se utiliza dentro de MapSystem para representar zonas.
+// ENCAPSULAMIENTO: variables privadas que no son accesibles directamente desde fuera de la clase
+
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;

@@ -1,3 +1,6 @@
+//TP2 - Sofia Liberman
+// HERENCIA indirecta: ScriptableObject hereda de UnityEngine.Object.
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NuevaParteMapa", menuName = "Mapa/Parte")]
