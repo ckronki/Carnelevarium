@@ -68,7 +68,7 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _CastShadows: 1
-    - _ColorOverlayOpacity: 0
+    - _ColorOverlayOpacity: 0.69
     - _Cull: 2
     - _CustomColor: 1
     - _DstBlend: 0
@@ -88,7 +88,7 @@ Material:
     - _ZWriteControl: 0
     m_Colors:
     - _Blue_Area_Color: {r: 1, g: 1, b: 1, a: 0}
-    - _ColorOverlay: {r: 1, g: 1, b: 1, a: 0}
+    - _ColorOverlay: {r: 0.18801177, g: 0.20428884, b: 0.23584908, a: 0}
     - _Emission_Color: {r: 1, g: 1, b: 1, a: 0}
     - _Green_Area_Color: {r: 1, g: 1, b: 1, a: 0}
     - _Red_Area_Color: {r: 1, g: 1, b: 1, a: 0}
