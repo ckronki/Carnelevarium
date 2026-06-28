@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Entity : MonoBehaviour //TP2 ludmila perez arias, get/set,
+public abstract class Entity : MonoBehaviour //TP2 ludmila perez arias, get/set, encapsulamiento
 {
     [SerializeField] protected int life;
     [SerializeField] protected int damage;

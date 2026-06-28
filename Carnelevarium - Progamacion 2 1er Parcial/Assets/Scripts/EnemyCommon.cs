@@ -17,8 +17,7 @@ namespace Game.Enemies // TP2 Ludmila perez arias - namespace, get/set, evento s
             private set => life = Mathf.Max(0, value);
         }
 
-        //evento al morir
-        public event Action<EnemyBasic> OnEnemyDeath;
+        
 
         public void Start()
         {
@@ -73,6 +72,8 @@ namespace Game.Enemies // TP2 Ludmila perez arias - namespace, get/set, evento s
             animator.SetTrigger("WasHit");
         }
 
+        //evento al morir
+        public event Action<EnemyBasic> OnEnemyDeath;
         public override void Death()
         {
             gameObject.SetActive(false);
