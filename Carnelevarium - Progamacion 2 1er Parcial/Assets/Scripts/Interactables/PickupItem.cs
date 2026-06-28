@@ -1,11 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class PickupItem : MonoBehaviour, IInteractable
 {
-    [Header("Prefab para inspección")]
+    [Header("Prefab para inspecciÃ³n")]
     public GameObject itemPrefab;
 
-    [Header("Identificador único para SaveSystem")]
+    [Header("Identificador Ãºnico para SaveSystem")]
     public string objectID;   // ? este campo faltaba
 
     public void Interact()

@@ -11,8 +11,6 @@ public class PickupCrowbar : Interactables, IInteractable
         Inventory.instance.AddItem(this.name);
 
         StartCoroutine(IsInteracting());
-
-        
     }
 
     public IEnumerator IsInteracting()

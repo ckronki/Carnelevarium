@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -15,21 +15,27 @@ public class Inventory : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    // Se añade el parámetro opcional 'esPorCarga'. Si no se especifica, por defecto es 'false'.
+    // Se aÃ±ade el parÃ¡metro opcional 'esPorCarga'. Si no se especifica, por defecto es 'false'.
     public void AddItem(string itemName, bool esPorCarga = false)
     {
         items.Add(itemName);
 
-        // Si el ítem NO proviene del archivo de carga, significa que se acaba de recoger/agregar en la sesión actual
         if (!esPorCarga)
         {
-            Debug.Log($"<color=green>[Inventario]</color> ¡Nuevo Item agregado en tiempo real!: {itemName} (Guardado en lista local).");
+            Debug.Log($"<color=green>[Inventario]</color> Â¡Nuevo Item agregado en tiempo real!: {itemName} (Guardado en lista local).");
         }
         else
         {
             Debug.Log($"<color=yellow>[Inventario - Carga]</color> Item restaurado desde el archivo de guardado: {itemName}");
         }
+
+        // ðŸ”¹ Crear el objeto visual en el Grid
+        if (InventorySystem.Instance != null)
+        {
+            InventorySystem.Instance.SpawnItemInGrid(itemName);
+        }
     }
+
 
     public bool HasItem(string itemName)
     {
@@ -42,14 +48,14 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
-    /// Limpia la lista lógica de strings y destruye físicamente todos los elementos
-    /// visuales arrastrables que se encuentren dentro del inventario de cuadrícula.
+    /// Limpia la lista lÃ³gica de strings y destruye fÃ­sicamente todos los elementos
+    /// visuales arrastrables que se encuentren dentro del inventario de cuadrÃ­cula.
     /// </summary>
     public void Clear()
     {
         items.Clear();
 
-        // Limpieza visual profunda del sistema de cuadrícula (Grid)
+        // Limpieza visual profunda del sistema de cuadrÃ­cula (Grid)
         if (InventorySystem.Instance != null)
         {
             // Buscamos todos los componentes InventoryItem que existan como hijos del sistema de inventario
