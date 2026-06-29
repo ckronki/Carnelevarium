@@ -44,19 +44,17 @@ public class InventoryMenu : MonoBehaviour
         if (inventoryCanvas != null) inventoryCanvas.SetActive(true);
         if (gridInventory != null) gridInventory.SetActive(true);
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        if (cameraController != null)
+        {
+            var camController = cameraController.GetComponent<CameraController>();
+            if (camController != null)
+                camController.enabled = false;
+        }
 
-        // 🔒 Desactivar cámara y movimiento
-        if (cameraController != null) cameraController.enabled = false;
         if (playerController != null) playerController.enabled = false;
+        cameraController.GetComponent<CameraController>().LockCamera();
 
-
-
-        Debug.Log("<color=green>[Inventario]</color> Inventario abierto y cámara bloqueada.");
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
+        Debug.Log("<color=green>[Inventario]</color> Inventario abierto.");
     }
 
     private void CerrarInventario()
@@ -66,16 +64,17 @@ public class InventoryMenu : MonoBehaviour
         if (inventoryCanvas != null) inventoryCanvas.SetActive(false);
         if (gridInventory != null) gridInventory.SetActive(false);
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (cameraController != null)
+        {
+            var camController = cameraController.GetComponent<CameraController>();
+            if (camController != null)
+                camController.enabled = true;
+        }
 
-        // 🔓 Reactivar cámara y movimiento
-        if (cameraController != null) cameraController.enabled = true;
+        cameraController.GetComponent<CameraController>().UnlockCamera();
         if (playerController != null) playerController.enabled = true;
 
-        Debug.Log("<color=yellow>[Inventario]</color> Inventario cerrado y cámara desbloqueada.");
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
+        Debug.Log("<color=yellow>[Inventario]</color> Inventario cerrado.");
     }
+
 }

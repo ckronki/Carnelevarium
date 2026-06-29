@@ -1,16 +1,22 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class MouseManager : MonoBehaviour
 {
-    [Header("ConfiguraciÛn del Mouse")]
-    public Camera cam; // C·mara principal
+    [Header("Referencias")]
+    public Camera cam;
+    public GraphicRaycaster uiRaycaster;
+    public EventSystem eventSystem;
+
     private InventoryItem itemSeleccionado;
     private ItemAnchorManager anchorManager;
 
     void Update()
     {
-        // Detectar clic izquierdo para agarrar o soltar
+        if (Time.timeScale == 0f) Physics.autoSimulation = true;
+
         if (Input.GetMouseButtonDown(0))
         {
             if (itemSeleccionado == null)
@@ -19,13 +25,11 @@ public class MouseManager : MonoBehaviour
                 IntentarSoltarItem();
         }
 
-        // Detectar tecla R para rotar el Ìtem
         if (itemSeleccionado != null && Input.GetKeyDown(KeyCode.R))
         {
             itemSeleccionado.Rotate();
         }
 
-        // Si hay un Ìtem seleccionado, seguir el mouse
         if (itemSeleccionado != null)
         {
             MoverItemConMouse();
@@ -42,20 +46,25 @@ public class MouseManager : MonoBehaviour
             {
                 itemSeleccionado = item;
                 anchorManager = item.GetComponent<ItemAnchorManager>();
-                item.transform.SetParent(null); // Lo sacamos del slot temporalmente
+                anchorManager.LiberarSlots(); // libera los slots previos
+                item.transform.SetParent(null);
                 item.transform.localScale = item.escalaAlArrastrar;
-                Debug.Log($"<color=yellow>[Mouse]</color> Õtem '{item.name}' seleccionado.");
+                Debug.Log($"[Mouse] √çtem '{item.name}' seleccionado.");
             }
         }
     }
 
     void MoverItemConMouse()
     {
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            itemSeleccionado.transform.position = hit.point + Vector3.up * 0.5f;
-        }
+        Vector2 pos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            uiRaycaster.GetComponent<RectTransform>(),
+            Input.mousePosition,
+            cam,
+            out pos
+        );
+
+        itemSeleccionado.transform.localPosition = pos;
     }
 
     void IntentarSoltarItem()
@@ -69,7 +78,7 @@ public class MouseManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("<color=red>[Mouse]</color> No se puede colocar el Ìtem aquÌ.");
+            Debug.Log("<color=red>[Mouse]</color> No se puede colocar el √≠tem aqu√≠.");
         }
     }
 }
