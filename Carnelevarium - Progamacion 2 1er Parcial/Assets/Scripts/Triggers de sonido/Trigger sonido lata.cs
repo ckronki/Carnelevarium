@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CanTrigger : MonoBehaviour
 {
-    public Animator canAnimator;     
-    public AudioSource canSound;     
+    public Animator canAnimator;
+    public AudioSource canSound;
 
     private bool triggered = false;
 
@@ -11,21 +11,16 @@ public class CanTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag ("Player"))
+        if (!triggered && other.CompareTag("Player"))
         {
+            triggered = true;
 
+            
             myAnimationController.SetBool("roll2", true);
 
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-
-            myAnimationController.SetBool("roll2", false);
-
+            //reproduce sonido
+            if (canSound != null && !canSound.isPlaying)
+                canSound.Play();
         }
     }
 }
