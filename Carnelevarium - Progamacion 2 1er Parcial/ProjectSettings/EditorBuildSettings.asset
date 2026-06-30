@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MAIN MENU TEST.unity
     guid: 238dd1368a22d8243a8eb2dea8ecc999
   - enabled: 1
-    path: Assets/Scenes/SubLevel.unity
+    path: Assets/Scenes/SubLevel_!.unity
     guid: 9aae44245f104b84bb3a4847b3336a33
   - enabled: 1
     path: Assets/Scenes/Death.unity

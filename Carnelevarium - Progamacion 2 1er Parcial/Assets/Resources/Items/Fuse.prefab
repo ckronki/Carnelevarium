@@ -96,9 +96,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2593090151839229998}
   - component: {fileID: 3546067417631810911}
-  - component: {fileID: 1023046261594308439}
   - component: {fileID: 1433488982196319388}
   - component: {fileID: 9164364218192666630}
+  - component: {fileID: 2381559720968399896}
+  - component: {fileID: 5234616286949958694}
   m_Layer: 6
   m_Name: Fuse
   m_TagString: Untagged
@@ -121,6 +122,7 @@ Transform:
   m_Children:
   - {fileID: 4542909333857078415}
   - {fileID: 3855402872806115976}
+  - {fileID: 4083375317302340910}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 3.307, y: -43.838, z: -74.459}
 --- !u!114 &3546067417631810911
@@ -138,23 +140,6 @@ MonoBehaviour:
   dialogue: "Podr\xEDa usar este fusil para reparar el generador."
   dialogueTime: 1.5
   isCrowbar: 0
---- !u!114 &1023046261594308439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3788635426023468029}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 963318be8e5f5124087a3a10286bc3c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue: "Podr\xEDa usar este fusil para reparar el generador."
-  dialogueTime: 1.5
-  objectID: Fuse
-  itemPrefab: {fileID: 3788635426023468029}
-  gameObject: {fileID: 3788635426023468029}
 --- !u!114 &1433488982196319388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,6 +174,107 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12152463, y: 0.17328642, z: 0.12169959}
   m_Center: {x: -0.0107622575, y: 0.03664313, z: 0.0004255242}
+--- !u!114 &2381559720968399896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3788635426023468029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bf545cc68a5b44094d96ef900b2fb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 1
+  height: 1
+  rotado: 0
+  lastSlot: {fileID: 0}
+  contenedorVisual: {fileID: 2593090151839229998}
+  escalaEnInventario: {x: 1, y: 1, z: 1}
+  escalaAlArrastrar: {x: 1, y: 1, z: 1}
+--- !u!114 &5234616286949958694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3788635426023468029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56b41511dc44b14b9d92f3440372b61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anchorPoints:
+  - {fileID: 7605305086466077529}
+--- !u!1 &6894287711711057847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4083375317302340910}
+  - component: {fileID: 5876663386362086095}
+  - component: {fileID: 7605305086466077529}
+  m_Layer: 6
+  m_Name: AnchorPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4083375317302340910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6894287711711057847}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2593090151839229998}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5876663386362086095
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6894287711711057847}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.060567897
+  m_Center: {x: -3.8566123e-10, y: 0.03682868, z: 0.0000003867028}
+--- !u!114 &7605305086466077529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6894287711711057847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8164535543961c47bdfeb371be8e206, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotDetectado: {fileID: 0}
+  itemPadre: {fileID: 2381559720968399896}
 --- !u!1 &7308801505863407389
 GameObject:
   m_ObjectHideFlags: 0
