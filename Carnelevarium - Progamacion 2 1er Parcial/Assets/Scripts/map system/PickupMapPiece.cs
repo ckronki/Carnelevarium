@@ -1,7 +1,6 @@
 //TP2 - Sofia Liberman
 // HERENCIA: PickupMapPiece hereda de MonoBehaviour, lo que le permite funcionar como componente en Unity.
 // INTERFACES: implementa IInteractable, lo que obliga a definir el método Interact().
-
 using UnityEngine;
 
 public class PickupMapPiece : MonoBehaviour, IInteractable
@@ -9,7 +8,9 @@ public class PickupMapPiece : MonoBehaviour, IInteractable
     [Header("Nivel de mapa que desbloquea")]
     public int nivelMapa = 1;
 
-    // Este método se llama automáticamente desde InteractionController
+    [Header("Sonido al recoger")]
+    public AudioClip pickupSound; // asignar en Inspector
+
     public void Interact()
     {
         // Buscar el MapSystem y desbloquear el nivel
@@ -17,6 +18,12 @@ public class PickupMapPiece : MonoBehaviour, IInteractable
         if (mapSystem != null)
         {
             mapSystem.AddPiece(nivelMapa);
+        }
+
+        // Reproducir sonido desde el SoundManager
+        if (SoundsManager.Instance != null)
+        {
+            SoundsManager.Instance.PlaySound(pickupSound);
         }
 
         // Ocultar el objeto después de recogerlo
