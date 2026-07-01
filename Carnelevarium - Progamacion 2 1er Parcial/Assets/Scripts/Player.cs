@@ -28,10 +28,11 @@ public class Player : Entity
     [SerializeField] float staminaRegenRate;   
 
     public float staminaCurrent;
-    private bool isSprinting;
+    public bool isSprinting;
     private bool exhausted;
 
     public bool hasCrowbar;
+    public bool isPlayerInSafeRoom;
 
     public string currentDialogue;
     public int currentDialogueTime;
@@ -83,6 +84,19 @@ public class Player : Entity
             }
         }
     }
+
+    public void SafeRoomState()
+    {
+        if (!isPlayerInSafeRoom)
+        {
+            isPlayerInSafeRoom = true;
+        }
+        else
+        {
+            isPlayerInSafeRoom = false;
+        }
+    }
+
     public void setStun()
     {
         cantMove = true;
