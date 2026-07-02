@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PickupItem : MonoBehaviour, Interactables
+public class PickupItem : MonoBehaviour, IInteractable
 {
     [Header("Prefab para inspección")]
     public GameObject itemPrefab;
