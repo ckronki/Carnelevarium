@@ -11,7 +11,6 @@ public class Player : Entity
     public InputActionReference sprintAction; 
     [SerializeField] private Rigidbody rb;
 
-    public Animator animator;
     Coroutine _currentCoroutine;
     float _backupSpeed;
     private InteractionController interactionController;
@@ -64,15 +63,6 @@ public class Player : Entity
             rb.linearVelocity = dir * speed;
 
             HandleSprint(move);
-
-            if (move.magnitude != 0)
-            {
-                animator.SetBool("isWalking", true);
-            }
-            else
-                animator.SetBool("isWalking", false);
-
-            AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
 
             if (move != Vector2.zero)
             {
@@ -248,10 +238,4 @@ public class Player : Entity
     }
 
     public float CurrentSpeed => speed;
-
-    public void AttackAnimation()
-    {
-        animator.SetBool("IsAttacking", true);
-        Debug.Log("Se reproduce la animación de ataque");
-    }
 }

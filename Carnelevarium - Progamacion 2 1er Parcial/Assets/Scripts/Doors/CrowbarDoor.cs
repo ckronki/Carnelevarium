@@ -8,15 +8,19 @@ public class CrowbarDoor : Door
 
     public override void Interact()
     {
-            if (!GameManager.instance.player.hasCrowbar)
-            {
-                StartCoroutine(HasInteracted(dialogue, dialogueTime));
-                return;
-            }
-            else
-            {
-                OpenDoor();
-                StartCoroutine(HasInteracted(openDialogue, dialogueTime));
-            }
+        if (!GameManager.instance.player.hasCrowbar)
+        {
+            StartCoroutine(HasInteracted(dialogue, dialogueTime));
+
+
+            return;
+        }
+        else if (!GameManager.instance.stalkerMovement.canMove)
+        {
+            OpenDoor();
+            StartCoroutine(HasInteracted(openDialogue, dialogueTime));
+
+            GameManager.instance.stalkerMovement.MovementState();
+        }
     }
 }

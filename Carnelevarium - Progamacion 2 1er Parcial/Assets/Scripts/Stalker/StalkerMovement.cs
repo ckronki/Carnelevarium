@@ -23,14 +23,16 @@ public class StalkerMovement : Enemy
     public bool isPlayerInRange = false;
     public bool isResettingPath = false;
     public bool canHide = false;
+    public bool canMove = false;
+
+    [SerializeField] float attackCooldown;
+    private float nextAttack;
 
     private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-        navMeshAgent.stoppingDistance = attackRange;
-
-        detectionRange = 0; //se hardcodea el detectionrange a 0 para detectar al jugador usando colliders con triggers
+        navMeshAgent.stoppingDistance = detectionRange;
     }
 
     protected void Update()
@@ -39,30 +41,41 @@ public class StalkerMovement : Enemy
 
         float distance = Vector3.Distance(transform.position, player.position);
 
-        if (isPlayerInRange)
+        if (canMove)
         {
-            ChasePlayer(distance);
-
-            animator.SetBool("IsPlayerInRange", true);
-        }
-        else
-        {
-            if (isResettingPath)
+            if (isPlayerInRange)
             {
-                if (GameManager.instance.player.isPlayerInSafeRoom && canHide)
+                if (distance > attackRange)
                 {
-                    ChooseClosestWaypoint(hidingSpots);
+                    ChasePlayer(distance);
+
+                    animator.SetBool("IsPlayerInRange", true);
                 }
-                else if (!canHide)
+                else
                 {
-                    ChooseClosestWaypoint(waypoints);
+                    AttackPlayer();
                 }
+
             }
-            else if (!isResettingPath)
+            else
             {
-                UpdatePath(currentWaypoint);
+                if (isResettingPath)
+                {
+                    if (GameManager.instance.player.isPlayerInSafeRoom && canHide)
+                    {
+                        ChooseClosestWaypoint(hidingSpots);
+                    }
+                    else if (!canHide)
+                    {
+                        ChooseClosestWaypoint(waypoints);
+                    }
+                }
+                else if (!isResettingPath)
+                {
+                    UpdatePath(currentWaypoint);
 
-                animator.SetBool("IsPlayerInRange", false);
+                    animator.SetBool("IsPlayerInRange", false);
+                }
             }
         }
     }
@@ -83,18 +96,11 @@ public class StalkerMovement : Enemy
 
         if (path.status == NavMeshPathStatus.PathComplete)
         {
-            if (distance > attackRange)
-            {
-                transform.LookAt(player);
+            transform.LookAt(player);
 
-                UpdatePath(player);
+            UpdatePath(player);
 
-                Debug.Log($"{gameObject.name} persigue al jugador");
-            }
-            else
-            {
-                AttackPlayer();
-            }
+            Debug.Log($"{gameObject.name} persigue al jugador");
         }
         else
         {
@@ -108,7 +114,26 @@ public class StalkerMovement : Enemy
 
     protected override void AttackPlayer()
     {
-        animator.SetTrigger("IsAttacking");
+        if (Time.time > nextAttack)
+        {
+            nextAttack = Time.time + attackCooldown;
+
+            Player p = GameManager.instance.player;
+
+            if (p != null)
+            {
+                p.GetDamage(damage);
+                Debug.Log($"{gameObject.name} ataca al jugador. Daño: {damage}");
+
+                animator.SetTrigger("IsAttacking");
+                Debug.Log("El ataque se realizó");
+            }
+
+        }
+        else
+        {
+            Debug.Log("El ataque se encuentra en cooldown");
+        }
     }
 
     #region OnTriggers
@@ -163,6 +188,7 @@ public class StalkerMovement : Enemy
 
     private void UpdatePath(Transform t)
     {
+
         if (Time.time >= pathUpdateDeadline)
         {
             Debug.Log("Actualizando camino");
@@ -170,6 +196,34 @@ public class StalkerMovement : Enemy
             navMeshAgent.SetDestination(t.position);
         }
     }
+
+    //private void UpdatePath(Transform t)
+    //{
+    //    Debug.Log("Actualizando camino");
+    //    pathUpdateDeadline = Time.time + pathUpdateDelay;
+
+    //    if (Time.time >= pathUpdateDeadline)
+    //    {
+    //        //NavMeshPath path = new NavMeshPath();
+
+    //        //navMeshAgent.CalculatePath(t.position, path);
+
+    //        //Debug.Log("Estado del path: " + path.status);
+
+    //        //if (path.status == NavMeshPathStatus.PathComplete)
+    //        //{
+    //            navMeshAgent.SetDestination(t.position);
+    //        //}
+    //        //else
+    //        //{
+    //        //    Debug.Log("El waypoint elegido no puede ser alcanzado");
+
+    //        //    ChooseClosestWaypoint(hidingSpots);
+
+    //        //    Debug.Log("El stalker ha elegido un waypoint nuevo");
+    //        //}
+    //    }
+    //}
 
     public void ChooseClosestWaypoint(Transform[] tArray)
     {
@@ -222,6 +276,11 @@ public class StalkerMovement : Enemy
         {
             canHide = false;
         }
+    }
+
+    public void MovementState()
+    {
+        canMove = true;
     }
 
     public void PlayerIsInRange()
