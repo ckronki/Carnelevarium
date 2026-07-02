@@ -2875,6 +2875,7 @@ MonoBehaviour:
       m_FeatureLookupFlags: 12
     - m_FirstAdjustmentRecord:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         m_GlyphIndex: 311
         m_GlyphValueRecord:
           m_XPlacement: 0
@@ -2935,6 +2936,8 @@ MonoBehaviour:
           m_YAdvance: 0
       m_FeatureLookupFlags: 4096
     - m_FirstAdjustmentRecord:
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
         m_GlyphIndex: 318
