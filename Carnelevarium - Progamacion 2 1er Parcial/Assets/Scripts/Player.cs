@@ -1,14 +1,15 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
 public class Player : Entity
 {
     public InputActionReference controlMove;
-    public InputActionReference sprintAction; 
+    public InputActionReference sprintAction;
     [SerializeField] private Rigidbody rb;
 
     Coroutine _currentCoroutine;
@@ -16,15 +17,17 @@ public class Player : Entity
     private InteractionController interactionController;
 
     public AudioSource audioSource;
-    public AudioClip footSteps;
+    public AudioClip[] footSteps;
+    public AudioSource breathingSource;
 
     public bool cantMove;
     // --- Sprint & Stamina ---
     [Header("Sprint Settings")]
-    [SerializeField] float sprintMultiplier; 
-    [SerializeField] public float staminaMax;        
-    [SerializeField] float staminaMin;         
-    [SerializeField] float staminaRegenRate;   
+    [SerializeField] float sprintMultiplierNice;
+    [SerializeField] float sprintMultiplierEvil;
+    [SerializeField] public float staminaMax;
+    [SerializeField] float staminaMin;
+    [SerializeField] float staminaRegenRate;
 
     public float staminaCurrent;
     public bool isSprinting;
@@ -53,20 +56,26 @@ public class Player : Entity
     private void Update()
     {
         if (cantMove == true) return;
-        else 
+        else
         {
             Vector2 move = controlMove.action.ReadValue<Vector2>();
 
             Vector3 dir = transform.forward * move.y;
             dir += transform.right * move.x;
-            
+
             rb.linearVelocity = dir * speed;
 
             HandleSprint(move);
 
             if (move != Vector2.zero)
             {
-                Walking();
+
+                if (!isSprinting)
+                {
+                    if (exhausted) Walking(sprintMultiplierEvil);
+                    else Walking(1);
+                }
+                else Walking(sprintMultiplierNice);
             }
             else
             {
@@ -116,7 +125,6 @@ public class Player : Entity
     {
         if (isSprinting)
         {
-            speed = _backupSpeed;
             isSprinting = false;
         }
     }
@@ -127,9 +135,9 @@ public class Player : Entity
 
     private IEnumerator DisableSprintRoutine(float duration)
     {
-        exhausted = true; 
+        exhausted = true;
         yield return new WaitForSeconds(duration);
-        exhausted = false; 
+        exhausted = false;
     }
     private void HandleSprint(Vector2 move)
     {
@@ -139,7 +147,7 @@ public class Player : Entity
         {
             if (!isSprinting && staminaCurrent > staminaMin)
             {
-                speed = _backupSpeed * sprintMultiplier;
+                speed = _backupSpeed * sprintMultiplierNice;
                 isSprinting = true;
             }
 
@@ -150,12 +158,24 @@ public class Player : Entity
                 {
                     staminaCurrent = 0f;
                     StopSprint();
+                    
                     exhausted = true;
+
+                    breathingSource.Play();
                 }
             }
         }
         else
         {
+            if (exhausted)
+            {
+                speed = _backupSpeed * sprintMultiplierEvil;
+            }
+            else
+            {
+                speed = _backupSpeed;
+            }
+            
             StopSprint();
         }
 
@@ -180,12 +200,22 @@ public class Player : Entity
         }
     }
 
-    public void Walking()
+    [SerializeField] float footStepCooldown;
+    private float nextFootStep;
+
+    public void Walking(float t)
     {
-        if (!audioSource.isPlaying)
+        float localFootStepCooldown = footStepCooldown / t;
+
+        if (!audioSource.isPlaying && Time.time > nextFootStep)
         {
-            audioSource.clip = footSteps;
-            audioSource.loop = true;
+            int footStepsIndex = Random.Range(0, footSteps.Length);
+
+            Debug.Log("Se ha elegido el paso " + footStepsIndex);
+
+            nextFootStep = Time.time + localFootStepCooldown;
+
+            audioSource.clip = footSteps[footStepsIndex];
             audioSource.Play();
         }
     }

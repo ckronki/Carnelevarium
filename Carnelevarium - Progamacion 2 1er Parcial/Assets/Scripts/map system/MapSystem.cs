@@ -37,6 +37,9 @@ public class MapSystem : MonoBehaviour
     private int mapaNivel = 0;
     private string currentRoom = "";
 
+    [Header("Sonidos")]
+    [SerializeField] AudioSource audioSource;
+
     void Awake()
     {
         Instance = this;
@@ -61,6 +64,8 @@ public class MapSystem : MonoBehaviour
         if (Keyboard.current.mKey.wasPressedThisFrame)
         {
             ToggleMap();
+
+            if (mapaNivel != 0) audioSource.Play();
         }
 
         if (isOpen && mapaNivel > 0 && currentRoom != "")

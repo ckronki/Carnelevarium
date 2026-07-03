@@ -6,12 +6,13 @@ public class CrowbarDoor : Door
 
     [TextArea][SerializeField] string openDialogue;
 
+    [SerializeField] AudioSource stalkerEntry;
+
     public override void Interact()
     {
         if (!GameManager.instance.player.hasCrowbar)
         {
             StartCoroutine(HasInteracted(dialogue, dialogueTime));
-
 
             return;
         }
@@ -19,6 +20,8 @@ public class CrowbarDoor : Door
         {
             OpenDoor();
             StartCoroutine(HasInteracted(openDialogue, dialogueTime));
+
+            stalkerEntry.Play();
 
             GameManager.instance.stalkerMovement.MovementState();
         }

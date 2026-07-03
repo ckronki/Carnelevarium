@@ -2,6 +2,7 @@ using System.Collections;
 using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
@@ -28,6 +29,10 @@ public class StalkerMovement : Enemy
     [SerializeField] float attackCooldown;
     private float nextAttack;
 
+    [SerializeField] AudioSource frontSteps;
+    [SerializeField] AudioSource backSteps;
+    [SerializeField] AudioClip[] footSteps;
+
     private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -43,6 +48,9 @@ public class StalkerMovement : Enemy
 
         if (canMove)
         {
+            frontSteps.enabled = true;
+            backSteps.enabled = true;
+
             if (isPlayerInRange)
             {
                 if (distance > attackRange)
@@ -77,6 +85,11 @@ public class StalkerMovement : Enemy
                     animator.SetBool("IsPlayerInRange", false);
                 }
             }
+        }
+        else
+        {
+            frontSteps.enabled = false;
+            backSteps.enabled = false;
         }
     }
 
@@ -134,6 +147,26 @@ public class StalkerMovement : Enemy
         {
             Debug.Log("El ataque se encuentra en cooldown");
         }
+    }
+
+    public void PlayFrontFootStep()
+    {
+        int footStepsIndex = Random.Range(0, footSteps.Length);
+
+        Debug.Log("El stalker ha elegido el paso " + footStepsIndex);
+
+        frontSteps.clip = footSteps[footStepsIndex];
+        frontSteps.Play();
+    }
+
+    public void PlayBackFootStep()
+    {
+        int footStepsIndex = Random.Range(0, footSteps.Length);
+
+        Debug.Log("El stalker ha elegido el paso " + footStepsIndex);
+
+        backSteps.clip = footSteps[footStepsIndex];
+        backSteps.Play();
     }
 
     #region OnTriggers

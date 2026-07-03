@@ -44,13 +44,12 @@ public class CrowbarController : MonoBehaviour
     public void AttackRaycast()
     {
         var ray = _playerCamera.ViewportPointToRay(new Vector2(0.5f, 0.5f));
-
+        
         if (Physics.Raycast(ray, out RaycastHit hit, attackDistance, attackLayer))
         {
             hit.collider.GetComponent<Entity>().GetDamage(attackDamage);
             Debug.Log("El player golpeó a " +  hit.collider.name);
             Debug.Log("La vida de " + hit.collider.name + " es: " + hit.collider.GetComponent<Entity>().CurrentLife);
-
         }
     }
 
