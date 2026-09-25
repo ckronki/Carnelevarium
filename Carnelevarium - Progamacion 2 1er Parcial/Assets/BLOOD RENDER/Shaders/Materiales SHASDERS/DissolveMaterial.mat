@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: sangre mat
-  m_Shader: {fileID: -6465566751694194690, guid: 00db47900c335cf41925a491ec33cc74, type: 3}
+  m_Name: DissolveMaterial
+  m_Shader: {fileID: -6465566751694194690, guid: 016b645a206b96342aeeeef13f723d9a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -38,23 +38,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Normal_strenght: 0
+    - _DIssolveStrenght: 0.34
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _mettqalic: 0.1
-    - _smoothness: 1
-    - _voronoiagitation: 1
-    - _voronoipower: 4
-    - _voronoiscale: 5
-    m_Colors:
-    - _VoronoiColor: {r: 0.03773582, g: 0, b: 0, a: 1}
-    - _basecolor: {r: 0.24528301, g: 0, b: 0, a: 1}
-    - _normalspeed: {r: 0, g: 0.2, b: 0, a: 0}
-    - _voronoispeed: {r: 0, g: 0.3, b: 0, a: 0}
-    - _voronoitilling: {r: 1, g: 1, b: 0, a: 0}
+    m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &3363978466336838834
+--- !u!114 &991002814849613784
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
