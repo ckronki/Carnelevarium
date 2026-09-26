@@ -22,6 +22,7 @@ namespace Game.Enemies // TP2 Ludmila perez arias - namespace, get/set, evento s
         public void Start()
         {
             animator = GetComponent<Animator>();
+            
         }
 
         protected override void ChasePlayer(float distance)
