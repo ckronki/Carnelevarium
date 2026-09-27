@@ -62,12 +62,15 @@ namespace Game.Enemies // TP2 Ludmila perez arias - namespace, get/set, evento s
 
         public override void GetDamage(int d)
         {
+            if (Life <= 0) return; //ya murio, mientras se disuelve no recibe mas golpes
+
             Life -= d; //para q no quede en numeros negativos
             Debug.Log($"{gameObject.name} recibe {d} de daño. Vida restante: {Life}");
 
             if (Life <= 0)
             {
                 Death();
+                return; //si murio no hace la animacion de golpe
             }
 
             animator.SetTrigger("WasHit");
@@ -77,7 +80,17 @@ namespace Game.Enemies // TP2 Ludmila perez arias - namespace, get/set, evento s
         public event Action<EnemyBasic> OnEnemyDeath;
         public override void Death()
         {
-            gameObject.SetActive(false);
+            //si tiene el efecto de disolverse, deja de perseguir y se disuelve (se destruye solo al terminar)
+            DissolvingControllerTut dissolve = GetComponent<DissolvingControllerTut>();
+            if (dissolve != null)
+            {
+                enabled = false;
+                dissolve.StartDissolve();
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
 
             //sonido al morir
             AudioSource audio = GetComponent<AudioSource>();

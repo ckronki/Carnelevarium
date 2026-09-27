@@ -50,11 +50,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - DissolveAmount_: 0.255
+    - DissolveAmount_: 0
     - _AmbientOcclusionStrenght: 1
     - _DissolveAmount: 0
     - _DissolveScale: 30
-    - _DissolveWidth: 0.063
+    - _DissolveWidth: 0.0523
     - _Metallic: 0
     - _NormalsStrenght: 0.5
     - _QueueControl: 0
