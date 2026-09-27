@@ -65,7 +65,11 @@
         }
     ],
     "m_GroupDatas": [],
-    "m_StickyNoteDatas": [],
+    "m_StickyNoteDatas": [
+        {
+            "m_Id": "6579972f121445e8a9cf133880b9eee6"
+        }
+    ],
     "m_Edges": [
         {
             "m_OutputSlot": {
@@ -504,10 +508,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -976.9999389648438,
-            "y": -824.9998779296875,
+            "x": -957.9999389648438,
+            "y": -819.9999389648438,
             "width": 208.0,
-            "height": 313.99993896484377
+            "height": 314.0
         }
     },
     "m_Slots": [
@@ -684,9 +688,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -649.0,
-            "y": -837.0,
-            "width": 208.00003051757813,
+            "x": -637.9999389648438,
+            "y": -821.0,
+            "width": 208.0,
             "height": 278.0
         }
     },
@@ -770,6 +774,26 @@
     "m_SGVersion": 2,
     "m_Type": "UnityEditor.Rendering.Universal.ShaderGraph.UniversalUnlitSubTarget",
     "m_ObjectId": "6444d1037b204e0f8ce52324537ba4dc"
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.StickyNoteData",
+    "m_ObjectId": "6579972f121445e8a9cf133880b9eee6",
+    "m_Title": "Normalize",
+    "m_Content": "normalize para que el grosor del outline sea igual en todas direcciones\r\n\r\n",
+    "m_TextSize": 0,
+    "m_Theme": 0,
+    "m_Position": {
+        "serializedVersion": "2",
+        "x": -780.0,
+        "y": -995.0,
+        "width": 200.0,
+        "height": 161.0
+    },
+    "m_Group": {
+        "m_Id": ""
+    }
 }
 
 {
@@ -872,10 +896,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -794.5303344726563,
-            "y": -316.5303649902344,
-            "width": 153.0,
-            "height": 173.0
+            "x": -785.0,
+            "y": -357.0,
+            "width": 84.0,
+            "height": 77.0
         }
     },
     "m_Slots": [
@@ -1352,9 +1376,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -755.0000610351563,
-            "y": -412.0000305175781,
-            "width": 134.00006103515626,
+            "x": -798.0,
+            "y": -399.0,
+            "width": 135.0,
             "height": 34.0
         }
     },
