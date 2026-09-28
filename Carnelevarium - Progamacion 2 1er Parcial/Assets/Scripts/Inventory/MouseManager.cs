@@ -2,6 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class MouseManager : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class MouseManager : MonoBehaviour
     {
         if (Time.timeScale == 0f) Physics.autoSimulation = true;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Mouse.current.leftButton.isPressed) 
         {
             if (itemSeleccionado == null)
                 IntentarSeleccionarItem();
@@ -38,7 +39,7 @@ public class MouseManager : MonoBehaviour
 
     void IntentarSeleccionarItem()
     {
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             InventoryItem item = hit.collider.GetComponent<InventoryItem>();

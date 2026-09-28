@@ -8,7 +8,7 @@ public class SprintBar : MonoBehaviour
     public float maxSprint;        // stamina máxima
 
     [Header("Interfaz")]
-    public Image sprinthBar;       // la imagen de la barra
+    public Image sprintBar;       // la imagen de la barra
     public CanvasGroup canvasGroup; // para controlar visibilidad (opcional)
 
     private void Start()
@@ -29,7 +29,7 @@ public class SprintBar : MonoBehaviour
 
     public void updateInterface()
     {
-        sprinthBar.fillAmount = sprint / maxSprint;
+        sprintBar.fillAmount = sprint / maxSprint;
 
         // Mostrar la barra solo si la stamina < max
         if (sprint < maxSprint)
@@ -52,7 +52,7 @@ public class SprintBar : MonoBehaviour
         }
         else
         {
-            sprinthBar.gameObject.SetActive(true);
+            sprintBar.gameObject.SetActive(true);
         }
     }
 
@@ -66,7 +66,7 @@ public class SprintBar : MonoBehaviour
         }
         else
         {
-            sprinthBar.gameObject.SetActive(false);
+            sprintBar.gameObject.SetActive(false);
         }
     }
 }

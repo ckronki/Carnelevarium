@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -42,7 +43,7 @@ public class DissolvingControllerTut : MonoBehaviour
         if(Animator != null)
             Animator.SetTrigger("Die");
 
-        yield return new WaitForSeconds(dieDelay);
+            yield return new WaitForSeconds(dieDelay);
 
         if (VFXGraph != null)
         {

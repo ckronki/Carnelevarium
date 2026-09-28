@@ -25,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Dither:
-        m_Texture: {fileID: 2800000, guid: 408297d39fbf15241a9fe5d3215096b3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 96d27961c7557874aab7ff7d2cbc3786, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -55,7 +55,7 @@ Material:
     - _DecalMeshBiasType: 0
     - _DecalMeshDepthBias: 0
     - _DecalMeshViewBias: 0
-    - _Dither_Opacity: 0.3
+    - _Dither_Opacity: 0.2
     - _DrawOrder: 0
     - _Quantization_Level: 64
     - _QueueControl: 0

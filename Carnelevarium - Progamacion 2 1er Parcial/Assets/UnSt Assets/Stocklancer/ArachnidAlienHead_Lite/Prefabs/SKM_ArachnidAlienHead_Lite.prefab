@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 308137607535956886}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -87,11 +87,10 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ab165df703b7054ea92996ccd376740, type: 2}
-  - {fileID: 2100000, guid: 863bc21d8e09b2947b9a2bdb62943225, type: 2}
-  - {fileID: 2100000, guid: 863bc21d8e09b2947b9a2bdb62943225, type: 2}
-  - {fileID: 2100000, guid: 863bc21d8e09b2947b9a2bdb62943225, type: 2}
-  - {fileID: 2100000, guid: 863bc21d8e09b2947b9a2bdb62943225, type: 2}
+  - {fileID: 2100000, guid: 8bdb280f89487db4181c39d4f629a630, type: 2}
+  - {fileID: 2100000, guid: 8bdb280f89487db4181c39d4f629a630, type: 2}
+  - {fileID: 2100000, guid: 8bdb280f89487db4181c39d4f629a630, type: 2}
+  - {fileID: 2100000, guid: 8bdb280f89487db4181c39d4f629a630, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -266,6 +265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 434905609701813055}
   - component: {fileID: 5830248975158227269}
+  - component: {fileID: 208564370148085855}
   m_Layer: 0
   m_Name: SKM_ArachnidAlienHead_Lite
   m_TagString: Untagged
@@ -286,8 +286,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6987435289534601733}
   - {fileID: 3926509440427538310}
+  - {fileID: 6987435289534601733}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5830248975158227269
@@ -312,6 +312,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &208564370148085855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955547028025880965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dbff20f73a2f3c45ac66595cbe72dd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Animator: {fileID: 0}
+  VFXGraph: {fileID: 0}
+  dissolveRate: 0.02
+  refreshRate: 0.05
+  dieDelay: 0.2
 --- !u!1 &1194225874818755644
 GameObject:
   m_ObjectHideFlags: 0
