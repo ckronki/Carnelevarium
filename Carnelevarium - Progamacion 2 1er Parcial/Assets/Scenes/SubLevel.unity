@@ -34676,7 +34676,7 @@ MonoBehaviour:
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61232b1857cfe4744af45202db77ce96, type: 2}
-  m_sharedMaterial: {fileID: -2844003635114192599, guid: d03ecb0300e83d0448cf4b9129645db0, type: 2}
+  m_sharedMaterial: {fileID: 9050168308955745551, guid: 61232b1857cfe4744af45202db77ce96, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -34706,7 +34706,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -34741,7 +34741,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &208560569
@@ -106735,7 +106735,7 @@ MonoBehaviour:
   m_text: Main Menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61232b1857cfe4744af45202db77ce96, type: 2}
-  m_sharedMaterial: {fileID: -2844003635114192599, guid: d03ecb0300e83d0448cf4b9129645db0, type: 2}
+  m_sharedMaterial: {fileID: 9050168308955745551, guid: 61232b1857cfe4744af45202db77ce96, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -106765,7 +106765,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -106800,7 +106800,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &525702013
@@ -178084,7 +178084,7 @@ MonoBehaviour:
   m_text: Quit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61232b1857cfe4744af45202db77ce96, type: 2}
-  m_sharedMaterial: {fileID: -2844003635114192599, guid: d03ecb0300e83d0448cf4b9129645db0, type: 2}
+  m_sharedMaterial: {fileID: 9050168308955745551, guid: 61232b1857cfe4744af45202db77ce96, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -178114,7 +178114,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -178149,7 +178149,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &848000078
@@ -378425,6 +378425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1667422117}
   - component: {fileID: 1667422116}
+  - component: {fileID: 1667422121}
   - component: {fileID: 1667422115}
   - component: {fileID: 1667422114}
   - component: {fileID: 1667422113}
@@ -378433,7 +378434,6 @@ GameObject:
   - component: {fileID: 1667422119}
   - component: {fileID: 1667422118}
   - component: {fileID: 1667422120}
-  - component: {fileID: 1667422121}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -378571,7 +378571,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 10
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -378583,7 +378583,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -378597,7 +378597,7 @@ Transform:
   m_GameObject: {fileID: 1667422109}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -86.3, y: 0.9282892, z: -144}
+  m_LocalPosition: {x: -86.3, y: 2.211, z: -144}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
