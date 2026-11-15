@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FlickeringLights : MonoBehaviour
 {
-    private Light light;
+    private new Light light;
 
     public float minIntensity = .5f;
     public float maxIntensity = 5.0f;

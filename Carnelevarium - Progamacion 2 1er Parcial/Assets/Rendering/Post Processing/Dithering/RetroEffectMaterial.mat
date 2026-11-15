@@ -55,7 +55,7 @@ Material:
     - _DecalMeshBiasType: 0
     - _DecalMeshDepthBias: 0
     - _DecalMeshViewBias: 0
-    - _Dither_Opacity: 0.2
+    - _Dither_Opacity: 0.3
     - _DrawOrder: 0
     - _Quantization_Level: 64
     - _QueueControl: 0
