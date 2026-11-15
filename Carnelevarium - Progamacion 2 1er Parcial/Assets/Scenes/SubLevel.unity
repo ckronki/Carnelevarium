@@ -66461,7 +66461,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -325.00006, y: 181}
+  m_AnchoredPosition: {x: -325.00006, y: 179.5}
   m_SizeDelta: {x: 100, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &354051863
@@ -322367,7 +322367,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card_GateYellow
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3826030597323891165, guid: 266b86b5ac92ce34f994acba480f6ed1, type: 3}
+    - {fileID: -5486622777536059123, guid: 266b86b5ac92ce34f994acba480f6ed1, type: 3}
+    - {fileID: -9121766522870673547, guid: 266b86b5ac92ce34f994acba480f6ed1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

@@ -42448,7 +42448,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -325.00006, y: 181}
+  m_AnchoredPosition: {x: -325.00006, y: 179.5}
   m_SizeDelta: {x: 100, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &354051863
@@ -66612,15 +66612,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8528771675315042918, guid: 266b86b5ac92ce34f994acba480f6ed1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -99.942
+      value: -99.64
       objectReference: {fileID: 0}
     - target: {fileID: 8528771675315042918, guid: 266b86b5ac92ce34f994acba480f6ed1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.933
+      value: 1.967
       objectReference: {fileID: 0}
     - target: {fileID: 8528771675315042918, guid: 266b86b5ac92ce34f994acba480f6ed1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -147.62442
+      value: -147.305
       objectReference: {fileID: 0}
     - target: {fileID: 8528771675315042918, guid: 266b86b5ac92ce34f994acba480f6ed1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -66689,8 +66689,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.13247581, y: 0.0070981327, z: 0.09067251}
-  m_Center: {x: -0.0085024545, y: 0.0038944054, z: 0.008188396}
+  m_Size: {x: 0.17108847, y: 0.02318176, z: 0.13103059}
+  m_Center: {x: -0.00040787566, y: -0.0041474057, z: 0.002967398}
 --- !u!114 &548619914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67592,7 +67592,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &554638832
 RectTransform:
   m_ObjectHideFlags: 0
