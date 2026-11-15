@@ -2,8 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController))]
-
 public class CrowbarController : MonoBehaviour
 {
     public GameObject crowbar;
